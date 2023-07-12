@@ -15,6 +15,9 @@ def bus_name_exists(form, field):
     if bus:
         raise ValidationError('Business name is already in use.')
 
+
+#pipenv install validators
+#validators.url("b")
 def image__is_valid_url(form, field):
     pass
     #image = field.data

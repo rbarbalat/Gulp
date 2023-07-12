@@ -22,7 +22,10 @@ def get_all_teams_current_user():
         # images = [image.to_dict() for image in bus.images]
         # reviews = [review.to_dict() for review in bus.bus_reviews]
         average = [review.rating for review in bus.bus_reviews]
-        average = sum(average)/len(average)
+        if len(average) == 0:
+            average = None
+        else:
+            average = sum(average)/len(average)
         lst.append({
             **bus.to_dict(),
             "owner": bus.owner.to_dict(),
@@ -49,7 +52,10 @@ def get_business_by_id(id):
     reviews = [review.to_dict() for review in bus.bus_reviews]
 
     average = [review["rating"] for review in reviews ]
-    average = sum(average)/len(average)
+    if len(average) == 0:
+        average = None
+    else:
+        average = sum(average)/len(average)
 
     return {
         **bus.to_dict(),
@@ -76,11 +82,13 @@ def get_all_teams():
 
     lst = []
     for bus in all_bus:
-        # if needed
         # images = [image.to_dict() for image in bus.images]
         # reviews = [review.to_dict() for review in bus.bus_reviews]
         average = [review.rating for review in bus.bus_reviews]
-        average = sum(average)/len(average)
+        if len(average) == 0:
+            average = None
+        else:
+            average = sum(average)/len(average)
         lst.append({
             **bus.to_dict(),
             "owner": bus.owner.to_dict(),
@@ -143,9 +151,7 @@ def create_business():
         # https://www.google.com/
         keys = ["first", "second", "third"]
         images = [ BusImage(business = bus, url = form.data[key])
-            #  for key in keys if key in form.data ]
             for key in keys if form.data[key] ]
-        #might need to be if form.data[key], if the key there but no value
 
         _ = [db.session.add(image) for image in images]
         db.session.commit()
@@ -167,11 +173,41 @@ def edit_business(id):
         return {"error": "Not authenticated"}, 401
 
     bus = Business.query.get(id)
+
     if not bus:
         return {"error": "Business not found"}, 404
 
     if current_user.id != bus.owner_id:
         return {"error": "Not authorized"}, 403
 
+    # form will be populated with values pulled from the store on the front end
     form = BusForm()
+    #form["csrf_token"].data = request.cookies.get("csrf_token")
+    if "csrf_token" in request.cookies:
+        form["csrf_token"].data = request.cookies["csrf_token"]
+    else:
+        return {"error": "Missing csrf_token"}, 404
+        # check this error code
+
+    if form.validate_on_submit():
+
+        bus.name = form.data["name"]
+        bus.description = form.data["description"]
+        bus.prev_url = form.data["prev_url"]
+        bus.address = form.data["address"]
+        bus.city = form.data["city"]
+        bus.state = form.data["state"]
+
+        db.session.commit()
+
+        # https://www.google.com/
+        keys = ["first", "second", "third"]
+
+        #handle updating images here, have to query for each bus_image
+        #might need to create new busImages, or delete existing ones, or update the url
+
+        db.session.commit()
+        images = [image.to_dict() for image in images]
+
+
     return {"error": form.errors}, 400
