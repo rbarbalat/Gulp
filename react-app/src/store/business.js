@@ -69,6 +69,8 @@ const busReducer = (state = initialState, action) => {
             const newAllBus = {...state.allBus};
             delete newAllBus[action.bus_id];
             return {allBus: newAllBus, singleBus: {}}
+        default:
+            return state;
     }
 }
 
