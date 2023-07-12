@@ -1,14 +1,14 @@
 from flask import Blueprint, jsonify, request
 from flask_login import current_user
 # from app.api.aws import get_unique_filename, upload_file_to_s3, remove_file_from_s3
-from app.models import db, User,  Business, Review, BusImage, RevImage
+from app.models import db, User, Business, Review, BusImage, RevImage
 from app.forms.bus_form import BusForm
 
 bus_routes = Blueprint("businesses", __name__)
 
 #GET ALL BUSINESSES
 @bus_routes.route("/")
-def get_all_teams_current_user():
+def get_all_businesses():
     """
     This route returns an array of business dictionairies for all business in the db
     """
@@ -29,7 +29,8 @@ def get_all_teams_current_user():
         lst.append({
             **bus.to_dict(),
             "owner": bus.owner.to_dict(),
-            "average": average
+            "average": average,
+            "numReviews": len(bus.bus_reviews)
             # "images": images,
             # "reviews": reviews
         })
@@ -49,7 +50,17 @@ def get_business_by_id(id):
         return {"error": "Business not found"}, 404
 
     images = [image.to_dict() for image in bus.images]
-    reviews = [review.to_dict() for review in bus.bus_reviews]
+    # reviews = [review.to_dict() for review in bus.bus_reviews]
+    # need to add image info and reviewer info to the reviews key!
+
+    reviews = []
+    for review in bus.bus_reviews:
+        rev_images = [image.to_dict() for image in review.images]
+        reviews.append({
+           **review.to_dict(),
+           "images": rev_images,
+           "reviewer": review.reviewer.to_dict()
+        })
 
     average = [review["rating"] for review in reviews ]
     if len(average) == 0:
@@ -68,7 +79,7 @@ def get_business_by_id(id):
 
 #GET ALL BUSINESSES BY CURRENT USER
 @bus_routes.route("/current")
-def get_all_teams():
+def get_all_businesses_by_current_user():
     """
     This route returns an array of dictionaries of all the businesses
     owned by the current user
@@ -92,7 +103,8 @@ def get_all_teams():
         lst.append({
             **bus.to_dict(),
             "owner": bus.owner.to_dict(),
-            "average": average
+            "average": average,
+            "numReviews": len(bus.bus_reviews)
             # "images": images,
             # "reviews": reviews
         })
