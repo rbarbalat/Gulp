@@ -6,6 +6,9 @@ import LoginFormPage from "./components/LoginFormPage";
 import { authenticate } from "./store/session";
 import Navigation from "./components/Navigation";
 
+import AllBusinesses from "./components/AllBusinesses";
+import SingleBusiness from "./components/SingleBusiness";
+
 function App() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
@@ -23,6 +26,12 @@ function App() {
           </Route>
           <Route path="/signup">
             <SignupFormPage />
+          </Route>
+          <Route exact path = "/businesses">
+            <AllBusinesses />
+          </Route>
+          <Route path="/businesses/:business_id">
+            <SingleBusiness />
           </Route>
         </Switch>
       )}

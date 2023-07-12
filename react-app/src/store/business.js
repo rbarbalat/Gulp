@@ -11,6 +11,29 @@ const actionLoadBusinesses = (businesses) => {
         businesses
     }
 }
+export const thunkLoadBusinesses = () => async (dispatch) => {
+    try {
+        const res = await fetch("/api/businesses/");
+        if(res.ok)
+        {
+            const serverData = await res.json();
+            console.log("good response from thunkLoadBusinesses")
+            console.log(serverData)
+            dispatch(actionLoadBusinesses(serverData));
+            return serverData;
+        } else {
+            const errorData = await res.json();
+            console.log("error response for thunkLoadSingleBusiness");
+            console.log(errorData);
+            return errorData;
+        }
+    } catch (error){
+    const errorData = await error.json();
+    console.log("CAUGHT error response for thunkLoadBusineeses")
+    console.log(errorData)
+    return errorData;
+    }
+}
 
 const actionLoadSingleBusiness = (singleBus) => {
     return {
@@ -18,6 +41,30 @@ const actionLoadSingleBusiness = (singleBus) => {
         singleBus
     }
 }
+export const thunkLoadSingleBusiness = (business_id) => async (dispatch) => {
+    try {
+        const res = await fetch(`/api/businesses/${business_id}`);
+        if(res.ok)
+        {
+            const serverData = await res.json();
+            dispatch(actionLoadSingleBusiness(serverData));
+            console.log("good response for thunkLoadSingleBusiness");
+            console.log(serverData);
+            return serverData;
+        } else{
+            const errorData = await res.json();
+            console.log("error response for thunkLoadSingleBusiness");
+            console.log(errorData);
+            return errorData;
+        }
+    } catch (error){
+        const errorData = await error.json();
+        console.log("CAUGHT error response for thunkLoadSingleBusiness");
+        console.log(errorData);
+        return errorData;
+    }
+}
+
 const actionReceiveBusiness = (business) => {
     return {
         type: RECEIVE_BUS,
