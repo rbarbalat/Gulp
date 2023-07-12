@@ -11,11 +11,15 @@ export default function SingleBusiness()
     const busIsEmpty = Object.keys(business).length == 0;
 
     const dispatch = useDispatch();
-    useEffect(async () => {
+    useEffect(() => {
         //if(Number(business_id) !== business.id)
-        const res = await dispatch(thunkLoadSingleBusiness(business_id));
-        console.log("res in useEffect")
-        console.log(res)
+        async function fetchData()
+        {
+            const res = await dispatch(thunkLoadSingleBusiness(business_id));
+            console.log("res in useEffect");
+            console.log(res);
+        }
+        fetchData();
     }, [dispatch, business_id])
 
     if(busIsEmpty) return <div>loading</div>

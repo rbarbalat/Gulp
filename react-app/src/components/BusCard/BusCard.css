@@ -1,0 +1,30 @@
+.bus_card_wrapper {
+    display:flex;
+    flex-direction: row;
+    gap: 2rem;
+    height: 150px;
+    border: 2px dashed blue;
+    margin-bottom: 2rem;
+}
+
+.bus_info_wrapper {
+    height: 80%;
+    width: 70%;
+    border: 2px dashed orange;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.preview_image_wrapper {
+    height: 60%;
+    width: 30%;
+    border: 2px dashed red;
+}
+
+.bus_preview {
+    height: 100%;
+    width: 100%;
+    border: 2px dashed black;
+}
