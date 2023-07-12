@@ -9,7 +9,7 @@ def seed_businesses(users):
     for i in range(10):
         bus = Business(
             owner = choice(users),
-            name = fake.text(max_nb_chars=randint(4, 12)),
+            name = fake.text(max_nb_chars=randint(5, 12)),
             description = fake.text(max_nb_chars=randint(150, 300)),
             prev_url = fake.url(),
             address = fake.address(),
@@ -20,6 +20,7 @@ def seed_businesses(users):
         lst.append(bus)
 
     db.session.commit()
+    print("seeded businesses")
     return lst
 
 
