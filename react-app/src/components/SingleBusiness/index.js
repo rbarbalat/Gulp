@@ -2,6 +2,9 @@ import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import { thunkLoadSingleBusiness } from "../../store/business";
+import TopCard from "../TopCard";
+
+import "./SingleBusiness.css";
 
 
 export default function SingleBusiness()
@@ -24,43 +27,15 @@ export default function SingleBusiness()
 
     if(busIsEmpty) return <div>loading</div>
     return(
-        <div>
-            <h1>Single Business Page</h1>
-            <div style={{"color": "red"}}>Name</div>
-            <div>{business.name}</div>
-            <div style={{"color": "red"}}>Description</div>
-            <div>{business.description}</div>
-            <div style={{"color": "red"}}>address</div>
-            <div>{business.address}</div>
-            <div style={{"color": "red"}}>location</div>
-            <div>{business.city}, {business.state}</div>
-            <div style={{"color": "red"}}>preview image</div>
-            <div>{business.preview_image}</div>
-            <div style={{"color": "red"}}>Rating</div>
-            <div>{business.average}</div>
-            <div style={{"color": "red"}}>Number of Reviews</div>
-            <div>{business.numReviews}</div>
-
-            <p style={{"color": "red"}}>
-                Owned by {business.owner.username}
-            </p>
-
-            <p style={{"color": "red"}}>
-                Business Images
-            </p>
-
-            <p>
-                <ul>
-                    {
-                        business.images.map(image => (
-                           <li key = {image.id}>
-                                {image.url}
-                           </li>
-                        ))
-                    }
-                </ul>
-            </p>
-
+        <>
+        <TopCard business={business} />
+        <div className ="single_bus_wrapper">
+            {/* {
+                business.reviews.map(review => (
+                    <ReviewCard key = {review.id} review={review} />
+                ))
+            } */}
         </div>
+    </>
     )
 }
