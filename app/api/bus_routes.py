@@ -13,7 +13,7 @@ def get_all_teams_current_user():
     """
     all_bus = Business.query.all()
     if not all_bus:
-        return []
+        return [], 404
 
     lst = []
     for bus in all_bus:
@@ -29,7 +29,7 @@ def get_all_teams_current_user():
             # "images": images,
             # "reviews": reviews
         })
-    return lst
+    return lst, 200
 
 #GET Business by Id
 @bus_routes.route("/<int:id>")
@@ -42,7 +42,7 @@ def get_business_by_id(id):
 
     bus = Business.query.get(id)
     if not bus:
-        return {}
+        return {"error": "Business not found"}, 404
 
     images = [image.to_dict() for image in bus.images]
     reviews = [review.to_dict() for review in bus.bus_reviews]
@@ -56,7 +56,7 @@ def get_business_by_id(id):
         "images": images,
         "numReviews": len(reviews),
         "average": average
-    }
+    }, 200
 
 #GET ALL BUSINESSES BY CURRENT USER
 @bus_routes.route("/current")
@@ -66,11 +66,11 @@ def get_all_teams():
     owned by the current user
     """
     if not current_user.is_authenticated:
-        return {"error": "not authorized"}, 403
+        return {"error": "not authenticated"}, 401
 
     all_bus = current_user.businesses
     if not all_bus:
-        return []
+        return [], 404
 
     lst = []
     for bus in all_bus:
@@ -86,4 +86,36 @@ def get_all_teams():
             # "images": images,
             # "reviews": reviews
         })
-    return lst
+    return lst, 200
+
+#DELETE Business by Id
+@bus_routes.route("/<int:id>", methods = ["DELETE"])
+def delete_business_by_id(id):
+    """
+    Delete a single business by id
+    """
+    if not current_user.is_authenticated:
+        return {"error": "not authenticated"}, 401
+
+    bus = Business.query.get(id)
+    if not bus:
+        return {"error": "Business not found"}, 404
+
+    if current_user.id != bus.owner_id:
+        return {"error": "not authorized"}, 403
+
+    db.session.delete(bus)
+    db.session.commit()
+    return {"message": "Successfully Deleted"}
+
+#CREATE A BUSINESS
+@bus_routes.route("/", methods = ["POST"])
+def create_business():
+    #201 is the right code
+    return {"message": "not a message, fill in details of obj"}, 201
+
+#EDIT A BUSINESS
+@bus_routes.route("/", methods = ["PUT"])
+def edit_business():
+    #200 is the right code
+    return {"message": "not a message, fill in details of obj"}, 200
