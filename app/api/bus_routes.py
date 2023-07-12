@@ -2,6 +2,7 @@ from flask import Blueprint, jsonify, request
 from flask_login import current_user
 # from app.api.aws import get_unique_filename, upload_file_to_s3, remove_file_from_s3
 from app.models import db, User,  Business, Review, BusImage, RevImage
+from app.forms.bus_form import BusForm
 
 bus_routes = Blueprint("businesses", __name__)
 
@@ -52,6 +53,7 @@ def get_business_by_id(id):
 
     return {
         **bus.to_dict(),
+        "owner": bus.owner.to_dict(),
         "reviews": reviews,
         "images": images,
         "numReviews": len(reviews),
@@ -111,11 +113,65 @@ def delete_business_by_id(id):
 #CREATE A BUSINESS
 @bus_routes.route("/", methods = ["POST"])
 def create_business():
-    #201 is the right code
-    return {"message": "not a message, fill in details of obj"}, 201
+    if not current_user.is_authenticated:
+        return {"error": "not authenticated"}, 401
+
+    form = BusForm()
+    #form["csrf_token"].data = request.cookies.get("csrf_token")
+    if "csrf_token" in request.cookies:
+        form["csrf_token"].data = request.cookies["csrf_token"]
+    else:
+        return {"error": "Missing csrf_token"}, 404
+        # check this error code
+
+    if form.validate_on_submit():
+
+        bus = Business()
+        # can't use form.populate_obj(bus) b/c have to populate multiple objects
+
+        bus.owner_id = current_user.id
+        bus.name = form.data["name"]
+        bus.description = form.data["description"]
+        bus.prev_url = form.data["prev_url"]
+        bus.address = form.data["address"]
+        bus.city = form.data["city"]
+        bus.state = form.data["state"]
+
+        db.session.add(bus)
+        db.session.commit()
+
+        # https://www.google.com/
+        keys = ["first", "second", "third"]
+        images = [ BusImage(business = bus, url = form.data[key])
+            #  for key in keys if key in form.data ]
+            for key in keys if form.data[key] ]
+        #might need to be if form.data[key], if the key there but no value
+
+        _ = [db.session.add(image) for image in images]
+        db.session.commit()
+        images = [image.to_dict() for image in images]
+
+        return {
+            **bus.to_dict(),
+            "images": images,
+            "owner": current_user.to_dict()
+            #if owner is necessary
+        }, 201
+
+    return {"error": form.errors}, 400
 
 #EDIT A BUSINESS
-@bus_routes.route("/", methods = ["PUT"])
-def edit_business():
-    #200 is the right code
-    return {"message": "not a message, fill in details of obj"}, 200
+@bus_routes.route("/<int:id>", methods = ["PUT"])
+def edit_business(id):
+    if not current_user.is_authenticated:
+        return {"error": "Not authenticated"}, 401
+
+    bus = Business.query.get(id)
+    if not bus:
+        return {"error": "Business not found"}, 404
+
+    if current_user.id != bus.owner_id:
+        return {"error": "Not authorized"}, 403
+
+    form = BusForm()
+    return {"error": form.errors}, 400

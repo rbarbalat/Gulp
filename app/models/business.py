@@ -29,6 +29,7 @@ class Business(db.Model):
         return {
             "id": self.id,
             "name": self.name,
+            "owner_id": self.owner_id,
             "description": self.description,
             "preview_image": self.prev_url,
             "address": self.address,
