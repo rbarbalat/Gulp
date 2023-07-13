@@ -20,11 +20,11 @@
 .preview_image_wrapper {
     height: 60%;
     width: 30%;
-    border: 2px dashed red;
+    /* border: 2px dashed red; */
 }
 
 .bus_preview {
     height: 100%;
     width: 100%;
-    border: 2px dashed black;
+     border: 2px dashed purple;
 }
