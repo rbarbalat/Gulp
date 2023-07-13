@@ -151,6 +151,7 @@ def create_business():
         # can't use form.populate_obj(bus) b/c have to populate multiple objects
 
         bus.owner_id = current_user.id
+
         bus.name = form.data["name"]
         bus.description = form.data["description"]
         bus.prev_url = form.data["prev_url"]

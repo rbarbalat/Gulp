@@ -71,16 +71,103 @@ const actionReceiveBusiness = (business) => {
         business
     }
 }
+export const thunkReceiveBusiness = (business) => async (dispatch) => {
+    try {
+        const options = {
+            method: "Post",
+            headers: { "Content-Type":  "application/json" },
+            body: JSON.stringify(business)
+            // no header when using aws
+            // body: business whe using aws
+        }
+        const res = await fetch(`/api/businesses/`, options);
+        if(res.ok)
+        {
+            const serverData = await res.json()
+            dispatch(actionReceiveBusiness(serverData))
+            console.log("good response for thunkReceiveBusiness");
+            console.log(serverData);
+            return serverData;
+        }else {
+            const errorData = await res.json()
+            console.log("error response for thunkReceiveBusiness");
+            console.log(errorData);
+            return serverData;
+        }
+    } catch (error){
+        const errorData = await error.json();
+        console.log("CAUGHT error response for thunkReceiveBusiness");
+        console.log(errorData);
+        return errorData;
+    }
+}
 const actionUpdateBusiness = (business) => {
     return {
         type: UPDATE_BUS,
         business
     }
 }
+export const thunkUpdateBusiness = (id, business) => async (dispatch) => {
+    try {
+        const options = {
+            method: "Put",
+            headers: { "Content-Type":  "application/json" },
+            body: JSON.stringify(business)
+            // no header when using aws
+            // body: business whe using aws
+        }
+        const res = await fetch(`/api/businesses/${id}`, options);
+        if(res.ok)
+        {
+            const serverData = await res.json()
+            dispatch(actionUpdateBusiness(serverData))
+            console.log("good response for thunkUpdateBusiness");
+            console.log(serverData);
+            return serverData;
+        }else {
+            const errorData = await res.json()
+            console.log("error response for thunkUpdateBusiness");
+            console.log(errorData);
+            return serverData;
+        }
+    } catch (error){
+        const errorData = await error.json();
+        console.log("CAUGHT error response for thunkUpdateBusiness");
+        console.log(errorData);
+        return errorData;
+    }
+}
 const actionDeleteBusiness = (bus_id) => {
     return {
         type: REMOVE_BUS,
         bus_id
+    }
+}
+export const thunkDeleteBusiness = (id) => async (dispatch) => {
+    const options = {
+        method: "Delete"
+    }
+    try{
+        const res = await fetch(`/api/businesses/${id}`, options);
+        if(res.ok)
+        {
+            const serverData = await res.json();
+            dispatch(actionDeleteBusiness(id));
+            console.log("good response from thunkDeleteBusiness")
+            console.log(serverData)
+            return serverData;
+        } else {
+            const errorData = await error.json();
+            console.log("error response for thunkDeleteBusiness");
+            console.log(errorData);
+            return errorData;
+        }
+    } catch(error)
+    {
+        const errorData = await error.json();
+        console.log("CAUGHT error response for thunkDeleteBusiness");
+        console.log(errorData);
+        return errorData;
     }
 }
 
