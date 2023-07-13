@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, URLField
-from wtforms.validators import URL, DataRequired, ValidationError, Length
+from wtforms.validators import URL, DataRequired, ValidationError, Length, Optional
 from flask_wtf.file import FileField, FileAllowed, FileRequired
 # from app.api.aws import ALLOWED_EXTENSIONS
 from app.models import Business
@@ -23,7 +23,6 @@ def image__is_valid_url(form, field):
     #image = field.data
 
 
-
 class BusForm(FlaskForm):
     name = StringField("name", validators=[DataRequired(), bus_name_exists, Length(min=2, max=50)], )
     description = StringField("description", validators=[DataRequired(), Length(min=20, max=2000)] )
@@ -31,8 +30,9 @@ class BusForm(FlaskForm):
     address = StringField("address", validators=[DataRequired(), Length(min=2, max=100)] )
     city = StringField("state", validators=[DataRequired(), Length(min=2, max=50)] )
     state = StringField("state", validators=[DataRequired(), Length(min=2, max=50)] )
-    first = StringField("image", validators=[ URL() ])
-    second = StringField("image", validators=[ URL() ])
-    # third = StringField("image", validators=[ URL() ])
-    third = StringField("image")
+    #maybe should be URLField?
+    first = StringField("image", validators=[Optional(), URL()])
+    second = StringField("image", validators=[Optional(), URL()])
+    third = StringField("image", validators=[Optional(), URL()])
+    # third = StringField("image")
     # image = FileField("image", validators=[FileRequired(), FileAllowed(list(ALLOWED_EXTENSIONS))])

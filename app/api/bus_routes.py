@@ -3,6 +3,7 @@ from flask_login import current_user
 # from app.api.aws import get_unique_filename, upload_file_to_s3, remove_file_from_s3
 from app.models import db, User, Business, Review, BusImage, RevImage
 from app.forms.bus_form import BusForm
+from app.forms.review_form import ReviewForm
 
 bus_routes = Blueprint("businesses", __name__)
 
@@ -221,5 +222,49 @@ def edit_business(id):
         db.session.commit()
         images = [image.to_dict() for image in images]
 
+    return {"error": form.errors}, 400
+
+
+#CREATE A REVIEW
+@bus_routes.route("/<int:id>/review", methods = ["POST"])
+def create_review(id):
+    if not current_user.is_authenticated:
+        return {"error": "not authenticated"}, 401
+
+    form = ReviewForm()
+    #form["csrf_token"].data = request.cookies.get("csrf_token")
+    if "csrf_token" in request.cookies:
+        form["csrf_token"].data = request.cookies["csrf_token"]
+    else:
+        return {"error": "Missing csrf_token"}, 404
+        # check this error code
+
+    if form.validate_on_submit():
+
+        review = Review()
+        # can't use form.populate_obj(bus) b/c have to populate multiple objects
+
+        review.reviewer_id = current_user.id
+        review.business_id = id
+        review.review = form.data["review"]
+        review.rating = form.data["rating"]
+
+        db.session.add(review)
+        db.session.commit()
+
+        # https://www.google.com/
+        keys = ["first", "second", "third"]
+        images = [ RevImage(review = review, url = form.data[key])
+            for key in keys if form.data[key] ]
+
+        _ = [db.session.add(image) for image in images]
+        db.session.commit()
+        images = [image.to_dict() for image in images]
+
+        return {
+            **review.to_dict(),
+            "images": images,
+            "reviewer": current_user.to_dict()
+        }, 201
 
     return {"error": form.errors}, 400
