@@ -5,15 +5,16 @@ import { thunkReceiveBusiness } from "../../store/business"
 import { thunkUpdateBusiness } from "../../store/business";
 import "./BusForm.css";
 
-export default function BusForm()
+export default function BusForm({edit})
 {
-    const [name, setName] = useState("");
-    const [description, setDescription] = useState("");
-    const [city, setCity] = useState("");
-    const [state, setState] = useState("");
-    const [address, setAddress] = useState("");
-    const [prev_url, setPrevUrl] = useState("");
-    const [first, setFirst] = useState("");
+    const business = useSelector(state => state.businesses.singleBus)
+    const [name, setName] = useState(business?.name ? business.name : "");
+    const [description, setDescription] = useState(business?.description ? business.description : "");
+    const [city, setCity] = useState(business?.city ? business.city : "");
+    const [state, setState] = useState(business?.state ? business.state : "");
+    const [address, setAddress] = useState(business?.address ? business.address : "");
+    const [prev_url, setPrevUrl] = useState(business?.prev_url ? business.prev_url : "");
+    const [first, setFirst] = useState();
     const [second, setSecond] = useState("");
     const [third, setThird] = useState("");
     const [valErrors, setValErrors] = useState({});
@@ -21,6 +22,14 @@ export default function BusForm()
     const sessionUser = useSelector((state) => state.session.user);
     const history = useHistory();
     const dispatch = useDispatch();
+    const {business_id} = useParams();
+
+    // console.log("line 26");
+    // console.log(name === "");
+
+    useEffect(() => {
+
+    }, [])
 
     async function onSubmit(event)
     {

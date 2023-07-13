@@ -34,6 +34,9 @@ function App() {
           <Route exact path = "/create_business">
             <BusForm />
           </Route>
+          <Route path="/businesses/:business_id/edit">
+            <BusForm edit={true}/>
+          </Route>
           <Route path="/businesses/:business_id">
             <SingleBusiness />
           </Route>
