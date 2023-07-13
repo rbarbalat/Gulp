@@ -92,7 +92,7 @@ export const thunkReceiveBusiness = (business) => async (dispatch) => {
             const errorData = await res.json()
             console.log("error response for thunkReceiveBusiness");
             console.log(errorData);
-            return serverData;
+            return errorData;
         }
     } catch (error){
         const errorData = await error.json();
@@ -128,7 +128,7 @@ export const thunkUpdateBusiness = (id, business) => async (dispatch) => {
             const errorData = await res.json()
             console.log("error response for thunkUpdateBusiness");
             console.log(errorData);
-            return serverData;
+            return errorData;
         }
     } catch (error){
         const errorData = await error.json();
@@ -157,7 +157,7 @@ export const thunkDeleteBusiness = (id) => async (dispatch) => {
             console.log(serverData)
             return serverData;
         } else {
-            const errorData = await error.json();
+            const errorData = await res.json();
             console.log("error response for thunkDeleteBusiness");
             console.log(errorData);
             return errorData;
