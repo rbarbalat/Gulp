@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import { thunkLoadSingleBusiness } from "../../store/business";
 import TopCard from "../TopCard";
+import ReviewCard from "../ReviewCard";
 
 import "./SingleBusiness.css";
 
@@ -30,11 +31,11 @@ export default function SingleBusiness()
         <>
         <TopCard business={business} />
         <div className ="single_bus_wrapper">
-            {/* {
+            {
                 business.reviews.map(review => (
                     <ReviewCard key = {review.id} review={review} />
                 ))
-            } */}
+            }
         </div>
     </>
     )

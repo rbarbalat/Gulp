@@ -9,7 +9,7 @@ def seed_businesses(users):
     for i in range(10):
         bus = Business(
             owner = choice(users),
-            name = fake.text(max_nb_chars=randint(5, 12)),
+            name = fake.text(max_nb_chars=randint(8, 20)),
             description = fake.text(max_nb_chars=randint(150, 300)),
             prev_url = fake.url(),
             address = fake.address(),

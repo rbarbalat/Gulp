@@ -2,10 +2,12 @@ import "./ReviewCard.css";
 
 export default function ReviewCard({review})
 {
+    console.log("preinting the length of review.images for review " + review.id)
+    console.log(review.images.length)
     if(Object.keys(review).length === 0) return <div>empty review</div>
     return(
         <div className = "rev_card_wrapper">
-            <div className = "user_section">
+            <div className = "reviewer_section">
                 <div className = "reviewer_image_wrapper">
                     <img className = "reviewer_image"></img>
                 </div>
@@ -32,10 +34,12 @@ export default function ReviewCard({review})
 
             {
                 review.images.length > 0 ?
-                <div className = "review_images">
+                <div className = "submitted_images">
                     {
                         review.images.map(image => (
-                            <img></img>
+                            <div key = {image.id} className = "submitted_image_wrapper">
+                                <img className = "submitted_image"></img>
+                            </div>
                         ))
                     }
                 </div>
