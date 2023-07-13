@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useHistory } from "react-router-dom";
+// import { useHistory } from "react-router-dom";
 import { thunkLoadBusinesses } from "../../store/business";
 import BusCard from "../BusCard";
 
@@ -26,7 +26,7 @@ export default function AllBusinesses()
         fetchData()
     }, [dispatch])
 
-    if(businesses.length == 0) return <div>loading</div>
+    if(businesses.length === 0) return <div>loading</div>
     return (
         <div className ="all_bus_wrapper">
             {

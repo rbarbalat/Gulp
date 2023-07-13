@@ -237,7 +237,7 @@ def edit_business(id):
         #might need to create new busImages, or delete existing ones, or update the url
 
         db.session.commit()
-        images = [image.to_dict() for image in images]
+        images = [image.to_dict() for image in existing_images]
 
         # singleBus: {...state.singleBus, ...action.business}
         # should still the reviews, numReviews, average keys in the store b/ they aren't being overwritten

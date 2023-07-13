@@ -1,22 +1,41 @@
 import { useState, useEffect } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { thunkReceiveBusiness } from "../../store/business"
+import { thunkLoadSingleBusiness, thunkReceiveBusiness } from "../../store/business"
 import { thunkUpdateBusiness } from "../../store/business";
 import "./BusForm.css";
 
 export default function BusForm({edit})
 {
-    const business = useSelector(state => state.businesses.singleBus)
-    const [name, setName] = useState(business?.name ? business.name : "");
-    const [description, setDescription] = useState(business?.description ? business.description : "");
-    const [city, setCity] = useState(business?.city ? business.city : "");
-    const [state, setState] = useState(business?.state ? business.state : "");
-    const [address, setAddress] = useState(business?.address ? business.address : "");
-    const [prev_url, setPrevUrl] = useState(business?.prev_url ? business.prev_url : "");
-    const [first, setFirst] = useState();
-    const [second, setSecond] = useState("");
-    const [third, setThird] = useState("");
+    const business = useSelector(state => state.businesses.singleBus);
+    //the edit version is linked from the page for the specific business
+    //so that business is guaranteed to be the singleBus in the store
+    const [name, setName] = useState(edit ? business.name : "");
+    const [description, setDescription] = useState(edit ? business.description : "");
+    const [city, setCity] = useState(edit ? business.city : "");
+    const [state, setState] = useState(edit ? business.state : "");
+    const [address, setAddress] = useState(edit ? business.address : "");
+    const [prev_url, setPrevUrl] = useState(edit ? business.preview_image : "");
+
+    const [first, setFirst] = useState(
+        edit ?
+        business.images?.length >= 1 ? business.images[0].url : ""
+        :
+        ""
+    );
+    const [second, setSecond] = useState(
+        edit ?
+        business.images?.length >= 2 ? business.images[1].url : ""
+        :
+        ""
+    );
+    const [third, setThird] = useState(
+        edit ?
+        business.images?.length == 3 ? business.images[2].url : ""
+        :
+        ""
+    );
+
     const [valErrors, setValErrors] = useState({});
 
     const sessionUser = useSelector((state) => state.session.user);
@@ -24,12 +43,14 @@ export default function BusForm({edit})
     const dispatch = useDispatch();
     const {business_id} = useParams();
 
-    // console.log("line 26");
-    // console.log(name === "");
-
     useEffect(() => {
-
-    }, [])
+        if(edit)
+        {
+            console.log("USE EFFECT")
+            dispatch(thunkLoadSingleBusiness(business_id));
+        }
+    }, [business_id])
+    //check if business_id needs to be in the dep array
 
     async function onSubmit(event)
     {
@@ -39,10 +60,17 @@ export default function BusForm({edit})
         if(second) business.second = second;
         if(third) business.third = third;
 
-        const res = await dispatch(thunkReceiveBusiness(business))
-        console.log("print server response inside onSubmit function")
-        console.log(res)
-
+        let res;
+        if(!edit)
+        {
+            res = await dispatch(thunkReceiveBusiness(business));
+            console.log("print server response inside onSubmit function");
+            console.log(res);
+        }else{
+            res = await dispatch(thunkUpdateBusiness(business_id, business));
+            console.log("print server response inside onSubmit function");
+            console.log(res);
+        }
         if(res.error)
         {
             const errors = {};
@@ -53,9 +81,11 @@ export default function BusForm({edit})
             setValErrors(errors);
             return;
         }
-        history.push(`/businesses/${res.id}`);
+        // history.push(`/businesses/${res.id}`);
         return null;
     }
+
+    // if(Object.keys(business).length === 0) return <div>loading</div>
     return(
         <div className = "formWrapper">
             {/* might need to specify some kind of form method for python backend? */}

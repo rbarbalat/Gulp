@@ -16,7 +16,9 @@ def bus_name_exists(form, field):
         raise ValidationError('Business name is already in use.')
 
 class BusForm(FlaskForm):
-    name = StringField("name", validators=[DataRequired(), bus_name_exists, Length(min=2, max=50)], )
+    # name = StringField("name", validators=[DataRequired(), bus_name_exists, Length(min=2, max=50)], )
+    # the bus_name_exists was applied on edits as well...
+    name = StringField("name", validators=[DataRequired(), Length(min=2, max=50)], )
     description = StringField("description", validators=[DataRequired(), Length(min=20, max=2000)] )
     prev_url = StringField("preview image", validators=[DataRequired(), URL()])
     address = StringField("address", validators=[DataRequired(), Length(min=2, max=100)] )
