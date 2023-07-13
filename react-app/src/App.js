@@ -8,6 +8,7 @@ import Navigation from "./components/Navigation";
 
 import AllBusinesses from "./components/AllBusinesses";
 import SingleBusiness from "./components/SingleBusiness";
+import BusForm from "./components/BusForm";
 
 function App() {
   const dispatch = useDispatch();
@@ -29,6 +30,9 @@ function App() {
           </Route>
           <Route exact path = "/businesses">
             <AllBusinesses />
+          </Route>
+          <Route exact path = "/create_business">
+            <BusForm />
           </Route>
           <Route path="/businesses/:business_id">
             <SingleBusiness />
