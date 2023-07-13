@@ -15,14 +15,6 @@ def bus_name_exists(form, field):
     if bus:
         raise ValidationError('Business name is already in use.')
 
-
-#pipenv install validators
-#validators.url("b")
-def image__is_valid_url(form, field):
-    pass
-    #image = field.data
-
-
 class BusForm(FlaskForm):
     name = StringField("name", validators=[DataRequired(), bus_name_exists, Length(min=2, max=50)], )
     description = StringField("description", validators=[DataRequired(), Length(min=20, max=2000)] )

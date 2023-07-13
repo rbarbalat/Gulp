@@ -161,7 +161,7 @@ def create_business():
         db.session.add(bus)
         db.session.commit()
 
-        # https://www.google.com/
+        # form.data[key] always exists but can be (None or empty?)
         keys = ["first", "second", "third"]
         images = [ BusImage(business = bus, url = form.data[key])
             for key in keys if form.data[key] ]
@@ -193,7 +193,6 @@ def edit_business(id):
     if current_user.id != bus.owner_id:
         return {"error": "Not authorized"}, 403
 
-    # form will be populated with values pulled from the store on the front end
     form = BusForm()
     #form["csrf_token"].data = request.cookies.get("csrf_token")
     if "csrf_token" in request.cookies:
@@ -206,15 +205,29 @@ def edit_business(id):
 
         bus.name = form.data["name"]
         bus.description = form.data["description"]
-        bus.prev_url = form.data["prev_url"]
         bus.address = form.data["address"]
         bus.city = form.data["city"]
         bus.state = form.data["state"]
 
+        # this field is required so there is something there
+        bus.prev_url = form.data["prev_url"]
+
         db.session.commit()
 
-        # https://www.google.com/
+        #don't allow deletions of images in the update form
+        #separate delete button
+        existing_images = bus.images
         keys = ["first", "second", "third"]
+        for i in range(3):
+            # works if you force an order of first, second, third on the front end
+            # keys[i] in form.data True for all i in range(3) but its value might be None
+            if form.data[keys[i]]:
+                if len(existing_images) >= i + 1:
+                    existing_images[i].url = form.data[keys[i]]
+                else:
+                    new_image = BusImage(business_id = id, url = form.data[keys[i]])
+                    db.session.add(new_image)
+                    existing_images.append(new_image)
 
         #handle updating images here, have to query for each bus_image
         #might need to create new busImages, or delete existing ones, or update the url
@@ -230,6 +243,10 @@ def edit_business(id):
 def create_review(id):
     if not current_user.is_authenticated:
         return {"error": "not authenticated"}, 401
+
+    bus = Business.query.get(id)
+    if not bus:
+        return {"error": "Business does not exist"}, 404
 
     form = ReviewForm()
     #form["csrf_token"].data = request.cookies.get("csrf_token")
