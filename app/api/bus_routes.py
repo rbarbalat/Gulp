@@ -174,7 +174,10 @@ def create_business():
         return {
             **bus.to_dict(),
             "images": images,
-            "owner": current_user.to_dict()
+            "owner": current_user.to_dict(),
+            "reviews": [],
+            "numReviews": 0,
+            "average": None
             #if owner is necessary
         }, 201
 
@@ -235,6 +238,13 @@ def edit_business(id):
 
         db.session.commit()
         images = [image.to_dict() for image in images]
+
+        # singleBus: {...state.singleBus, ...action.business}
+        # should still the reviews, numReviews, average keys in the store b/ they aren't being overwritten
+        return {
+            **bus.to_dict(),
+            "images": images,
+        }, 201
 
     return {"error": form.errors}, 400
 
