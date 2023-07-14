@@ -1,7 +1,8 @@
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-// import { useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { thunkLoadBusinesses } from "../../store/business";
+import { Link } from "react-router-dom";
 import BusCard from "../BusCard";
 
 import "./AllBusinesses.css";
@@ -13,7 +14,7 @@ export default function AllBusinesses()
     //initialized to an empty array before the useEffect runs, singe intialState = {}
     const businesses = useSelector(state => Object.values(state.businesses.allBus))
 
-    // const history = useHistory();
+    const history = useHistory();
     const dispatch = useDispatch();
     useEffect(() => {
         //if(Number(business_id) !== business.id)
@@ -26,12 +27,22 @@ export default function AllBusinesses()
         fetchData()
     }, [dispatch])
 
+    // function individualPage(id)
+    // {
+    //     console.log(id);
+    //     console.log("inside indiv page");
+    //     history.push(`/businesses/${id}`);
+    // }
+
     if(businesses.length === 0) return <div>loading</div>
     return (
         <div className ="all_bus_wrapper">
             {
+                // change onClick later to a function on a div that checks the event target like in old project
                 businesses.map(business => (
-                    <BusCard key = {business.id} business={business} />
+                    <Link key = {business.id} to={`/businesses/${business.id}`}>
+                        <BusCard business={business} />
+                    </Link>
                 ))
             }
         </div>

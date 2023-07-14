@@ -11,6 +11,29 @@ const actionLoadReviews = (reviews) => {
         reviews
     }
 }
+export const thunkLoadReviewsOfUser = () => async (dispatch) => {
+    try {
+        const res = await fetch("/api/reviews/current");
+        if(res.ok)
+        {
+            const serverData = await res.json();
+            console.log("good response from thunkLoadReviewsOfUser")
+            console.log(serverData)
+            dispatch(actionLoadReviews(serverData));
+            return serverData;
+        } else {
+            const errorData = await res.json();
+            console.log("error response for thunkLoadReviewsOfUser");
+            console.log(errorData);
+            return errorData;
+        }
+    } catch (error){
+    const errorData = await error.json();
+    console.log("CAUGHT error response for thunkLoadReviewsOfUser")
+    console.log(errorData)
+    return errorData;
+    }
+}
 
 const actionLoadSingleReview = (singleRev) => {
     return {

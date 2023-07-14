@@ -46,7 +46,7 @@ export const thunkLoadBusinessesOfUser = () => async (dispatch) => {
             return serverData;
         } else {
             const errorData = await res.json();
-            console.log("error response for thunkLoadSingleBusinessOfUser");
+            console.log("error response for thunkBusinessesOfUser");
             console.log(errorData);
             return errorData;
         }

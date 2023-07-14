@@ -7,7 +7,8 @@ export default function LandingPage()
     return (
         <div>
             <h1>Hello World</h1>
-            { user && <NavLink to={`/users/${user.id}`}>User Profile</NavLink> }
+            { user && <div><NavLink to={`/users/${user.id}`}>User Profile</NavLink></div> }
+            <div><NavLink to="/businesses">All Businesses</NavLink></div>
         </div>
     )
 }
