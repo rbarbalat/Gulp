@@ -49,6 +49,9 @@ function App() {
           <ProtectedRoute path="/businesses/:business_id/reviews">
             <RevForm edit={false}/>
           </ProtectedRoute>
+          <ProtectedRoute path="/reviews/:review_id">
+            <RevForm edit={true}/>
+          </ProtectedRoute>
           <Route path="/businesses/:business_id">
             <SingleBusiness />
           </Route>

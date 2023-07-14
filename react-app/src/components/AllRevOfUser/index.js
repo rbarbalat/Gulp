@@ -29,6 +29,7 @@ export default function AllRevOfUser()
     //might be zero b/c it hasn't loaded or it might be zero b/c he has no businesses
     if(loaded)
     {
+        //REPLACE THE DIV WITH SOMETHING ELSE LATER
         if(reviews.length === 0) return <div>You have no reviews</div>
     }
     if(!loaded) return <div>loading</div>
@@ -36,7 +37,7 @@ export default function AllRevOfUser()
         <div className ="all_rev_of_user_wrapper">
             {
                 reviews.map(review => (
-                    <ReviewCard key = {review.id} review={review} />
+                    <ReviewCard key = {review.id} review={review} user={user} />
                 ))
             }
         </div>

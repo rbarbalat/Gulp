@@ -1,17 +1,23 @@
 import { useSelector, useDispatch } from "react-redux";
 import { thunkDeleteReview } from "../../store/review";
+import { thunkLoadSingleBusiness } from "../../store/business";
+import { useHistory } from "react-router-dom";
 import "./ReviewCard.css";
 
 export default function ReviewCard({review, user, business_id})
 {
-    const isReviewer = user?.id === review?.reviewer_id;
+    //prob don't need to use optional chaining on review here
+    //user can be null if not logged in so need it
+    const isReviewer = user?.id === review.reviewer.id;
+
     const dispatch = useDispatch();
+    const history = useHistory();
 
     //disappears from list of user's reviews b/c AllRevOfUser
     //accesses the store for reviews
     async function deleteReview()
     {
-        const res = await dispatch(thunkDeleteReview(review?.id));
+        const res = await dispatch(thunkDeleteReview(review.id));
         if(res.error)
         {
             console.log("bad response from inside deleteBus");
@@ -20,13 +26,26 @@ export default function ReviewCard({review, user, business_id})
         }else {
             console.log("good response from inside deleteBus");
             console.log(res);
-            alert("succesful deletion");
             if(business_id)
             {
-                // const res2 = dispatch(thunkLoadSingleBusiness(business_id))
+                //the single business component pulls reviews from the business
+                //store not the review store so need to trigger an update
+                const res_two = await dispatch(thunkLoadSingleBusiness(business_id));
+                if(res_two.error)
+                {
+                    console.log("problem loading single business after review deletion");
+                    console.log(res_two);
+                }else {
+                    console.log("reloaded the single business page after deleting a review")
+                    console.log(res_two)
+                }
             }
             return;
         }
+    }
+    function linkEdit()
+    {
+        history.push(`/reviews/${review.id}`)
     }
 
     //returning empty review for development for now
@@ -51,7 +70,7 @@ export default function ReviewCard({review, user, business_id})
                 {
                     isReviewer &&
                     <div className="rev_card_buttons_wrapper">
-                        <button>Edit Review</button>
+                        <button onClick={linkEdit}>Edit Review</button>
                         <button onClick={deleteReview}>Delete Review</button>
                     </div>
                 }
