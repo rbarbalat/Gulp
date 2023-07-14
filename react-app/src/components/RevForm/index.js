@@ -23,8 +23,10 @@ export default function RevForm({edit})
     async function onSubmit(event)
     {
         event.preventDefault();
+        //if the user doesn't change the default rating (1)
+        //in the dropdown it is undefined
         const rev = {
-            rating: Number(rating),
+            rating: rating ? Number(rating) : 1,
             review
         };
         if(first) rev.first = first;
@@ -60,7 +62,6 @@ export default function RevForm({edit})
             <form onSubmit={onSubmit}>
                 <div>
                     <select value={rating} onChange={e => setRating(e.target.value)}>
-                            <option>0</option>
                             <option>1</option>
                             <option>2</option>
                             <option>3</option>
