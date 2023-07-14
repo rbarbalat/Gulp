@@ -9,7 +9,7 @@ export default function RevForm({edit})
     //for create review form will always be coming from a single business page
     //singleBus will be loaded in the store
     const business = useSelector(state => state.businesses.singleBus);
-    const [rating, setRating] = useState();
+    const [rating, setRating] = useState("");
     const [review, setReview] = useState("");
     const [first, setFirst] = useState("");
     const [second, setSecond] = useState("");
@@ -24,7 +24,7 @@ export default function RevForm({edit})
     {
         event.preventDefault();
         //if the user doesn't change the default rating (1)
-        //in the dropdown it is undefined
+        //it won't be accepted by the form, have to explictly make it 1
         const rev = {
             rating: rating ? Number(rating) : 1,
             review
