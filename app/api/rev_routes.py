@@ -12,7 +12,12 @@ def get_all_reviews_by_current_user():
     if not current_user.is_authenticated:
         return {"error": "not authenticated"}, 401
 
-    reviews = [ { **review.to_dict(), "business": review.business.to_dict() }
+    reviews = [{
+                **review.to_dict(),
+                "business": review.business.to_dict(),
+                "reviewer": review.reviewer.to_dict(),
+                "images": [ image.to_dict() for image in review.images ]
+                }
                for review in current_user.user_reviews]
     return reviews
 

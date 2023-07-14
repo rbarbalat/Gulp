@@ -2,8 +2,8 @@ import "./ReviewCard.css";
 
 export default function ReviewCard({review})
 {
-    console.log("preinting the length of review.images for review " + review.id)
-    console.log(review.images.length)
+    // console.log("preinting the length of review.images for review " + review.id)
+    // console.log(review.images.length)
     if(Object.keys(review).length === 0) return <div>empty review</div>
     return(
         <div className = "rev_card_wrapper">

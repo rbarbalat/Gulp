@@ -2,6 +2,7 @@ import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useState } from "react";
 import AllBusOfUser from "../AllBusOfUser";
+import AllRevOfUser from "../AllRevOfUser";
 import "./UserProfile.css";
 
 export default function UserProfile()
@@ -27,7 +28,7 @@ export default function UserProfile()
                 { !showRev && <p>Your Businesses</p> }
                 { !showRev && <AllBusOfUser /> }
                 { showRev && <p>Your Reviews</p>}
-                {/* { showRev && <AllRevOfUser /> } */}
+                { showRev && <AllRevOfUser /> }
             </div>
 
             <div className = "user_profile_right_wrapper">
