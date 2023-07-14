@@ -38,3 +38,18 @@ def delete_review_by_id(id):
     db.session.commit()
 
     return {"message": "Successfully Deleted"}
+
+#Edit Review by Id
+@rev_routes.route("/<int:id>", methods = ["DELETE"])
+def edit_review_by_id(id):
+    if not current_user.is_authenticated:
+        return {"error": "not authenticated"}, 401
+
+    review = Review.query.get(id)
+    if not review:
+        return {"error": "Review not found"}, 404
+
+    if review.reviewer_id != current_user.id:
+        return {"error": "Not Authorized"}, 403
+
+    return {"message": "hello world"}, 200

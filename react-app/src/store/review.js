@@ -48,6 +48,36 @@ const actionReceiveReview = (review) => {
         review
     }
 }
+export const thunkReceiveReview = (bus_id, review) => async (dispatch) => {
+    try {
+        const options = {
+            method: "Post",
+            headers: { "Content-Type":  "application/json" },
+            body: JSON.stringify(review)
+            // no header when using aws
+            // body: business whe using aws
+        };
+        const res = await fetch(`/api/businesses/${bus_id}/reviews`, options);
+        if(res.ok)
+        {
+            const serverData = await res.json();
+            dispatch(actionReceiveReview(serverData));
+            console.log("good response for thunkReceiveReview");
+            console.log(serverData);
+            return serverData;
+        }else {
+            const errorData = await res.json();
+            console.log("error response for thunkReceiveReview");
+            console.log(errorData);
+            return errorData;
+        }
+    } catch (error){
+        const errorData = await error.json();
+        console.log("CAUGHT error response for thunkReceiveReview");
+        console.log(errorData);
+        return errorData;
+    }
+}
 
 const actionUpdateReview = (review) => {
     return {
@@ -55,11 +85,68 @@ const actionUpdateReview = (review) => {
         review
     }
 }
+export const thunkUpdateReview = (id, review) => async (dispatch) => {
+    try {
+        const options = {
+            method: "Put",
+            headers: { "Content-Type":  "application/json" },
+            body: JSON.stringify(review)
+            // no header when using aws
+            // body: business whe using aws
+        }
+        const res = await fetch(`/api/reviews/${id}`, options);
+        if(res.ok)
+        {
+            const serverData = await res.json();
+            dispatch(actionUpdateReview(serverData));
+            console.log("good response for thunkUpdateReview");
+            console.log(serverData);
+            return serverData;
+        }else {
+            const errorData = await res.json()
+            console.log("error response for thunkUpdateReview");
+            console.log(errorData);
+            return errorData;
+        }
+    } catch (error){
+        const errorData = await error.json();
+        console.log("CAUGHT error response for thunkUpdateReview");
+        console.log(errorData);
+        return errorData;
+    }
+}
 
 const actionDeleteReview = (rev_id) => {
     return {
         type: REMOVE_REVIEW,
         rev_id
+    }
+}
+export const thunkDeleteReview = (id) => async (dispatch) => {
+    const options = {
+        method: "Delete"
+    }
+    try{
+        const res = await fetch(`/api/reviews/${id}`, options);
+        if(res.ok)
+        {
+            const serverData = await res.json();
+            dispatch(actionDeleteReview(id));
+            console.log("good response from thunkDeleteReview")
+            console.log(serverData)
+            return serverData;
+        } else {
+            const errorData = await res.json();
+            console.log("error response for thunkDeleteReview");
+            console.log(errorData);
+            return errorData;
+        }
+    } catch(error)
+    {
+        const errorData = await error.json();
+        console.log("CAUGHT error response for thunkDeleteReview");
+        console.log(errorData);
+        return errorData;
     }
 }
 

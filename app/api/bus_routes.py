@@ -268,7 +268,7 @@ def edit_business(id):
 
 
 #CREATE A REVIEW
-@bus_routes.route("/<int:id>/review", methods = ["POST"])
+@bus_routes.route("/<int:id>/reviews", methods = ["POST"])
 def create_review(id):
     if not current_user.is_authenticated:
         return {"error": "not authenticated"}, 401
