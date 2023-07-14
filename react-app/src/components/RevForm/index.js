@@ -1,24 +1,48 @@
 import { useState, useEffect } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { thunkReceiveReview, thunkUpdateReview } from "../../store/review";
+import { thunkReceiveReview, thunkUpdateReview, thunkLoadSingleReview } from "../../store/review";
 import "./RevForm.css";
 
 export default function RevForm({edit})
 {
     //for create review form will always be coming from a single business page
     //singleBus will be loaded in the store
+
+    //if you have multiple reviews of the same business, if you click on a card
+    //it will take you to the right one
+    //make a button at the top of the single bus page that will take you to the most recent
+
+    //rating is loaded correctly but if it isn't changed in the edit will it cause typerror
+    //as in the case with default 1 in the create review case????
+
     const business = useSelector(state => state.businesses.singleBus);
-    const [rating, setRating] = useState("");
-    const [review, setReview] = useState("");
+    const edit_rev = useSelector(state => state.reviews.singleRev);
+    const [rating, setRating] = useState(edit ? edit_rev?.rating : "");
+    console.log("rating is ", rating);
+    const [review, setReview] = useState(edit ? edit_rev?.review : "");
+    console.log("printing review   ", review);
     const [first, setFirst] = useState("");
     const [second, setSecond] = useState("");
     const [third, setThird] = useState("");
     const [valErrors, setValErrors] = useState({});
+    const [loaded, setLoaded] = useState(false);
 
-    const {business_id} = useParams();
+    //business_id exists when !edit, review id exists when edit
+    const { business_id} = useParams();
+    const { review_id } = useParams();
+
     const dispatch = useDispatch();
     const user = useSelector((state) => state.session.user);
+
+    useEffect(() => {
+        if(edit)
+        {
+            console.log("USE EFFECT");
+            dispatch(thunkLoadSingleReview(review_id));
+            setLoaded(true);
+        }
+    }, [review_id])
 
     async function onSubmit(event)
     {
