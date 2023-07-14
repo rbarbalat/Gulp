@@ -64,7 +64,7 @@ export default function RevForm({edit})
             console.log("print server response inside onSubmit function");
             console.log(res);
         }else{
-            res = await dispatch(thunkUpdateReview(business_id, rev));
+            res = await dispatch(thunkUpdateReview(review_id, rev));
             console.log("print server response inside onSubmit function");
             console.log(res);
         }
