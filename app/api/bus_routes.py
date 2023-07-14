@@ -23,6 +23,7 @@ def get_all_businesses():
         # images = [image.to_dict() for image in bus.images]
         # reviews = [review.to_dict() for review in bus.bus_reviews]
         average = [review.rating for review in bus.bus_reviews]
+        numReviews = len(average)
         if len(average) == 0:
             average = None
         else:
@@ -31,7 +32,7 @@ def get_all_businesses():
             **bus.to_dict(),
             "owner": bus.owner.to_dict(),
             "average": average,
-            "numReviews": len(bus.bus_reviews)
+            "numReviews": numReviews
             # "images": images,
             # "reviews": reviews
         })
@@ -97,6 +98,7 @@ def get_all_businesses_by_current_user():
         # images = [image.to_dict() for image in bus.images]
         # reviews = [review.to_dict() for review in bus.bus_reviews]
         average = [review.rating for review in bus.bus_reviews]
+        numReviews = len(average)
         if len(average) == 0:
             average = None
         else:
@@ -105,7 +107,7 @@ def get_all_businesses_by_current_user():
             **bus.to_dict(),
             "owner": bus.owner.to_dict(),
             "average": average,
-            "numReviews": len(bus.bus_reviews)
+            "numReviews": numReviews
             # "images": images,
             # "reviews": reviews
         })

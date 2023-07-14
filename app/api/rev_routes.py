@@ -12,14 +12,15 @@ def get_all_reviews_by_current_user():
     if not current_user.is_authenticated:
         return {"error": "not authenticated"}, 401
 
-    reviews = [{
+    reviews = current_user.user_reviews
+    numReviews = len(reviews)
+    return [{
                 **review.to_dict(),
                 "business": review.business.to_dict(),
-                "reviewer": review.reviewer.to_dict(),
-                "images": [ image.to_dict() for image in review.images ]
-                }
-               for review in current_user.user_reviews]
-    return reviews
+                "images": [ image.to_dict() for image in review.images ],
+                "reviewer": { **current_user.to_dict(), "numReviews": numReviews }
+            }
+                for review in reviews]
 
 #DELETE Review by Id
 @rev_routes.route("/<int:id>", methods = ["DELETE"])

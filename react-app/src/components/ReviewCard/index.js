@@ -19,7 +19,7 @@ export default function ReviewCard({review})
                         city,state
                     </div>
                     <div className = "reviewer_numReviews">
-                        x number of reviews
+                        {review.reviewer.numReviews} reviews
                     </div>
                 </div>
             </div>
