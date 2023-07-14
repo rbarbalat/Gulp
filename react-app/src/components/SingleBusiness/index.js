@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams, useHistory } from "react-router-dom";
-import { thunkLoadSingleBusiness } from "../../store/business";
+import { thunkLoadSingleBusiness, thunkDeleteBusiness } from "../../store/business";
 import TopCard from "../TopCard";
 import ReviewCard from "../ReviewCard";
 
@@ -17,7 +17,7 @@ export default function SingleBusiness()
 
     //make sure this line never causes a typeerror
     //initial state for both is an object, so worst case undefined === undefined
-    const isOwner = user.id === business.owner_id;
+    const isOwner = user?.id === business?.owner_id;
 
     const { business_id } = useParams();
     const dispatch = useDispatch();
@@ -37,6 +37,23 @@ export default function SingleBusiness()
     {
         history.push(`/businesses/${business_id}/edit`);
     }
+    //MOVE THIS FUNCTION TO THE BusCard component
+    async function deleteBus()
+    {
+        const res = await dispatch(thunkDeleteBusiness(business_id));
+        if(res.error)
+        {
+            console.log("bad response from inside deleteBus");
+            console.log(res);
+            alert("something went wrong with the deletion");
+        }else {
+            console.log("good response from inside deleteBus");
+            console.log(res);
+            //owner linked back to his profile after deleting a business
+            history.push(`/users/${user.id}`);
+            return;
+        }
+    }
     function linkReview()
     {
         history.push(`/businesses/${business_id}/reviews`);
@@ -48,8 +65,9 @@ export default function SingleBusiness()
         <TopCard business={business} />
 
         { isOwner && <p><button onClick={linkEdit}>Edit</button></p>}
+        { isOwner && <p><button onClick={deleteBus}>Delete</button></p>}
 
-        <p><button onClick={linkReview}>Write a Review!</button></p>
+        { !isOwner && <p><button onClick={linkReview}>Write a Review!</button></p>}
 
         <div className ="single_bus_wrapper">
             {
