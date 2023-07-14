@@ -221,6 +221,7 @@ def edit_business(id):
         #don't allow deletions of images in the update form
         #separate delete button
         existing_images = bus.images
+        images_to_delete = []
         keys = ["first", "second", "third"]
         for i in range(3):
             # works if you force an order of first, second, third on the front end
@@ -232,18 +233,35 @@ def edit_business(id):
                     new_image = BusImage(business_id = id, url = form.data[keys[i]])
                     db.session.add(new_image)
                     existing_images.append(new_image)
+            else:
+                #if user sends back an empty string, that means delete (for now)
+                if len(existing_images) >= i + 1:
+                    existing_images[i].url = ""
 
-        #handle updating images here, have to query for each bus_image
-        #might need to create new busImages, or delete existing ones, or update the url
-
+        #commit the new images added in line 233
         db.session.commit()
-        images = [image.to_dict() for image in existing_images]
+        del_images = []
+        retain_images = []
+        for image in existing_images:
+            if image.url == "":
+                del_images.append(image)
+            else:
+                retain_images.append(image)
 
+        _ = [db.session.delete(image) for image in del_images]
+        db.session.commit()
+
+        retain_images = [image.to_dict() for image in retain_images]
+
+        #remove lines 236 to 254 EXCLUDING db.session.commit() on 252
+        #this is the end for the original working edit route that doesn't allow for deletions
+        images = [image.to_dict() for image in existing_images]
         # singleBus: {...state.singleBus, ...action.business}
         # should still the reviews, numReviews, average keys in the store b/ they aren't being overwritten
         return {
             **bus.to_dict(),
-            "images": images,
+            # "images": images,
+            "images": retain_images
         }, 201
 
     return {"error": form.errors}, 400
