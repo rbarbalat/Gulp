@@ -11,7 +11,7 @@ import "./SingleBusiness.css";
 export default function SingleBusiness()
 {
     const business = useSelector(state => state.businesses.singleBus);
-    const busIsEmpty = Object.keys(business).length == 0;
+    const busIsEmpty = Object.keys(business).length === 0;
 
     const user = useSelector(state => state.session.user);
 

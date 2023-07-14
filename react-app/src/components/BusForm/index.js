@@ -31,7 +31,7 @@ export default function BusForm({edit})
     );
     const [third, setThird] = useState(
         edit ?
-        business.images?.length == 3 ? business.images[2].url : ""
+        business.images?.length === 3 ? business.images[2].url : ""
         :
         ""
     );

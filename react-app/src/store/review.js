@@ -41,6 +41,29 @@ const actionLoadSingleReview = (singleRev) => {
         singleRev
     }
 }
+export const thunkLoadSingleReview = (review_id) => async (dispatch) => {
+    try {
+        const res = await fetch(`/api/reviews/${review_id}`);
+        if(res.ok)
+        {
+            const serverData = await res.json();
+            dispatch(actionLoadSingleReview(serverData));
+            console.log("good response for thunkLoadSingleReview");
+            console.log(serverData);
+            return serverData;
+        } else{
+            const errorData = await res.json();
+            console.log("error response for thunkLoadSingleReview");
+            console.log(errorData);
+            return errorData;
+        }
+    } catch (error){
+        const errorData = await error.json();
+        console.log("CAUGHT error response for thunkLoadSingleReview");
+        console.log(errorData);
+        return errorData;
+    }
+}
 
 const actionReceiveReview = (review) => {
     return {

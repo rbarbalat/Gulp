@@ -55,3 +55,24 @@ def edit_review_by_id(id):
         return {"error": "Not Authorized"}, 403
 
     return {"message": "hello world"}, 200
+
+
+#GET review by id
+@rev_routes.route("/<int:id>")
+def get_review_by_id(id):
+    if not current_user.is_authenticated:
+        return {"error": "not authenticated"}, 401
+
+    review = Review.query.get(id)
+    if not review:
+        return {"error": "Review not found"}, 404
+
+    if review.reviewer_id != current_user.id:
+        return {"error": "Not Authorized"}, 403
+
+    return {
+        **review.to_dict(),
+        "business": review.business.to_dict(),
+        "images": [image.to_dict() for image in review.images],
+        "reviewer": { **current_user.to_dict(), "numReviews": len(current_user.user_reviews) }
+    }
