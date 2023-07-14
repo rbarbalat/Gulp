@@ -35,6 +35,7 @@ def delete_review_by_id(id):
     if current_user.id != review.reviewer_id:
         return {"error": "Not authorized"}
 
+    #have to remove any rev images from Amazon!!
     db.session.delete(review)
     db.session.commit()
 

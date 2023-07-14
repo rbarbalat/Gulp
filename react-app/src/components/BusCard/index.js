@@ -1,7 +1,13 @@
+import {useHistory} from "react-router-dom";
 import "./BusCard.css";
 
 export default function BusCard({business})
 {
+    const history = useHistory();
+    function linkBusiness()
+    {
+        history.push(`/businesses/${business.id}`)
+    }
     if(Object.keys(business).length === 0) return <div>loading</div>
     // return <div>Hello World!!! from business {business.id}</div>
     return(
@@ -11,7 +17,7 @@ export default function BusCard({business})
                 <img className ="bus_preview"></img>
             </div>
             <div className = "bus_info_wrapper">
-                <div>{business.name}</div>
+                <div className = "business_name" onClick={linkBusiness}>{business.name}</div>
                 {
                     business.average ?
                     <div>{String(business.average).slice(0,4)} stars</div>

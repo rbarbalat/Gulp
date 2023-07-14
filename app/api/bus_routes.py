@@ -89,9 +89,10 @@ def get_all_businesses_by_current_user():
     if not current_user.is_authenticated:
         return {"error": "not authenticated"}, 401
 
+    #this is not an error, legit response
     all_bus = current_user.businesses
     if not all_bus:
-        return [], 404
+        return [], 200
 
     lst = []
     for bus in all_bus:
@@ -250,6 +251,7 @@ def edit_business(id):
             else:
                 retain_images.append(image)
 
+        #these would have to be removed from Amazon as well
         _ = [db.session.delete(image) for image in del_images]
         db.session.commit()
 
