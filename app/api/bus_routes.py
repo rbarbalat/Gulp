@@ -209,7 +209,6 @@ def edit_business(id):
         # check this error code
 
     if form.validate_on_submit():
-
         bus.name = form.data["name"]
         bus.description = form.data["description"]
         bus.address = form.data["address"]
@@ -224,7 +223,6 @@ def edit_business(id):
         #don't allow deletions of images in the update form
         #separate delete button
         existing_images = bus.images
-        images_to_delete = []
         keys = ["first", "second", "third"]
         for i in range(3):
             # works if you force an order of first, second, third on the front end
