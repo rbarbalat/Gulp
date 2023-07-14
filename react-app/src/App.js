@@ -9,6 +9,7 @@ import Navigation from "./components/Navigation";
 import AllBusinesses from "./components/AllBusinesses";
 import SingleBusiness from "./components/SingleBusiness";
 import BusForm from "./components/BusForm";
+import RevForm from "./components/RevForm";
 import AllBusOfUser from "./components/AllBusOfUser";
 import UserProfile from "./components/UserProfile";
 import LandingPage from "./components/LandingPage";
@@ -44,6 +45,9 @@ function App() {
           </ProtectedRoute>
           <ProtectedRoute path="/businesses/:business_id/edit">
             <BusForm edit={true}/>
+          </ProtectedRoute>
+          <ProtectedRoute path="/businesses/:business_id/reviews">
+            <RevForm edit={false}/>
           </ProtectedRoute>
           <Route path="/businesses/:business_id">
             <SingleBusiness />

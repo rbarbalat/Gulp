@@ -37,6 +37,10 @@ export default function SingleBusiness()
     {
         history.push(`/businesses/${business_id}/edit`);
     }
+    function linkReview()
+    {
+        history.push(`/businesses/${business_id}/reviews`);
+    }
 
     if(busIsEmpty) return <div>loading</div>
     return(
@@ -44,6 +48,8 @@ export default function SingleBusiness()
         <TopCard business={business} />
 
         { isOwner && <p><button onClick={linkEdit}>Edit</button></p>}
+
+        <p><button onClick={linkReview}>Write a Review!</button></p>
 
         <div className ="single_bus_wrapper">
             {

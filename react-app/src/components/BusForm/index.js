@@ -55,6 +55,7 @@ export default function BusForm({edit})
     async function onSubmit(event)
     {
         event.preventDefault();
+        //reusing business as a name of variable but looks ok in this scope
         const business = {name, description, city, state, address, prev_url }
         if(first) business.first = first;
         if(second) business.second = second;
@@ -87,7 +88,7 @@ export default function BusForm({edit})
 
     // if(Object.keys(business).length === 0) return <div>loading</div>
     return(
-        <div className = "formWrapper">
+        <div className = "bus_form_wrapper">
             {/* might need to specify some kind of form method for python backend? */}
         <form onSubmit={onSubmit}>
             <div>

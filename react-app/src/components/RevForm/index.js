@@ -1,0 +1,106 @@
+import { useState, useEffect } from "react";
+import { useHistory, useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { thunkReceiveReview, thunkUpdateReview } from "../../store/review";
+import "./RevForm.css";
+
+export default function RevForm({edit})
+{
+    //for create review form will always be coming from a single business page
+    //singleBus will be loaded in the store
+    const business = useSelector(state => state.businesses.singleBus);
+    const [rating, setRating] = useState();
+    const [review, setReview] = useState("");
+    const [first, setFirst] = useState("");
+    const [second, setSecond] = useState("");
+    const [third, setThird] = useState("");
+    const [valErrors, setValErrors] = useState({});
+
+    const {business_id} = useParams();
+    const dispatch = useDispatch();
+    const user = useSelector((state) => state.session.user);
+
+    async function onSubmit(event)
+    {
+        event.preventDefault();
+        const rev = {
+            rating: Number(rating),
+            review
+        };
+        if(first) rev.first = first;
+        if(second) rev.second = second;
+        if(third) rev.third = third;
+
+        let res;
+        if(!edit)
+        {
+            res = await dispatch(thunkReceiveReview(business_id, rev));
+            console.log("print server response inside onSubmit function");
+            console.log(res);
+        }else{
+            res = await dispatch(thunkUpdateReview(business_id, rev));
+            console.log("print server response inside onSubmit function");
+            console.log(res);
+        }
+        if(res.error)
+        {
+            const errors = {};
+            for(let key in res.error)
+            {
+                errors[key] = res.error[key];
+            }
+            setValErrors(errors);
+            return;
+        }
+        // history.push(`/businesses/${res.id}`);
+        return null;
+    }
+    return (
+        <div className = "rev_form_wrapper">
+            <form onSubmit={onSubmit}>
+                <div>
+                    <select value={rating} onChange={e => setRating(e.target.value)}>
+                            <option>0</option>
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                    </select>
+                </div>
+                {valErrors.rating && <p>{valErrors.rating}</p>}
+
+                <div>
+                    <input type="text" name="review" placeholder="Review"
+                        value={review} onChange={e => setReview(e.target.value)}
+                    />
+                </div>
+                {valErrors.review && <p>{valErrors.review}</p>}
+
+                <div>
+                <input type="text" name="first" placeholder="Optional Image Url"
+                        value={first} onChange={e => setFirst(e.target.value)}
+                    />
+                </div>
+                {valErrors.first && <p>{valErrors.first}</p>}
+
+                <div>
+                    <input type="text" name="second" placeholder="Optional Image Url"
+                        value={second} onChange={e => setSecond(e.target.value)}
+                    />
+                </div>
+                {valErrors.second && <p>{valErrors.second}</p>}
+
+                <div>
+                <input type="text" name="third" placeholder="Optional Image Url"
+                        value={third} onChange={e => setThird(e.target.value)}
+                    />
+                </div>
+                {valErrors.third && <p>{valErrors.third}</p>}
+
+                <button type="submit">Submit Review</button>
+
+            </form>
+        </div>
+    )
+}
