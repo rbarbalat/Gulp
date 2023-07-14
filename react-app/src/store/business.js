@@ -34,6 +34,29 @@ export const thunkLoadBusinesses = () => async (dispatch) => {
     return errorData;
     }
 }
+export const thunkLoadBusinessesOfUser = () => async (dispatch) => {
+    try {
+        const res = await fetch("/api/businesses/current");
+        if(res.ok)
+        {
+            const serverData = await res.json();
+            console.log("good response from thunkLoadBusinessesOfUser")
+            console.log(serverData)
+            dispatch(actionLoadBusinesses(serverData));
+            return serverData;
+        } else {
+            const errorData = await res.json();
+            console.log("error response for thunkLoadSingleBusinessOfUser");
+            console.log(errorData);
+            return errorData;
+        }
+    } catch (error){
+    const errorData = await error.json();
+    console.log("CAUGHT error response for thunkLoadBusineesesOfUser")
+    console.log(errorData)
+    return errorData;
+    }
+}
 
 const actionLoadSingleBusiness = (singleBus) => {
     return {
