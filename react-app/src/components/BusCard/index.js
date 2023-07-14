@@ -12,7 +12,19 @@ export default function BusCard({business})
             </div>
             <div className = "bus_info_wrapper">
                 <div>{business.name}</div>
-                <div>{business.average} stars and business.numReviews</div>
+                {
+                    business.average ?
+                    <div>{String(business.average).slice(0,4)} stars</div>
+                    :
+                    null
+                }
+                {
+                    business.numReviews > 0 ?
+                    <div>{business.numReviews} reviews</div>
+                    :
+                    <div>No reviews yet!</div>
+                }
+                {/* <div>{business.numReviews} reviews</div> */}
                 <div>{business.description}</div>
             </div>
         </div>
