@@ -1,9 +1,35 @@
+import { useSelector, useDispatch } from "react-redux";
+import { thunkDeleteReview } from "../../store/review";
 import "./ReviewCard.css";
 
-export default function ReviewCard({review})
+export default function ReviewCard({review, user, business_id})
 {
-    // console.log("preinting the length of review.images for review " + review.id)
-    // console.log(review.images.length)
+    const isReviewer = user?.id === review?.reviewer_id;
+    const dispatch = useDispatch();
+
+    //disappears from list of user's reviews b/c AllRevOfUser
+    //accesses the store for reviews
+    async function deleteReview()
+    {
+        const res = await dispatch(thunkDeleteReview(review?.id));
+        if(res.error)
+        {
+            console.log("bad response from inside deleteBus");
+            console.log(res);
+            alert("something went wrong with the deletion");
+        }else {
+            console.log("good response from inside deleteBus");
+            console.log(res);
+            alert("succesful deletion");
+            if(business_id)
+            {
+                // const res2 = dispatch(thunkLoadSingleBusiness(business_id))
+            }
+            return;
+        }
+    }
+
+    //returning empty review for development for now
     if(Object.keys(review).length === 0) return <div>empty review</div>
     return(
         <div className = "rev_card_wrapper">
@@ -22,6 +48,13 @@ export default function ReviewCard({review})
                         {review.reviewer.numReviews} reviews
                     </div>
                 </div>
+                {
+                    isReviewer &&
+                    <div className="rev_card_buttons_wrapper">
+                        <button>Edit Review</button>
+                        <button onClick={deleteReview}>Delete Review</button>
+                    </div>
+                }
             </div>
 
             <div className = "reviewer_rating">

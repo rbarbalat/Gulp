@@ -72,7 +72,8 @@ export default function SingleBusiness()
         <div className ="single_bus_wrapper">
             {
                 business.reviews.map(review => (
-                    <ReviewCard key = {review.id} review={review} />
+                    <ReviewCard key = {review.id} review={review}
+                    user={user} business_id = {business_id} />
                 ))
             }
         </div>
