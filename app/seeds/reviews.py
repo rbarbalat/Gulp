@@ -10,8 +10,8 @@ def seed_reviews(users, businesses):
         review = Review(
             reviewer = choice(users),
             business = choice(businesses),
-            rating = randint(0, 5),
-            review = fake.text(max_nb_chars=randint(100, 200)),
+            rating = randint(1, 5),
+            review = fake.text(max_nb_chars=randint(50, 150)),
         )
         db.session.add(review)
         lst.append(review)

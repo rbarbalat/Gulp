@@ -10,7 +10,7 @@ def seed_businesses(users):
         bus = Business(
             owner = choice(users),
             name = fake.text(max_nb_chars=randint(10, 20)),
-            description = fake.text(max_nb_chars=randint(50, 100)),
+            description = fake.text(max_nb_chars=randint(50, 150)),
             prev_url = fake.url(),
             address = fake.address(),
             city = fake.city(),

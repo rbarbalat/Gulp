@@ -40,7 +40,7 @@ function SignupFormPage() {
     } else {
         //setErrors(['Confirm Password field must be the same as the Password field']);
         setErrors({
-          confirmPassword: 'Confirm Password field must be the same as the Password field'
+          confirmPassword: "The passwords don't match"
         });
     }
   };
@@ -70,7 +70,7 @@ function SignupFormPage() {
             <p><input className="signup_input" type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} required placeholder="Confirm Password"/></p>
             {errors.confirmPassword && <p className = "signup_errors">{errors.confirmPassword}</p>}
 
-            <p><button className="signup_button" type="submit">Log In</button></p>
+            <p><button className="signup_button" type="submit">Sign Up</button></p>
           </form>
           <p><button className="signup_button" onClick={loginDemo}>Demo User</button></p>
         </div>

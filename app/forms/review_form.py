@@ -12,10 +12,11 @@ def integer_zero_through_five(form, field):
     rating = field.data
     print("printing rating")
     print(rating)
-    if rating not in [0, 1 , 2, 3, 4, 5]:
-        raise ValidationError('Star rating must be an integer between zero and five')
+    if rating not in [1, 2, 3, 4, 5]:
+        raise ValidationError('Star rating must be an integer between 1 and five')
 
 class ReviewForm(FlaskForm):
+    #change to TextAreaField when changing front end to TextArea
     review = StringField("review", validators=[DataRequired(), Length(min=20, max=2000)])
     #IntegerField coerces inputs into integers before validations, can't use it
     rating = FloatField("rating", validators=[integer_zero_through_five])
