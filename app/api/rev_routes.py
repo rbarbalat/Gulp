@@ -42,7 +42,7 @@ def delete_review_by_id(id):
     return {"message": "Successfully Deleted"}
 
 #Edit Review by Id
-@rev_routes.route("/<int:id>", methods = ["DELETE"])
+@rev_routes.route("/<int:id>", methods = ["PUT"])
 def edit_review_by_id(id):
     if not current_user.is_authenticated:
         return {"error": "not authenticated"}, 401

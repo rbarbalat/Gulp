@@ -132,10 +132,11 @@ export const thunkUpdateReview = (id, review) => async (dispatch) => {
             return errorData;
         }
     } catch (error){
-        const errorData = await error.json();
+        // const errorData = await error.json();
         console.log("CAUGHT error response for thunkUpdateReview");
-        console.log(errorData);
-        return errorData;
+        console.log(error);
+        // console.log(errorData);
+        // return errorData;
     }
 }
 
