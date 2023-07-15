@@ -4,6 +4,7 @@ import { logout } from "../../store/session";
 import OpenModalButton from "../OpenModalButton";
 import LoginFormModal from "../LoginFormModal";
 import SignupFormModal from "../SignupFormModal";
+import { NavLink } from "react-router-dom";
 
 function ProfileButton({ user }) {
   const dispatch = useDispatch();
@@ -37,6 +38,7 @@ function ProfileButton({ user }) {
   const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
   const closeMenu = () => setShowMenu(false);
 
+  //replace OpenModalButtons with regular links to the the login/sign up pages
   return (
     <>
       <button onClick={openMenu}>
@@ -53,7 +55,7 @@ function ProfileButton({ user }) {
           </>
         ) : (
           <>
-            <OpenModalButton
+            {/* <OpenModalButton
               buttonText="Log In"
               onItemClick={closeMenu}
               modalComponent={<LoginFormModal />}
@@ -63,7 +65,9 @@ function ProfileButton({ user }) {
               buttonText="Sign Up"
               onItemClick={closeMenu}
               modalComponent={<SignupFormModal />}
-            />
+            /> */}
+            <div><NavLink to="/login" onClick={closeMenu}>Log In</NavLink></div>
+            <div><NavLink to="/signup" onClick={closeMenu}>Sign Up</NavLink></div>
           </>
         )}
       </ul>

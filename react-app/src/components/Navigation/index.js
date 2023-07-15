@@ -6,7 +6,7 @@ import './Navigation.css';
 
 function Navigation({ isLoaded }){
 	const sessionUser = useSelector(state => state.session.user);
-
+	console.log(sessionUser);
 	return (
 		<ul>
 			<li>
