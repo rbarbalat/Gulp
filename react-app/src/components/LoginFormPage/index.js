@@ -14,6 +14,11 @@ function LoginFormPage() {
 
   if (sessionUser) return <Redirect to="/" />;
 
+  async function loginDemo()
+  {
+    const data = await dispatch(login("demo@aa.io", "password"));
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const data = await dispatch(login(email, password));
@@ -53,6 +58,7 @@ function LoginFormPage() {
             {errors.password && <p className = "login_errors">{errors.password}</p>}
             <p><button className="login_button" type="submit">Log In</button></p>
           </form>
+          <p><button className="login_button" onClick={loginDemo}>Demo User</button></p>
         </div>
       </div>
 
