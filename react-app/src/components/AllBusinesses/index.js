@@ -13,7 +13,7 @@ export default function AllBusinesses()
 {
     //initialized to an empty array before the useEffect runs, singe intialState = {}
     const businesses = useSelector(state => Object.values(state.businesses.allBus))
-
+    const user = useSelector(state => state.session.user);
     const history = useHistory();
     const dispatch = useDispatch();
     useEffect(() => {
@@ -41,7 +41,7 @@ export default function AllBusinesses()
                 // change onClick later to a function on a div that checks the event target like in old project
                 businesses.map(business => (
                     <Link key = {business.id} to={`/businesses/${business.id}`}>
-                        <BusCard business={business} />
+                        <BusCard business={business} user={user} />
                     </Link>
                 ))
             }
