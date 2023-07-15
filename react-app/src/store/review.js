@@ -28,10 +28,8 @@ export const thunkLoadReviewsOfUser = () => async (dispatch) => {
             return errorData;
         }
     } catch (error){
-    const errorData = await error.json();
-    console.log("CAUGHT error response for thunkLoadReviewsOfUser")
-    console.log(errorData)
-    return errorData;
+        console.log("CAUGHT error response for thunkLoadReviewsOfUser")
+        console.log(error);
     }
 }
 
@@ -58,10 +56,8 @@ export const thunkLoadSingleReview = (review_id) => async (dispatch) => {
             return errorData;
         }
     } catch (error){
-        const errorData = await error.json();
         console.log("CAUGHT error response for thunkLoadSingleReview");
-        console.log(errorData);
-        return errorData;
+        console.log(error);
     }
 }
 
@@ -95,10 +91,8 @@ export const thunkReceiveReview = (bus_id, review) => async (dispatch) => {
             return errorData;
         }
     } catch (error){
-        const errorData = await error.json();
         console.log("CAUGHT error response for thunkReceiveReview");
-        console.log(errorData);
-        return errorData;
+        console.log(error);
     }
 }
 
@@ -132,11 +126,8 @@ export const thunkUpdateReview = (id, review) => async (dispatch) => {
             return errorData;
         }
     } catch (error){
-        // const errorData = await error.json();
         console.log("CAUGHT error response for thunkUpdateReview");
         console.log(error);
-        // console.log(errorData);
-        // return errorData;
     }
 }
 
@@ -167,10 +158,8 @@ export const thunkDeleteReview = (id) => async (dispatch) => {
         }
     } catch(error)
     {
-        const errorData = await error.json();
         console.log("CAUGHT error response for thunkDeleteReview");
-        console.log(errorData);
-        return errorData;
+        console.log(error);
     }
 }
 

@@ -19,9 +19,7 @@ export default function RevForm({edit})
     const business = useSelector(state => state.businesses.singleBus);
     const edit_rev = useSelector(state => state.reviews.singleRev);
     const [rating, setRating] = useState(edit ? edit_rev?.rating : "");
-    console.log("rating is ", rating);
     const [review, setReview] = useState(edit ? edit_rev?.review : "");
-    console.log("printing review   ", review);
     const [first, setFirst] = useState("");
     const [second, setSecond] = useState("");
     const [third, setThird] = useState("");
@@ -33,9 +31,10 @@ export default function RevForm({edit})
     const { review_id } = useParams();
 
     const dispatch = useDispatch();
-    const user = useSelector((state) => state.session.user);
+    // const user = useSelector((state) => state.session.user);
 
     useEffect(() => {
+        //consider if(edit && Object.keys(edit_revew).length == 0)
         if(edit)
         {
             console.log("USE EFFECT");

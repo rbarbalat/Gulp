@@ -1,7 +1,7 @@
-import { useSelector, useDispatch } from "react-redux";
-import { thunkDeleteReview } from "../../store/review";
-import { thunkLoadSingleBusiness } from "../../store/business";
-import { thunkLoadSingleReview } from "../../store/review";
+import { useDispatch } from "react-redux";
+// import { thunkDeleteReview } from "../../store/review";
+// import { thunkLoadSingleBusiness } from "../../store/business";
+// import { thunkLoadSingleReview } from "../../store/review";
 import { useHistory } from "react-router-dom";
 import { linkEditReview, deleteReview } from "../../helpers";
 import "./ReviewCard.css";

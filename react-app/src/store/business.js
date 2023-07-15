@@ -28,10 +28,8 @@ export const thunkLoadBusinesses = () => async (dispatch) => {
             return errorData;
         }
     } catch (error){
-    const errorData = await error.json();
     console.log("CAUGHT error response for thunkLoadBusineeses")
-    console.log(errorData)
-    return errorData;
+    console.log(error);
     }
 }
 export const thunkLoadBusinessesOfUser = () => async (dispatch) => {
@@ -51,10 +49,8 @@ export const thunkLoadBusinessesOfUser = () => async (dispatch) => {
             return errorData;
         }
     } catch (error){
-    const errorData = await error.json();
     console.log("CAUGHT error response for thunkLoadBusineesesOfUser")
-    console.log(errorData)
-    return errorData;
+    console.log(error);
     }
 }
 
@@ -81,10 +77,8 @@ export const thunkLoadSingleBusiness = (business_id) => async (dispatch) => {
             return errorData;
         }
     } catch (error){
-        const errorData = await error.json();
         console.log("CAUGHT error response for thunkLoadSingleBusiness");
-        console.log(errorData);
-        return errorData;
+        console.log(error);
     }
 }
 
@@ -118,10 +112,8 @@ export const thunkReceiveBusiness = (business) => async (dispatch) => {
             return errorData;
         }
     } catch (error){
-        const errorData = await error.json();
         console.log("CAUGHT error response for thunkReceiveBusiness");
-        console.log(errorData);
-        return errorData;
+        console.log(error);
     }
 }
 const actionUpdateBusiness = (business) => {
@@ -154,10 +146,8 @@ export const thunkUpdateBusiness = (id, business) => async (dispatch) => {
             return errorData;
         }
     } catch (error){
-        const errorData = await error.json();
         console.log("CAUGHT error response for thunkUpdateBusiness");
-        console.log(errorData);
-        return errorData;
+        console.log(error);
     }
 }
 const actionDeleteBusiness = (bus_id) => {
@@ -187,13 +177,10 @@ export const thunkDeleteBusiness = (id) => async (dispatch) => {
         }
     } catch(error)
     {
-        const errorData = await error.json();
         console.log("CAUGHT error response for thunkDeleteBusiness");
-        console.log(errorData);
-        return errorData;
+        console.log(error);
     }
 }
-
 
 const initialState = {
     allBus: {},
