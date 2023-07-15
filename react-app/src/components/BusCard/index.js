@@ -1,8 +1,9 @@
 import {useHistory} from "react-router-dom";
 import "./BusCard.css";
 
-export default function BusCard({business})
+export default function BusCard({business, user})
 {
+    const isOwner = user?.id === business?.owner_id;
     const history = useHistory();
     function linkBusiness()
     {

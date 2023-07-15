@@ -36,7 +36,7 @@ export default function AllBusOfUser()
         <div className ="all_bus_of_user_wrapper">
             {
                 businesses.map(business => (
-                    <BusCard key = {business.id} business={business} />
+                    <BusCard key = {business.id} business={business} user={user} />
                 ))
             }
         </div>

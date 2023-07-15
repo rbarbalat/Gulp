@@ -1,6 +1,7 @@
 import { useSelector, useDispatch } from "react-redux";
 import { thunkDeleteReview } from "../../store/review";
 import { thunkLoadSingleBusiness } from "../../store/business";
+import { thunkLoadSingleReview } from "../../store/review";
 import { useHistory } from "react-router-dom";
 import "./ReviewCard.css";
 
@@ -28,6 +29,7 @@ export default function ReviewCard({review, user, business_id})
             console.log(res);
             if(business_id)
             {
+                //if you are deleting from the single business page
                 //the single business component pulls reviews from the business
                 //store not the review store so need to trigger an update
                 const res_two = await dispatch(thunkLoadSingleBusiness(business_id));
@@ -43,9 +45,21 @@ export default function ReviewCard({review, user, business_id})
             return;
         }
     }
-    function linkEdit()
+    async function linkEdit()
     {
-        history.push(`/reviews/${review.id}`)
+        const res = await dispatch(thunkLoadSingleReview(review.id));
+        // singleRev will be in the store so the useSelectors on the
+        // edit form will be able to get the existing values right away
+        if(!res.error)
+        {
+            console.log("good response inside linkEdit in ReviewCard");
+            console.log(res)
+            history.push(`/reviews/${review.id}`);
+            return;
+        }else{
+            console.log("bad response inside linkEdit in ReviewCard")
+            console.log(res);
+        }
     }
 
     //returning empty review for development for now
