@@ -9,7 +9,8 @@ function LoginFormPage() {
   const sessionUser = useSelector((state) => state.session.user);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [errors, setErrors] = useState([]);
+  // const [errors, setErrors] = useState([]);
+  const [errors, setErrors] = useState({});
 
   if (sessionUser) return <Redirect to="/" />;
 
@@ -17,10 +18,18 @@ function LoginFormPage() {
     e.preventDefault();
     const data = await dispatch(login(email, password));
     if (data) {
-      setErrors(data);
+      // setErrors(data);
+      // the format in the starter was to return an array in this format
+      // ['email : Email provided not found.', 'password : No such user exists.']
+      const val_errors = {}
+      data.forEach(ele => {
+        const index = ele.indexOf(":");
+        val_errors[ele.slice(0, index - 1)] = ele.slice(index + 2);
+      })
+      setErrors(val_errors);
     }
   };
-
+  console.log(errors);
   return (
     <div className = "login_page_wrapper">
 
@@ -38,8 +47,10 @@ function LoginFormPage() {
         </div>
         <div className = "form_wrapper">
           <form onSubmit={handleSubmit}>
-            <p><input className="login_input" type="text" value={email} onChange={(e) => setEmail(e.target.value)} required Placeholder="Email"/></p>
-            <p><input className="login_input" type="text" value={password} onChange={(e) => setPassword(e.target.value)} required Placeholder="Password"/></p>
+            <p><input className="login_input" type="text" value={email} onChange={(e) => setEmail(e.target.value)} required placeholder="Email"/></p>
+            {errors.email && <p className = "login_errors">{errors.email}</p>}
+            <p><input className="login_input" type="text" value={password} onChange={(e) => setPassword(e.target.value)} required placeholder="Password"/></p>
+            {errors.password && <p className = "login_errors">{errors.password}</p>}
             <p><button className="login_button" type="submit">Log In</button></p>
           </form>
         </div>

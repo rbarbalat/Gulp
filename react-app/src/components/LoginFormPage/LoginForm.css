@@ -65,3 +65,7 @@
 .terms {
     font-size: 11px;
 }
+
+.login_errors {
+    color: red;
+}
