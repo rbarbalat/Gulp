@@ -21,6 +21,8 @@ function LoginFormPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    //make old errors go away
+    setErrors({});
     const data = await dispatch(login(email, password));
     if (data) {
       // setErrors(data);

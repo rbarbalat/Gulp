@@ -24,6 +24,8 @@ function SignupFormPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    //make old errors go away
+    setErrors({})
     if (password === confirmPassword) {
         const data = await dispatch(signUp(username, email, password));
         if (data) {
@@ -36,8 +38,10 @@ function SignupFormPage() {
           setErrors(val_errors);
         }
     } else {
-      const val_errors = {}
-        setErrors(['Confirm Password field must be the same as the Password field']);
+        //setErrors(['Confirm Password field must be the same as the Password field']);
+        setErrors({
+          confirmPassword: 'Confirm Password field must be the same as the Password field'
+        });
     }
   };
 
@@ -63,7 +67,7 @@ function SignupFormPage() {
             {errors.username && <p className = "signup_errors">{errors.username}</p>}
             <p><input className="signup_input" type="password" value={password} onChange={(e) => setPassword(e.target.value)} required placeholder="Password"/></p>
             {errors.password && <p className = "signup_errors">{errors.password}</p>}
-            <p><input className="signup_input" type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} required placeholder="Password"/></p>
+            <p><input className="signup_input" type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} required placeholder="Confirm Password"/></p>
             {errors.confirmPassword && <p className = "signup_errors">{errors.confirmPassword}</p>}
 
             <p><button className="signup_button" type="submit">Log In</button></p>
