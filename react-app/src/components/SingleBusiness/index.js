@@ -35,6 +35,8 @@ export default function SingleBusiness()
 
     function linkEdit()
     {
+        //don't need the linkEditBus helper b/c if coming
+        //from this component don't need to dispatch load single bus
         history.push(`/businesses/${business_id}/edit`);
     }
     //MOVE THIS FUNCTION TO THE BusCard component

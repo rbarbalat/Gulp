@@ -24,20 +24,23 @@ def seed_users():
     num = 22
 
     names = []
-    count = 0
-    while count <= num:
-        name = fake.name().split(" ")[0]
-        if name not in names:
-            names.append(name)
-            count = count + 1
-
     emails = []
     count = 0
     while count <= num:
-        email = fake.email()
-        if email not in emails:
+        name = fake.name().split(" ")[0]
+        email = f"{name}@aa.io"
+        if name not in names:
+            names.append(name)
             emails.append(email)
             count = count + 1
+
+    # emails = []
+    # count = 0
+    # while count <= num:
+    #     email = fake.email()
+    #     if email not in emails:
+    #         emails.append(email)
+    #         count = count + 1
 
     for i in range(num):
         user = User(

@@ -3,6 +3,7 @@ import { thunkDeleteReview } from "../../store/review";
 import { thunkLoadSingleBusiness } from "../../store/business";
 import { thunkLoadSingleReview } from "../../store/review";
 import { useHistory } from "react-router-dom";
+import { linkEditReview, deleteReview } from "../../helpers";
 import "./ReviewCard.css";
 
 export default function ReviewCard({review, user, business_id})
@@ -13,54 +14,6 @@ export default function ReviewCard({review, user, business_id})
 
     const dispatch = useDispatch();
     const history = useHistory();
-
-    //disappears from list of user's reviews b/c AllRevOfUser
-    //accesses the store for reviews
-    async function deleteReview()
-    {
-        const res = await dispatch(thunkDeleteReview(review.id));
-        if(res.error)
-        {
-            console.log("bad response from inside deleteBus");
-            console.log(res);
-            alert("something went wrong with the deletion");
-        }else {
-            console.log("good response from inside deleteBus");
-            console.log(res);
-            if(business_id)
-            {
-                //if you are deleting from the single business page
-                //the single business component pulls reviews from the business
-                //store not the review store so need to trigger an update
-                const res_two = await dispatch(thunkLoadSingleBusiness(business_id));
-                if(res_two.error)
-                {
-                    console.log("problem loading single business after review deletion");
-                    console.log(res_two);
-                }else {
-                    console.log("reloaded the single business page after deleting a review")
-                    console.log(res_two)
-                }
-            }
-            return;
-        }
-    }
-    async function linkEdit()
-    {
-        const res = await dispatch(thunkLoadSingleReview(review.id));
-        // singleRev will be in the store so the useSelectors on the
-        // edit form will be able to get the existing values right away
-        if(!res.error)
-        {
-            console.log("good response inside linkEdit in ReviewCard");
-            console.log(res)
-            history.push(`/reviews/${review.id}`);
-            return;
-        }else{
-            console.log("bad response inside linkEdit in ReviewCard")
-            console.log(res);
-        }
-    }
 
     //returning empty review for development for now
     if(Object.keys(review).length === 0) return <div>empty review</div>
@@ -84,8 +37,10 @@ export default function ReviewCard({review, user, business_id})
                 {
                     isReviewer &&
                     <div className="rev_card_buttons_wrapper">
-                        <button onClick={linkEdit}>Edit Review</button>
-                        <button onClick={deleteReview}>Delete Review</button>
+                        {/* <button onClick={linkEdit}>Edit Review</button> */}
+                        {/* <button onClick={deleteReview}>Delete Review</button> */}
+                        <button onClick={() => linkEditReview(review.id, dispatch, history)}>Edit Review</button>
+                        <button onClick={() => deleteReview(review.id, dispatch, business_id)}>Delete Review</button>
                     </div>
                 }
             </div>

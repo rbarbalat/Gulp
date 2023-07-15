@@ -1,6 +1,7 @@
 import {useHistory} from "react-router-dom";
 import {useDispatch} from "react-redux";
-import { thunkLoadSingleBusiness } from "../../store/business";
+// import {thunkLoadSingleBusiness } from "../../store/business";
+import { linkEditBus, deleteBusiness } from "../../helpers";
 import "./BusCard.css";
 
 export default function BusCard({business, user})
@@ -11,25 +12,6 @@ export default function BusCard({business, user})
     function linkBusiness()
     {
         history.push(`/businesses/${business.id}`)
-    }
-    async function linkEdit()
-    {
-        //load the singleBus in the store so the useSelector in
-        //the edit form can access it right away
-        const res = await dispatch(thunkLoadSingleBusiness(business.id));
-        if(res.error)
-        {
-            console.log("bad response from inside linkEdit in BusCard");
-            console.log(res);
-        }else{
-            console.log("good response from inside linkEdit");
-            console.log(res);
-            history.push(`/businesses/${business.id}/edit`);
-        }
-    }
-    async function deleteBus()
-    {
-        return null;
     }
     if(Object.keys(business).length === 0) return <div>loading</div>
     // return <div>Hello World!!! from business {business.id}</div>
@@ -45,8 +27,8 @@ export default function BusCard({business, user})
                     {
                         isOwner &&
                         <div className = "bus_card_buttons">
-                            <button onClick={linkEdit}>Edit</button>
-                            <button onClick={deleteBus}>Delete</button>
+                            <button onClick={() => linkEditBus(business.id, dispatch, history)}>Edit</button>
+                            <button onClick={() => deleteBusiness(business.id, user.id, dispatch, history)}>Delete</button>
                         </div>
                     }
                 </div>
