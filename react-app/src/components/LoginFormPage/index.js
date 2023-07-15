@@ -34,7 +34,7 @@ function LoginFormPage() {
       setErrors(val_errors);
     }
   };
-  console.log(errors);
+  // console.log(errors);
   return (
     <div className = "login_page_wrapper">
 
@@ -54,7 +54,7 @@ function LoginFormPage() {
           <form onSubmit={handleSubmit}>
             <p><input className="login_input" type="text" value={email} onChange={(e) => setEmail(e.target.value)} required placeholder="Email"/></p>
             {errors.email && <p className = "login_errors">{errors.email}</p>}
-            <p><input className="login_input" type="text" value={password} onChange={(e) => setPassword(e.target.value)} required placeholder="Password"/></p>
+            <p><input className="login_input" type="password" value={password} onChange={(e) => setPassword(e.target.value)} required placeholder="Password"/></p>
             {errors.password && <p className = "login_errors">{errors.password}</p>}
             <p><button className="login_button" type="submit">Log In</button></p>
           </form>
@@ -66,35 +66,6 @@ function LoginFormPage() {
         <img className ="login_logo_image" alt="logo" src="https://s3-media0.fl.yelpcdn.com/assets/2/www/img/7922e77f338d/signup/signup_illustration.png"></img>
       </div>
     </div>
-    // <>
-    //   <h1>Log In</h1>
-    //   <form onSubmit={handleSubmit}>
-    //     <ul>
-    //       {errors.map((error, idx) => (
-    //         <li key={idx}>{error}</li>
-    //       ))}
-    //     </ul>
-    //     <label>
-    //       Email
-    //       <input
-    //         type="text"
-    //         value={email}
-    //         onChange={(e) => setEmail(e.target.value)}
-    //         required
-    //       />
-    //     </label>
-    //     <label>
-    //       Password
-    //       <input
-    //         type="password"
-    //         value={password}
-    //         onChange={(e) => setPassword(e.target.value)}
-    //         required
-    //       />
-    //     </label>
-    //     <button type="submit">Log In</button>
-    //   </form>
-    // </>
   );
 }
 
