@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify, request
 from flask_login import current_user
-# from app.api.aws import get_unique_filename, upload_file_to_s3, remove_file_from_s3
+from app.api.aws import get_unique_filename, upload_file_to_s3, remove_file_from_s3
 from app.models import db, User, Business, Review, BusImage, RevImage
 from app.forms.bus_form import BusForm
 from app.forms.review_form import ReviewForm
@@ -149,15 +149,20 @@ def create_business():
         # check this error code
 
     if form.validate_on_submit():
+        prev_url = form.data["prev_url"]
+        prev_url.filename = get_unique_filename(prev_url.filename)
+        upload = upload_file_to_s3(prev_url)
+        #upload is a dictionary with 1 key, it is either "url" or "errors"
+        #upload["url"] is the new aws based url
+        if "url" not in upload:
+            return {"error": "failed b/c of problem with the image file"}, 400
 
         bus = Business()
-        # can't use form.populate_obj(bus) b/c have to populate multiple objects
+        bus.prev_url = upload["url"]
 
         bus.owner_id = current_user.id
-
         bus.name = form.data["name"]
         bus.description = form.data["description"]
-        bus.prev_url = form.data["prev_url"]
         bus.address = form.data["address"]
         bus.city = form.data["city"]
         bus.state = form.data["state"]
@@ -209,14 +214,14 @@ def edit_business(id):
         # check this error code
 
     if form.validate_on_submit():
+        bus.prev_url = form.data["prev_url"]
+
         bus.name = form.data["name"]
         bus.description = form.data["description"]
         bus.address = form.data["address"]
         bus.city = form.data["city"]
         bus.state = form.data["state"]
 
-        # this field is required so there is something there
-        bus.prev_url = form.data["prev_url"]
 
         db.session.commit()
 

@@ -2,7 +2,7 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, URLField
 from wtforms.validators import URL, DataRequired, ValidationError, Length, Optional
 from flask_wtf.file import FileField, FileAllowed, FileRequired
-# from app.api.aws import ALLOWED_EXTENSIONS
+from app.api.aws import ALLOWED_EXTENSIONS
 from app.models import Business
 
 def bus_name_exists(form, field):
@@ -20,11 +20,12 @@ class BusForm(FlaskForm):
     # the bus_name_exists was applied on edits as well...
     name = StringField("name", validators=[DataRequired(), Length(min=2, max=50)], )
     description = StringField("description", validators=[DataRequired(), Length(min=20, max=2000)] )
-    prev_url = StringField("preview image", validators=[DataRequired(), URL()])
     address = StringField("address", validators=[DataRequired(), Length(min=2, max=100)] )
     city = StringField("state", validators=[DataRequired(), Length(min=2, max=50)] )
     state = StringField("state", validators=[DataRequired(), Length(min=2, max=50)] )
-    #maybe should be URLField?
+
+    # prev_url = StringField("preview image", validators=[DataRequired(), URL()])
+    prev_url = FileField("preview image", validators=[FileRequired(), FileAllowed(list(ALLOWED_EXTENSIONS))])
     first = StringField("image", validators=[Optional(), URL()])
     second = StringField("image", validators=[Optional(), URL()])
     third = StringField("image", validators=[Optional(), URL()])
