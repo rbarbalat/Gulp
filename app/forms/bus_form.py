@@ -26,8 +26,6 @@ class BusForm(FlaskForm):
 
     # prev_url = StringField("preview image", validators=[DataRequired(), URL()])
     prev_url = FileField("preview image", validators=[FileRequired(), FileAllowed(list(ALLOWED_EXTENSIONS))])
-    first = StringField("image", validators=[Optional(), URL()])
-    second = StringField("image", validators=[Optional(), URL()])
-    third = StringField("image", validators=[Optional(), URL()])
-    # third = StringField("image")
-    # image = FileField("image", validators=[FileRequired(), FileAllowed(list(ALLOWED_EXTENSIONS))])
+    first = FileField("preview image", validators=[Optional(), FileRequired(), FileAllowed(list(ALLOWED_EXTENSIONS))])
+    second = FileField("preview image", validators=[Optional(), FileRequired(), FileAllowed(list(ALLOWED_EXTENSIONS))])
+    third = FileField("preview image", validators=[Optional(), FileRequired(), FileAllowed(list(ALLOWED_EXTENSIONS))])

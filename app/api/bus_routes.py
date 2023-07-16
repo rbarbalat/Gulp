@@ -130,21 +130,26 @@ def delete_business_by_id(id):
     if current_user.id != bus.owner_id:
         return {"error": "not authorized"}, 403
 
-    if bus.prev_url:
-        aws = remove_file_from_s3(bus.prev_url)
-        if aws is True:
-            db.session.delete(bus)
-            db.session.commit()
-            return {"message": "Successfully Deleted"}
-        else:
-            db.session.delete(bus)
-            db.session.commit()
-            # in this case aws = { "errors": str(e) }
-            return {
-                "message": "The business was deleted but their was an AWS error",
-                "error": aws["errors"]
-                }
-        #look up the right response code later
+    #remove prev.url any images bus.images from aws
+    errors = []
+    optional_urls = [image.url for image in bus.images]
+    urls = [bus.prev_url, *optional_urls]
+    for url in urls:
+        if url: #should always be true but just in case
+            aws = remove_file_from_s3(url)
+            if isinstance(aws, dict):
+                errors.append(aws["errors"])
+
+    db.session.delete(bus)
+    db.session.commit()
+    if not errors:
+        return {"message": "Successfully deleted the business"}
+    else:
+        return {
+            "message": "Successfully deleted but have AWS errors",
+            "errors": errors
+        }
+
 
 #CREATE A BUSINESS
 @bus_routes.route("/", methods = ["POST"])
@@ -164,10 +169,21 @@ def create_business():
         prev_url = form.data["prev_url"]
         prev_url.filename = get_unique_filename(prev_url.filename)
         upload = upload_file_to_s3(prev_url)
-        #upload is a dictionary with 1 key, it is either "url" or "errors"
-        #upload["url"] is the new aws based url
         if "url" not in upload:
-            return {"error": "failed b/c of problem with the image file"}, 400
+            return {"error": "failed b/c of problem with the preview image file"}, 400
+
+        # these keys come from the field names in the form
+        keys = ["first", "second", "third"]
+        optional_uploads = []
+        for key in keys:
+            #key in form.data always True but form.data[key] can be None
+            if form.data[key]:
+                val = form.data[key]
+                val.filename = get_unique_filename(val.filename)
+                optional_upload = upload_file_to_s3(val)
+                if "url" not in optional_upload:
+                    return {"error": f"failed b/c of problem with optional image file {key}"}
+                optional_uploads.append(optional_upload)
 
         bus = Business()
         bus.prev_url = upload["url"]
@@ -182,10 +198,8 @@ def create_business():
         db.session.add(bus)
         db.session.commit()
 
-        # form.data[key] always exists but can be (None or empty?)
-        keys = ["first", "second", "third"]
-        images = [ BusImage(business = bus, url = form.data[key])
-            for key in keys if form.data[key] ]
+        images = [ BusImage(business = bus, url = optional_upload["url"])
+            for optional_upload in optional_uploads ]
 
         _ = [db.session.add(image) for image in images]
         db.session.commit()

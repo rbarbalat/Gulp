@@ -15,26 +15,15 @@ export default function BusForm({edit})
     const [city, setCity] = useState(edit ? business.city : "");
     const [state, setState] = useState(edit ? business.state : "");
     const [address, setAddress] = useState(edit ? business.address : "");
-    const [prev_url, setPrevUrl] = useState(edit ? business.preview_image : undefined);
 
-    const [first, setFirst] = useState(
-        edit ?
-        business.images?.length >= 1 ? business.images[0].url : ""
-        :
-        ""
-    );
-    const [second, setSecond] = useState(
-        edit ?
-        business.images?.length >= 2 ? business.images[1].url : ""
-        :
-        ""
-    );
-    const [third, setThird] = useState(
-        edit ?
-        business.images?.length === 3 ? business.images[2].url : ""
-        :
-        ""
-    );
+    const [prev_url, setPrevUrl] = useState(edit ? business.preview_image : undefined);
+    const [first, setFirst] = useState(undefined);
+    const [second, setSecond] = useState(undefined);
+    const [third, setThird] = useState(undefined);
+
+    const first_url = edit ? (business.images?.length >= 1 ? business.images[0].url : "") : "";
+    const second_url = edit ? (business.images?.length >= 2 ? business.images[1].url : "") : "";
+    const third_url =  edit ? (business.images?.length === 3 ? business.images[2].url : "") : "" ;
 
     const [valErrors, setValErrors] = useState({});
 
@@ -53,8 +42,11 @@ export default function BusForm({edit})
     //don't think you need anything in the dep array, took out business_id
 
 
-    const handleImage = (e) => {
-        setPrevUrl(e.target.files[0])
+    const handleImage = (e, index) => {
+        if(index === 0) setPrevUrl(e.target.files[0])
+        if(index === 1) setFirst(e.target.files[0])
+        if(index === 2) setSecond(e.target.files[0])
+        if(index === 3) setThird(e.target.files[0])
         //setImagePreview(URL.createObjectURL(e.target.files[0]))
       };
 
@@ -77,9 +69,9 @@ export default function BusForm({edit})
         formData.append("address", address);
         formData.append("prev_url", prev_url);
         //maybe change preview_image on form if doesn't work
-        if(first) business.first = formData.append("first", first);
-        if(second) business.second = formData.append("second", second);
-        if(third) business.third = formData.append("third", third);
+        if(first) formData.append("first", first);
+        if(second) formData.append("second", second);
+        if(third) formData.append("third", third);
 
         const new_business = formData;
 
@@ -89,10 +81,12 @@ export default function BusForm({edit})
             res = await dispatch(thunkReceiveBusiness(new_business));
             console.log("print server response inside onSubmit function");
             console.log(res);
+            history.push(`/businesses/${res.id}`)
         }else{
             res = await dispatch(thunkUpdateBusiness(business_id, business));
             console.log("print server response inside onSubmit function");
             console.log(res);
+            history.push(`/businesses/${business_id}`)
         }
         if(res.error)
         {
@@ -134,18 +128,18 @@ export default function BusForm({edit})
 
                 <p>Mandatory Preview Image</p>
 
-                <p><input type="file" accept="image/*" name="prev_url" placeholder="Preview Image Url" onChange={e => handleImage(e)} required/></p>
+                <p><input type="file" accept="image/*" name="prev_url" placeholder="Preview Image Url" onChange={e => handleImage(e, 0)} required/></p>
                 {valErrors.prev_url && <p className="bus_form_errors">{valErrors.prev_url}</p>}
 
                 <p>Optional Images</p>
 
-                <p><input type="text" name="first" placeholder="Optional Image Url" value={first} onChange={e => setFirst(e.target.value)}/></p>
+                <p><input type="file" accept="image/*" name="first" placeholder="Optional Image Url" onChange={e => handleImage(e, 1)}/></p>
                 {valErrors.first && <p className="bus_form_errors">{valErrors.first}</p>}
 
-                <p><input type="text" name="second" placeholder="Optional Image Url" value={second} onChange={e => setSecond(e.target.value)}/></p>
+                <p><input type="file" accept="image/*" name="second" placeholder="Optional Image Url" onChange={e => handleImage(e, 2)}/></p>
                 {valErrors.second && <p className="bus_form_errors">{valErrors.second}</p>}
 
-                <p><input type="text" name="third" placeholder="Optional Image Url" value={third} onChange={e => setThird(e.target.value)}/></p>
+                <p><input type="file" accept="image/*" name="third" placeholder="Optional Image Url" onChange={e => handleImage(e, 3)}/></p>
                 {valErrors.third && <p className="bus_form_errors">{valErrors.third}</p>}
 
                 <button type="submit">Submit</button>
