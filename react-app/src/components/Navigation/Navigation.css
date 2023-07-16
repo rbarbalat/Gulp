@@ -1,5 +1,22 @@
 .profile-dropdown {
   position: absolute;
+  top: 50px;
+  right: 35px;
+  background-color:white;
+  width: 200px;
+  border: 1px solid lightgray;
+  box-shadow: 0 0 2px gray;
+}
+.profile-dropdown > li {
+  margin-bottom: .5rem;
+  font-size: 14px;
+}
+
+.drop_down_logout_button {
+  background-color:white;
+  border:none;
+  color:black;
+  font-size:14px;
 }
 
 .hidden {
@@ -69,7 +86,7 @@
 }
 
 .fa-message, .fa-bell, .fa-magnifying-glass,  .addBus,
-.nav_login_button, .nav_signup_button {
+.nav_login_button, .nav_signup_button, .drop_down_profile_link {
   cursor: pointer;
 }
 

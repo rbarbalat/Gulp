@@ -4,10 +4,11 @@ import { logout } from "../../store/session";
 import OpenModalButton from "../OpenModalButton";
 import LoginFormModal from "../LoginFormModal";
 import SignupFormModal from "../SignupFormModal";
-import { NavLink } from "react-router-dom";
+import { NavLink, useHistory } from "react-router-dom";
 
 function ProfileButton({ user }) {
   const dispatch = useDispatch();
+  const history = useHistory();
   const [showMenu, setShowMenu] = useState(false);
   const ulRef = useRef();
 
@@ -35,42 +36,25 @@ function ProfileButton({ user }) {
     dispatch(logout());
   };
 
+  function profile()
+  {
+    history.push(`/users/${user.id}`)
+  }
+
   const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
   const closeMenu = () => setShowMenu(false);
 
-  //replace OpenModalButtons with regular links to the the login/sign up pages
   return (
     <>
       <button onClick={openMenu}>
         <i className="fas fa-user-circle" />
       </button>
       <ul className={ulClassName} ref={ulRef}>
-        {user ? (
-          <>
             <li>{user.username}</li>
             <li>{user.email}</li>
-            <li>
-              <button onClick={handleLogout}>Log Out</button>
-            </li>
-          </>
-        ) : (
-          <>
-            {/* <OpenModalButton
-              buttonText="Log In"
-              onItemClick={closeMenu}
-              modalComponent={<LoginFormModal />}
-            />
-
-            <OpenModalButton
-              buttonText="Sign Up"
-              onItemClick={closeMenu}
-              modalComponent={<SignupFormModal />}
-            /> */}
-            <div><NavLink to="/login" onClick={closeMenu}>Log In</NavLink></div>
-            <div><NavLink to="/signup" onClick={closeMenu}>Sign Up</NavLink></div>
-          </>
-        )}
-      </ul>
+            <li className="drop_down_profile_link" onClick={profile}>My Profile</li>
+            <li onClick={handleLogout}>Log Out</li>
+        </ul>
     </>
   );
 }
