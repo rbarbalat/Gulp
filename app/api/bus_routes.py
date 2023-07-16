@@ -130,9 +130,21 @@ def delete_business_by_id(id):
     if current_user.id != bus.owner_id:
         return {"error": "not authorized"}, 403
 
-    db.session.delete(bus)
-    db.session.commit()
-    return {"message": "Successfully Deleted"}
+    if bus.prev_url:
+        aws = remove_file_from_s3(bus.prev_url)
+        if aws is True:
+            db.session.delete(bus)
+            db.session.commit()
+            return {"message": "Successfully Deleted"}
+        else:
+            db.session.delete(bus)
+            db.session.commit()
+            # in this case aws = { "errors": str(e) }
+            return {
+                "message": "The business was deleted but their was an AWS error",
+                "error": aws["errors"]
+                }
+        #look up the right response code later
 
 #CREATE A BUSINESS
 @bus_routes.route("/", methods = ["POST"])

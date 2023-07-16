@@ -117,32 +117,36 @@ export default function BusForm({edit})
             <div className ="add_your_business">Add Your Business</div>
             <form onSubmit={onSubmit} encType="multipart/form-data">
                 <p><input type="text" name="name" placeholder="Name" value={name} onChange={e => setName(e.target.value)} required/></p>
-                {valErrors.name && <p>{valErrors.name}</p>}
+                {valErrors.name && <p className="bus_form_errors">{valErrors.name}</p>}
 
                 {/* change to textarea later */}
                 <p><input type="text" name="description" placeholder="Description" value={description} onChange={e => setDescription(e.target.value)} required/></p>
-                {valErrors.description && <p>{valErrors.description}</p>}
+                {valErrors.description && <p className="bus_form_errors">{valErrors.description}</p>}
 
                 <p><input type="text" name="address" placeholder="Address" value={address} onChange={e => setAddress(e.target.value)} required/></p>
-                {valErrors.address && <p>{valErrors.address}</p>}
+                {valErrors.address && <p className="bus_form_errors">{valErrors.address}</p>}
 
                 <p><input type="text" name="city" placeholder="City" value={city} onChange={e => setCity(e.target.value)} required/></p>
-                {valErrors.city && <p>{valErrors.city}</p>}
+                {valErrors.city && <p className="bus_form_errors">{valErrors.city}</p>}
 
                 <p><input type="text" name="state" placeholder="State" value={state} onChange={e => setState(e.target.value)} required/></p>
-                {valErrors.state && <p>{valErrors.state}</p>}
+                {valErrors.state && <p className="bus_form_errors">{valErrors.state}</p>}
+
+                <p>Mandatory Preview Image</p>
 
                 <p><input type="file" accept="image/*" name="prev_url" placeholder="Preview Image Url" onChange={e => handleImage(e)} required/></p>
-                {valErrors.prev_url && <p>{valErrors.prev_url}</p>}
+                {valErrors.prev_url && <p className="bus_form_errors">{valErrors.prev_url}</p>}
+
+                <p>Optional Images</p>
 
                 <p><input type="text" name="first" placeholder="Optional Image Url" value={first} onChange={e => setFirst(e.target.value)}/></p>
-                {valErrors.first && <p>{valErrors.first}</p>}
+                {valErrors.first && <p className="bus_form_errors">{valErrors.first}</p>}
 
                 <p><input type="text" name="second" placeholder="Optional Image Url" value={second} onChange={e => setSecond(e.target.value)}/></p>
-                {valErrors.second && <p>{valErrors.second}</p>}
+                {valErrors.second && <p className="bus_form_errors">{valErrors.second}</p>}
 
                 <p><input type="text" name="third" placeholder="Optional Image Url" value={third} onChange={e => setThird(e.target.value)}/></p>
-                {valErrors.third && <p>{valErrors.third}</p>}
+                {valErrors.third && <p className="bus_form_errors">{valErrors.third}</p>}
 
                 <button type="submit">Submit</button>
             </form>
