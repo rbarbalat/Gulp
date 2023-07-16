@@ -15,7 +15,7 @@ export default function BusForm({edit})
     const [city, setCity] = useState(edit ? business.city : "");
     const [state, setState] = useState(edit ? business.state : "");
     const [address, setAddress] = useState(edit ? business.address : "");
-    const [prev_url, setPrevUrl] = useState(edit ? business.preview_image : "");
+    const [prev_url, setPrevUrl] = useState(edit ? business.preview_image : undefined);
 
     const [first, setFirst] = useState(
         edit ?
@@ -52,19 +52,41 @@ export default function BusForm({edit})
     }, [])
     //don't think you need anything in the dep array, took out business_id
 
+
+    const handleImage = (e) => {
+        setPrevUrl(e.target.files[0])
+        //setImagePreview(URL.createObjectURL(e.target.files[0]))
+      };
+
     async function onSubmit(event)
     {
         event.preventDefault();
         //reusing business as a name of variable but looks ok in this scope
-        const business = {name, description, city, state, address, prev_url }
-        if(first) business.first = first;
-        if(second) business.second = second;
-        if(third) business.third = third;
+        //pre_aws format
+        // const business = {name, description, city, state, address, prev_url }
+        // if(first) business.first = first;
+        // if(second) business.second = second;
+        // if(third) business.third = third;
+        //pre_aws format
+
+        const formData = new FormData();
+        formData.append("name", name);
+        formData.append("description", description);
+        formData.append("city", city);
+        formData.append("state", state);
+        formData.append("address", address);
+        formData.append("prev_url", prev_url);
+        //maybe change preview_image on form if doesn't work
+        if(first) business.first = formData.append("first", first);
+        if(second) business.second = formData.append("second", second);
+        if(third) business.third = formData.append("third", third);
+
+        const new_business = formData;
 
         let res;
         if(!edit)
         {
-            res = await dispatch(thunkReceiveBusiness(business));
+            res = await dispatch(thunkReceiveBusiness(new_business));
             console.log("print server response inside onSubmit function");
             console.log(res);
         }else{
@@ -93,7 +115,7 @@ export default function BusForm({edit})
 
         <div className = "bus_form_wrapper">
             <div className ="add_your_business">Add Your Business</div>
-            <form onSubmit={onSubmit}>
+            <form onSubmit={onSubmit} encType="multipart/form-data">
                 <p><input type="text" name="name" placeholder="Name" value={name} onChange={e => setName(e.target.value)} required/></p>
                 {valErrors.name && <p>{valErrors.name}</p>}
 
@@ -110,7 +132,7 @@ export default function BusForm({edit})
                 <p><input type="text" name="state" placeholder="State" value={state} onChange={e => setState(e.target.value)} required/></p>
                 {valErrors.state && <p>{valErrors.state}</p>}
 
-                <p><input type="text" name="prev_url" placeholder="Preview Image Url" value={prev_url} onChange={e => setPrevUrl(e.target.value)} required/></p>
+                <p><input type="file" accept="image/*" name="prev_url" placeholder="Preview Image Url" onChange={e => handleImage(e)} required/></p>
                 {valErrors.prev_url && <p>{valErrors.prev_url}</p>}
 
                 <p><input type="text" name="first" placeholder="Optional Image Url" value={first} onChange={e => setFirst(e.target.value)}/></p>

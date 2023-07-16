@@ -92,10 +92,9 @@ export const thunkReceiveBusiness = (business) => async (dispatch) => {
     try {
         const options = {
             method: "Post",
-            headers: { "Content-Type":  "application/json" },
-            body: JSON.stringify(business)
-            // no header when using aws
-            // body: business whe using aws
+            // headers: { "Content-Type":  "application/json" },
+            // body: JSON.stringify(business)
+            body: business
         }
         const res = await fetch(`/api/businesses/`, options);
         if(res.ok)
