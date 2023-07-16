@@ -1,0 +1,62 @@
+/* .bus_form_h1 {
+    margin-left: 15%;
+    margin-right: 15%;
+    display:flex;
+    flex-direction:row;
+    justify-content:flex-end;
+} */
+
+.add_your_business {
+    font-weight:bold;
+    font-size:20px;
+    display: flex;
+    flex-direction:row;
+    justify-content:center;
+}
+
+.bus_form_page_wrapper {
+    margin-left: 15%;
+    margin-right: 15%;
+
+    margin-top:20%;
+
+    height:382px;
+
+    display:flex;
+    flex-direction:row;
+    /* justify-content:space-between; */
+    gap: 5%;
+}
+
+.bus_form_right_image_wrapper {
+    height: 100%;
+    width: 65%;
+}
+.bus_form_logo_image {
+    height: 100%;
+    width: 100%;
+}
+
+.bus_form_wrapper {
+    height: 100%;
+    width: 35%;
+
+    display:flex;
+    flex-direction: column;
+    justify-content:center;
+    gap: 5%;
+}
+
+.bus_form_wrapper input {
+    width: 100%;
+    height: 27px;
+}
+.bus_form_wrapper button {
+    width: 100%;
+    height: 40px;
+    background-color: red;
+    color:white;
+    font-weight:bold;
+    font-size:15px;
+    cursor:pointer;
+}

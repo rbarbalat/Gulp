@@ -86,7 +86,8 @@
 }
 
 .fa-message, .fa-bell, .fa-magnifying-glass,  .addBus,
-.nav_login_button, .nav_signup_button, .drop_down_profile_link {
+.nav_login_button, .nav_signup_button,
+.drop_down_profile_link, .drop_down_profile_logout {
   cursor: pointer;
 }
 

@@ -49,8 +49,8 @@ export default function BusForm({edit})
             console.log("USE EFFECT")
             dispatch(thunkLoadSingleBusiness(business_id));
         }
-    }, [business_id])
-    //check if business_id needs to be in the dep array
+    }, [])
+    //don't think you need anything in the dep array, took out business_id
 
     async function onSubmit(event)
     {
@@ -88,75 +88,49 @@ export default function BusForm({edit})
 
     // if(Object.keys(business).length === 0) return <div>loading</div>
     return(
+
+    <div className="bus_form_page_wrapper">
+
         <div className = "bus_form_wrapper">
-            {/* might need to specify some kind of form method for python backend? */}
-        <form onSubmit={onSubmit}>
-            <div>
-                <input type="text" name="name" placeholder="Name"
-                        value={name} onChange={e => setName(e.target.value)}
-                    />
-            </div>
-            {valErrors.name && <p>{valErrors.name}</p>}
+            <div className ="add_your_business">Add Your Business</div>
+            <form onSubmit={onSubmit}>
+                <p><input type="text" name="name" placeholder="Name" value={name} onChange={e => setName(e.target.value)} required/></p>
+                {valErrors.name && <p>{valErrors.name}</p>}
 
-            {/* change to textarea later */}
-            <div>
-                <input type="text" name="description" placeholder="Description"
-                        value={description} onChange={e => setDescription(e.target.value)}
-                    />
-            </div>
-            {valErrors.description && <p>{valErrors.description}</p>}
+                {/* change to textarea later */}
+                <p><input type="text" name="description" placeholder="Description" value={description} onChange={e => setDescription(e.target.value)} required/></p>
+                {valErrors.description && <p>{valErrors.description}</p>}
 
-            <div>
-            <input type="text" name="address" placeholder="Address"
-                        value={address} onChange={e => setAddress(e.target.value)}
-                    />
-            </div>
-            {valErrors.address && <p>{valErrors.address}</p>}
+                <p><input type="text" name="address" placeholder="Address" value={address} onChange={e => setAddress(e.target.value)} required/></p>
+                {valErrors.address && <p>{valErrors.address}</p>}
 
-            <div>
-                <input type="text" name="city" placeholder="City"
-                        value={city} onChange={e => setCity(e.target.value)}
-                    />
-            </div>
-            {valErrors.city && <p>{valErrors.city}</p>}
+                <p><input type="text" name="city" placeholder="City" value={city} onChange={e => setCity(e.target.value)} required/></p>
+                {valErrors.city && <p>{valErrors.city}</p>}
 
-            <div>
-                <input type="text" name="state" placeholder="State"
-                        value={state} onChange={e => setState(e.target.value)}
-                    />
-            </div>
-            {valErrors.state && <p>{valErrors.state}</p>}
+                <p><input type="text" name="state" placeholder="State" value={state} onChange={e => setState(e.target.value)} required/></p>
+                {valErrors.state && <p>{valErrors.state}</p>}
 
-            <div>
-                <input type="text" name="prev_url" placeholder="Preview Image Url"
-                        value={prev_url} onChange={e => setPrevUrl(e.target.value)}
-                    />
-            </div>
-            {valErrors.prev_url && <p>{valErrors.prev_url}</p>}
+                <p><input type="text" name="prev_url" placeholder="Preview Image Url" value={prev_url} onChange={e => setPrevUrl(e.target.value)} required/></p>
+                {valErrors.prev_url && <p>{valErrors.prev_url}</p>}
 
-            <div>
-                <input type="text" name="first" placeholder="Optional Image Url"
-                        value={first} onChange={e => setFirst(e.target.value)}
-                    />
-            </div>
-            {valErrors.first && <p>{valErrors.first}</p>}
+                <p><input type="text" name="first" placeholder="Optional Image Url" value={first} onChange={e => setFirst(e.target.value)}/></p>
+                {valErrors.first && <p>{valErrors.first}</p>}
 
-            <div>
-            <input type="text" name="second" placeholder="Optional Image Url"
-                        value={second} onChange={e => setSecond(e.target.value)}
-                    />
-            </div>
-            {valErrors.second && <p>{valErrors.second}</p>}
+                <p><input type="text" name="second" placeholder="Optional Image Url" value={second} onChange={e => setSecond(e.target.value)}/></p>
+                {valErrors.second && <p>{valErrors.second}</p>}
 
-            <div>
-            <input type="text" name="third" placeholder="Optional Image Url"
-                        value={third} onChange={e => setThird(e.target.value)}
-                    />
-            </div>
-            {valErrors.third && <p>{valErrors.third}</p>}
+                <p><input type="text" name="third" placeholder="Optional Image Url" value={third} onChange={e => setThird(e.target.value)}/></p>
+                {valErrors.third && <p>{valErrors.third}</p>}
 
-            <button type="submit">Submit</button>
-        </form>
+                <button type="submit">Submit</button>
+            </form>
         </div>
+
+        <div className = "bus_form_right_image_wrapper">
+            <img className ="bus_form_logo_image" alt="logo" src="https://s3-media0.fl.yelpcdn.com/assets/2/www/img/7922e77f338d/signup/signup_illustration.png"></img>
+        </div>
+
+    </div>
+
     )
 }
