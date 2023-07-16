@@ -59,7 +59,7 @@ export default function ReviewCard({review, user, business_id})
                     {
                         review.images.map(image => (
                             <div key = {image.id} className = "submitted_image_wrapper">
-                                <img className = "submitted_image"></img>
+                                <img className = "submitted_image" src={image.url} alt="rev_preview_image"></img>
                             </div>
                         ))
                     }

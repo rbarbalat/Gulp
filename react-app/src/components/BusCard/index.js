@@ -18,8 +18,8 @@ export default function BusCard({business, user})
     return(
         <div className = "bus_card_wrapper">
             <div className = "preview_image_wrapper">
-                {/* <img className ="bus_preview" src={business.preview_image}></img> */}
-                <img className ="bus_preview"></img>
+                <img alt="bus_preview_image" className ="bus_preview" src={business.preview_image}></img>
+                {/* <img className ="bus_preview"></img> */}
             </div>
             <div className = "bus_info_wrapper">
                 <div className="bus_card_name_and_buttons_wrapper">
