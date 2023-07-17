@@ -17,7 +17,7 @@ def integer_one_through_five(form, field):
 
 class ReviewForm(FlaskForm):
     #change to TextAreaField when changing front end to TextArea
-    review = StringField("review", validators=[DataRequired(), Length(min=20, max=2000)])
+    review = StringField("review", validators=[DataRequired(), Length(min=20, max=500)])
     #IntegerField coerces inputs into integers before validations, can't use it
     rating = FloatField("rating", validators=[integer_one_through_five, DataRequired()])
     first = FileField("preview image", validators=[Optional(), FileRequired(), FileAllowed(list(ALLOWED_EXTENSIONS))])
