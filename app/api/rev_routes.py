@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify, request
 from flask_login import current_user
-# from app.api.aws import get_unique_filename, upload_file_to_s3, remove_file_from_s3
+from app.api.aws import get_unique_filename, upload_file_to_s3, remove_file_from_s3
 from app.models import db, User, Business, Review, BusImage, RevImage
 from app.forms.review_form import ReviewForm
 
@@ -35,11 +35,25 @@ def delete_review_by_id(id):
     if current_user.id != review.reviewer_id:
         return {"error": "Not authorized"}
 
-    #have to remove any rev images from Amazon!!
+    #remove prev.url any images review.images from aws
+    errors = []
+    urls = [image.url for image in review.images]
+    for url in urls:
+        if url: #should always be true but just in case
+            aws = remove_file_from_s3(url)
+            if isinstance(aws, dict):
+                errors.append(aws["errors"])
+
     db.session.delete(review)
     db.session.commit()
 
-    return {"message": "Successfully Deleted"}
+    if not errors:
+        return {"message": "Successfully deleted the business"}
+    else:
+        return {
+            "message": "Successfully deleted but have AWS errors",
+            "errors": errors
+        }
 
 #Edit Review by Id
 @rev_routes.route("/<int:id>", methods = ["PUT"])
@@ -62,47 +76,37 @@ def edit_review_by_id(id):
         # check this error code
 
     if form.validate_on_submit():
+
+        existing_images = review.images
+        keys = ["first", "second", "third"]
+        new_urls = []
+        for i in range(3):
+           if form.data[keys[i]]:
+                if len(existing_images) >= i + 1:
+                    url_to_remove = existing_images[i].url
+                    val = form.data[keys[i]]
+                    val.filename = get_unique_filename(val.filename)
+                    optional_upload = upload_file_to_s3(val)
+                    if "url" in optional_upload:
+                        existing_images[i].url = optional_upload["url"]
+                        aws = remove_file_from_s3(url_to_remove)
+                else:
+                    val = form.data[keys[i]]
+                    val.filename = get_unique_filename(val.filename)
+                    optional_upload = upload_file_to_s3(val)
+                    if "url" in optional_upload:
+                        new_image = RevImage(review_id = id, url = optional_upload["url"])
+                        existing_images.append(new_image)
+                        db.session.add(new_image)
+                        db.session.commit()
+
         review.rating = form.data["rating"]
         review.review = form.data["review"]
         db.session.commit()
 
-        existing_images = review.images
-        keys = ["first", "second", "third"]
-        for i in range(3):
-            # works if you force an order of first, second, third on the front end
-            # keys[i] in form.data True for all i in range(3) but its value might be None
-            if form.data[keys[i]]:
-                if len(existing_images) >= i + 1:
-                    existing_images[i].url = form.data[keys[i]]
-                else:
-                    new_image = RevImage(review_id = id, url = form.data[keys[i]])
-                    db.session.add(new_image)
-                    existing_images.append(new_image)
-            else:
-                #if user sends back an empty string, that means delete (for now)
-                if len(existing_images) >= i + 1:
-                    existing_images[i].url = ""
-
-
-        db.session.commit()
-        del_images = []
-        retain_images = []
-        for image in existing_images:
-            if image.url == "":
-                del_images.append(image)
-            else:
-                retain_images.append(image)
-
-        #these would have to be removed from Amazon as well
-        _ = [db.session.delete(image) for image in del_images]
-        db.session.commit()
-
-        retain_images = [image.to_dict() for image in retain_images]
-        # singleRev: {...state.singleRev, ...action.review}
-        # should still have the other key/value pairs in the store
         return {
             **review.to_dict(),
-            "images": retain_images
+            "images": [image.to_dict() for image in review.images]
         }, 201
 
     return {"error": form.errors}, 400
@@ -128,3 +132,32 @@ def get_review_by_id(id):
         "images": [image.to_dict() for image in review.images],
         "reviewer": { **current_user.to_dict(), "numReviews": len(current_user.user_reviews) }
     }
+
+#DELETE Review Image by Id
+@rev_routes.route("/images/<int:id>", methods = ["DELETE"])
+def delete_business_image_by_id(id):
+    if not current_user.is_authenticated:
+        return {"error": "not authenticated"}, 401
+
+    image = RevImage.query.get(id)
+    if not image:
+        return {"error": "Image not found"}, 404
+
+    if current_user.id != image.review.reviewer_id:
+        return {"error": "not authorized"}, 403
+
+    errors = []
+    if image.url: #should always be true but just in case
+        aws = remove_file_from_s3(image.url)
+        if isinstance(aws, dict):
+            errors.append(aws["errors"])
+
+    db.session.delete(image)
+    db.session.commit()
+
+    if not errors:
+        return {"message": "Successfully deleted the business image"}
+    else:
+        return {
+            "message": f"Successfully deleted the image but have the following error {errors[0]}"
+        }
