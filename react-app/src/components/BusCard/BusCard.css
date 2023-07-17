@@ -28,3 +28,9 @@
     width: 100%;
      border: 2px dashed purple;
 }
+
+.average_and_stars{
+    display:flex;
+    flex-direction:row;
+    gap: .2rem;
+}

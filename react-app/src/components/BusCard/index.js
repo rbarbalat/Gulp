@@ -2,6 +2,7 @@ import {useHistory} from "react-router-dom";
 import {useDispatch} from "react-redux";
 // import {thunkLoadSingleBusiness } from "../../store/business";
 import { linkEditBus, deleteBusiness } from "../../helpers";
+import StarRatingInput from "../StarRatingInput";
 import "./BusCard.css";
 
 export default function BusCard({business, user})
@@ -34,7 +35,10 @@ export default function BusCard({business, user})
                 </div>
                 {
                     business.average ?
-                    <div>{String(business.average).slice(0,4)} stars</div>
+                    <div className="average_and_stars">
+                        <StarRatingInput rating={Math.round(business.average)} form={false}/>
+                        <div>({String(business.average).slice(0,4)})</div>
+                    </div>
                     :
                     null
                 }

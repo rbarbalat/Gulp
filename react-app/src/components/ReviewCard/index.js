@@ -1,7 +1,5 @@
 import { useDispatch } from "react-redux";
-// import { thunkDeleteReview } from "../../store/review";
-// import { thunkLoadSingleBusiness } from "../../store/business";
-// import { thunkLoadSingleReview } from "../../store/review";
+import StarRatingInput from "../StarRatingInput";
 import { useHistory } from "react-router-dom";
 import { linkEditReview, deleteReview } from "../../helpers";
 import "./ReviewCard.css";
@@ -37,8 +35,6 @@ export default function ReviewCard({review, user, business_id})
                 {
                     isReviewer &&
                     <div className="rev_card_buttons_wrapper">
-                        {/* <button onClick={linkEdit}>Edit Review</button> */}
-                        {/* <button onClick={deleteReview}>Delete Review</button> */}
                         <button onClick={() => linkEditReview(review.id, dispatch, history)}>Edit Review</button>
                         <button onClick={() => deleteReview(review.id, dispatch, business_id)}>Delete Review</button>
                     </div>
@@ -46,8 +42,10 @@ export default function ReviewCard({review, user, business_id})
             </div>
 
             <div className = "reviewer_rating">
-                {review.rating} stars {review.updated_at ? review.updated_at : review.created_at}
+                <StarRatingInput rating={review.rating} form={false}/>
             </div>
+
+            {/* {review.updated_at ? review.updated_at : review.created_at} */}
 
             <div className = "review_text">
                 {review.review}

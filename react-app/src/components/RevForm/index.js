@@ -127,18 +127,8 @@ export default function RevForm({edit})
                 <div className ="add_your_review">Create Your Review</div>
             }
             <form encType="multipart/form-data" onSubmit={onSubmit}>
-                <div>
-                    <div>How many stars?</div>
-                    <StarRatingInput onRatingChange={onRatingChange} rating={rating}/>
-                    {/* <StarRatingInputRatingInput disabled={false} onChange={onChange} rating={rating}/> */}
-                    {/* <select value={rating} onChange={e => setRating(e.target.value)}>
-                            <option>1</option>
-                            <option>2</option>
-                            <option>3</option>
-                            <option>4</option>
-                            <option>5</option>
-                    </select> */}
-                </div>
+
+                <StarRatingInput form={true} onRatingChange={onRatingChange} rating={rating}/>
                 {valErrors.rating && <p className="rev_form_errors">{valErrors.rating}</p>}
 
                 <div>
