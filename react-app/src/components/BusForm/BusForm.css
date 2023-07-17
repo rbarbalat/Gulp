@@ -18,18 +18,21 @@
     margin-left: 15%;
     margin-right: 15%;
 
-    margin-top:20%;
+    margin-top:10%;
+    margin-bottom: 5%;
 
-    height:382px;
+    /* height:382px; */
 
     display:flex;
     flex-direction:row;
+    align-items:center;
     /* justify-content:space-between; */
     gap: 5%;
 }
 
 .bus_form_right_image_wrapper {
-    height: 100%;
+    /* height: 100%; */
+    height: 382px;
     width: 65%;
 }
 .bus_form_logo_image {
@@ -47,11 +50,16 @@
     gap: 5%;
 }
 
-.bus_form_wrapper input {
+.not_file_input {
     width: 100%;
     height: 27px;
 }
-.bus_form_wrapper button {
+
+.file_input {
+    height: 27px;
+}
+
+.bus_form_submit_button {
     width: 100%;
     height: 40px;
     background-color: red;
@@ -64,4 +72,38 @@
 .bus_form_errors {
     color: red;
     font-size:12px;
+}
+
+.form_images {
+    height: 50px;
+    width: 50px;
+}
+
+.bus_form_bottom_images {
+    display: flex;
+    flex-direction:row;
+    gap:1rem;
+}
+
+/* .optionalImagePar {
+    display:flex;
+    flex-direction:column;
+    align-items: center;
+} */
+
+.image_and_delete_button {
+    display:flex;
+    flex-direction: row;
+    justify-content:center;
+    gap:.2rem;
+}
+
+.bus_form_delete_image_button{
+    /* width: 50px;
+    height: 25px; */
+    background-color: red;
+    color:white;
+    font-weight:bold;
+    font-size:15px;
+    cursor:pointer;
 }

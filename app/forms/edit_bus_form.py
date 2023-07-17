@@ -15,7 +15,7 @@ def bus_name_exists(form, field):
     if bus:
         raise ValidationError('Business name is already in use.')
 
-class BusForm(FlaskForm):
+class EditBusForm(FlaskForm):
     # name = StringField("name", validators=[DataRequired(), bus_name_exists, Length(min=2, max=50)], )
     # the bus_name_exists was applied on edits as well...
     name = StringField("name", validators=[DataRequired(), Length(min=2, max=50)], )
@@ -24,8 +24,9 @@ class BusForm(FlaskForm):
     city = StringField("state", validators=[DataRequired(), Length(min=2, max=50)] )
     state = StringField("state", validators=[DataRequired(), Length(min=2, max=50)] )
 
-    # prev_url = StringField("preview image", validators=[DataRequired(), URL()])
-    prev_url = FileField("preview image", validators=[FileRequired(), FileAllowed(list(ALLOWED_EXTENSIONS))])
+    #changed prev_url to optional in the edit form
+    prev_url = FileField("preview image", validators=[Optional(), FileRequired(), FileAllowed(list(ALLOWED_EXTENSIONS))])
+
     first = FileField("preview image", validators=[Optional(), FileRequired(), FileAllowed(list(ALLOWED_EXTENSIONS))])
     second = FileField("preview image", validators=[Optional(), FileRequired(), FileAllowed(list(ALLOWED_EXTENSIONS))])
     third = FileField("preview image", validators=[Optional(), FileRequired(), FileAllowed(list(ALLOWED_EXTENSIONS))])

@@ -3,6 +3,7 @@ from flask_login import current_user
 from app.api.aws import get_unique_filename, upload_file_to_s3, remove_file_from_s3
 from app.models import db, User, Business, Review, BusImage, RevImage
 from app.forms.bus_form import BusForm
+from app.forms.edit_bus_form import EditBusForm
 from app.forms.review_form import ReviewForm
 
 bus_routes = Blueprint("businesses", __name__)
@@ -231,7 +232,7 @@ def edit_business(id):
     if current_user.id != bus.owner_id:
         return {"error": "Not authorized"}, 403
 
-    form = BusForm()
+    form = EditBusForm()
     #form["csrf_token"].data = request.cookies.get("csrf_token")
     if "csrf_token" in request.cookies:
         form["csrf_token"].data = request.cookies["csrf_token"]
@@ -240,7 +241,43 @@ def edit_business(id):
         # check this error code
 
     if form.validate_on_submit():
-        bus.prev_url = form.data["prev_url"]
+        # if the user did not change the picture, the frontend sends back nothing
+        if form.data["prev_url"]:
+            prev_url = form.data["prev_url"]
+            prev_url.filename = get_unique_filename(prev_url.filename)
+            upload = upload_file_to_s3(prev_url)
+            if "url" not in upload:
+                return {"error": "There was a problem with your preview image"}, 400
+            bus.prev_url = upload["url"]
+
+        keys = ["first", "second", "third"]
+        # bool_keys = ["update_first", "update_second", "update_third"]
+        existing_images = bus.images
+        new_urls = []
+        for i in range(3):
+            if form.data[keys[i]]:
+                # disallow updating second/third if first not updated, disallow updating third if not first/second
+                # if the first condition fails, the second won't be tested so there won't be a key error
+                # form.data[keys[i]] is a file not a url, need form.data[bool_keys[i]]
+                if len(existing_images) >= i + 1:
+                    # delete_from_aws.append(existing_images[i].url)
+                    temp = existing_images[i].url
+                    val = form.data[keys[i]]
+                    val.filename = get_unique_filename(val.filename)
+                    optional_upload = upload_file_to_s3(val)
+                    if "url" in optional_upload:
+                        existing_images[i].url = optional_upload["url"]
+                        aws = remove_file_from_s3(temp)
+                else:
+                    val = form.data[keys[i]]
+                    val.filename = get_unique_filename(val.filename)
+                    optional_upload = upload_file_to_s3(val)
+                    if "url" in optional_upload:
+                        # new_urls.append(optional_upload["url"])
+                        new_image = BusImage(business_id = id, url = optional_upload["url"])
+                        existing_images.append(new_image)
+                        db.session.add(new_image)
+                        db.session.commit()
 
         bus.name = form.data["name"]
         bus.description = form.data["description"]
@@ -253,48 +290,49 @@ def edit_business(id):
 
         #don't allow deletions of images in the update form
         #separate delete button
-        existing_images = bus.images
-        keys = ["first", "second", "third"]
-        for i in range(3):
-            # works if you force an order of first, second, third on the front end
-            # keys[i] in form.data True for all i in range(3) but its value might be None
-            if form.data[keys[i]]:
-                if len(existing_images) >= i + 1:
-                    existing_images[i].url = form.data[keys[i]]
-                else:
-                    new_image = BusImage(business_id = id, url = form.data[keys[i]])
-                    db.session.add(new_image)
-                    existing_images.append(new_image)
-            else:
-                #if user sends back an empty string, that means delete (for now)
-                if len(existing_images) >= i + 1:
-                    existing_images[i].url = ""
+        # existing_images = bus.images
+        # keys = ["first", "second", "third"]
+        # for i in range(3):
+        #     # works if you force an order of first, second, third on the front end
+        #     # keys[i] in form.data True for all i in range(3) but its value might be None
+        #     if form.data[keys[i]]:
+        #         if len(existing_images) >= i + 1:
+        #             existing_images[i].url = form.data[keys[i]]
+        #         else:
+        #             new_image = BusImage(business_id = id, url = form.data[keys[i]])
+        #             db.session.add(new_image)
+        #             existing_images.append(new_image)
+        #     else:
+        #         #if user sends back an empty string, that means delete (for now)
+        #         if len(existing_images) >= i + 1:
+        #             existing_images[i].url = ""
 
         #commit the new images added in line 233
-        db.session.commit()
-        del_images = []
-        retain_images = []
-        for image in existing_images:
-            if image.url == "":
-                del_images.append(image)
-            else:
-                retain_images.append(image)
+        # db.session.commit()
+        # del_images = []
+        # retain_images = []
+        # for image in existing_images:
+        #     if image.url == "":
+        #         del_images.append(image)
+        #     else:
+        #         retain_images.append(image)
 
         #these would have to be removed from Amazon as well
-        _ = [db.session.delete(image) for image in del_images]
-        db.session.commit()
+        # _ = [db.session.delete(image) for image in del_images]
+        # db.session.commit()
 
-        retain_images = [image.to_dict() for image in retain_images]
+        # retain_images = [image.to_dict() for image in retain_images]
 
         #remove lines 236 to 254 EXCLUDING db.session.commit() on 252
         #this is the end for the original working edit route that doesn't allow for deletions
-        images = [image.to_dict() for image in existing_images]
+        # images = [image.to_dict() for image in existing_images]
         # singleBus: {...state.singleBus, ...action.business}
         # should still the reviews, numReviews, average keys in the store b/ they aren't being overwritten
         return {
             **bus.to_dict(),
+            "images": [image.to_dict() for image in bus.images]
             # "images": images,
-            "images": retain_images
+            # "images": retain_images
         }, 201
 
     return {"error": form.errors}, 400
