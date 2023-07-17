@@ -5,7 +5,7 @@ from flask_wtf.file import FileField, FileAllowed, FileRequired
 # from app.api.aws import ALLOWED_EXTENSIONS
 from app.models import Review
 
-def integer_zero_through_five(form, field):
+def integer_one_through_five(form, field):
     """
     Returns a validation error if a user's submission is not in [0,1,2,3,4,5]
     """
@@ -19,7 +19,7 @@ class ReviewForm(FlaskForm):
     #change to TextAreaField when changing front end to TextArea
     review = StringField("review", validators=[DataRequired(), Length(min=20, max=2000)])
     #IntegerField coerces inputs into integers before validations, can't use it
-    rating = FloatField("rating", validators=[integer_zero_through_five])
+    rating = FloatField("rating", validators=[integer_one_through_five, DataRequired()])
     first = StringField("image", validators=[Optional(), URL()])
     second = StringField("image", validators=[Optional(), URL()])
     third = StringField("image", validators=[Optional(), URL()])
