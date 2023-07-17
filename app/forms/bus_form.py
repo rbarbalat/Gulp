@@ -16,13 +16,14 @@ def bus_name_exists(form, field):
         raise ValidationError('Business name is already in use.')
 
 class BusForm(FlaskForm):
-    # name = StringField("name", validators=[DataRequired(), bus_name_exists, Length(min=2, max=50)], )
-    # the bus_name_exists was applied on edits as well...
-    name = StringField("name", validators=[DataRequired(), Length(min=2, max=50)], )
-    description = StringField("description", validators=[DataRequired(), Length(min=20, max=2000)] )
-    address = StringField("address", validators=[DataRequired(), Length(min=2, max=100)] )
-    city = StringField("state", validators=[DataRequired(), Length(min=2, max=50)] )
-    state = StringField("state", validators=[DataRequired(), Length(min=2, max=50)] )
+    # the bus_name_exists was applied on edits as well...NEED TO CREATE A DIFFERENT
+    # A SEPARATE EDIT FORM ON WHICH NAME IS NOT A FIELD
+
+    name = StringField("name", validators=[DataRequired(), Length(min=3, max=40)], )
+    description = StringField("description", validators=[DataRequired(), Length(min=20, max=500)] )
+    address = StringField("address", validators=[DataRequired(), Length(min=4, max=100)] )
+    city = StringField("state", validators=[DataRequired(), Length(min=2, max=25)] )
+    state = StringField("state", validators=[DataRequired(), Length(min=2, max=25)] )
 
     # prev_url = StringField("preview image", validators=[DataRequired(), URL()])
     prev_url = FileField("preview image", validators=[FileRequired(), FileAllowed(list(ALLOWED_EXTENSIONS))])

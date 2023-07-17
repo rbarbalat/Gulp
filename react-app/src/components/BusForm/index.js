@@ -87,21 +87,12 @@ export default function BusForm({edit})
 
         const new_business = formData;
 
-        let res;
-        if(!edit)
-        {
-            res = await dispatch(thunkReceiveBusiness(new_business));
-            console.log("print server response inside onSubmit function");
-            console.log(res);
-            history.push(`/businesses/${res.id}`)
-        }else{
-            res = await dispatch(thunkUpdateBusiness(business_id, new_business));
-            console.log("print server response inside onSubmit function");
-            console.log(res);
-            history.push(`/businesses/${business_id}`)
-        }
+        const res = edit ? await dispatch(thunkUpdateBusiness(business_id, new_business))
+                    : await dispatch(thunkReceiveBusiness(new_business));
         if(res.error)
         {
+            console.log("printing error response from inside onSubmit creating/edit a business");
+            console.log(res);
             const errors = {};
             for(let key in res.error)
             {
@@ -109,9 +100,12 @@ export default function BusForm({edit})
             }
             setValErrors(errors);
             return;
+        }else{
+            console.log("printing good response from inside onSubmit creating/editing a business");
+            console.log(res);
+            history.push(`/businesses/${res.id}`);
+            return;
         }
-        // history.push(`/businesses/${res.id}`);
-        return null;
     }
 
     // if(Object.keys(business).length === 0) return <div>loading</div>
