@@ -7,3 +7,17 @@
 .filled {
     color: red;
 }
+
+/* .partial {
+    position: relative;
+    color:red;
+    overflow:hidden;
+}
+
+.partial::before {
+    position: absolute;
+    z-index: index 1;
+    top: 0;
+    left: 0;
+    overflow:hidden;
+} */
