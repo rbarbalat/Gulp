@@ -26,10 +26,6 @@ export default function BusForm({edit})
     const second_url = edit ? (business.images?.length >= 2 ? business.images[1].url : "") : "";
     const third_url =  edit ? (business.images?.length === 3 ? business.images[2].url : "") : "" ;
 
-    console.log(first_url)
-    console.log(second_url)
-    console.log(third_url)
-
     const [valErrors, setValErrors] = useState({});
 
     const sessionUser = useSelector((state) => state.session.user);
@@ -67,19 +63,10 @@ export default function BusForm({edit})
         return null;
     }
     const handleImage = (e, index) => {
-        // if(!edit)
-        // {
-            if(index === 0) setPrev(e.target.files[0])
-            if(index === 1) setFirst(e.target.files[0])
-            if(index === 2) setSecond(e.target.files[0])
-            if(index === 3) setThird(e.target.files[0])
-        // }else{
-        //     if(index === 2 && first != undefined)
-        //     {
-        //         setSecond(e.target.files[0])
-        //     }
-        // }
-        //setImagePreview(URL.createObjectURL(e.target.files[0]))
+        if(index === 0) setPrev(e.target.files[0])
+        if(index === 1) setFirst(e.target.files[0])
+        if(index === 2) setSecond(e.target.files[0])
+        if(index === 3) setThird(e.target.files[0])
       };
 
     async function onSubmit(event)
@@ -93,7 +80,6 @@ export default function BusForm({edit})
         formData.append("state", state);
         formData.append("address", address);
 
-        // if(typeof prev_url !== "string") formData.append("prev_url", prev_url);
         if(prev) formData.append("prev_url", prev);
         if(first) formData.append("first", first);
         if(second) formData.append("second", second);
@@ -174,7 +160,7 @@ export default function BusForm({edit})
                 <p>Optional Images</p>
 
                 <p>
-                    <input className="file_input" type="file" accept="image/*" name="first" placeholder="Optional Image Url" onChange={e => handleImage(e, 1)}/>
+                    <input className="file_input" type="file" accept="image/*" name="first" onChange={e => handleImage(e, 1)}/>
                     { first_url && !first &&
                         <p className="image_and_delete_button">
                             <img className="form_images" src={first_url}></img>
@@ -185,7 +171,7 @@ export default function BusForm({edit})
                 {valErrors.first && <p className="bus_form_errors">{valErrors.first}</p>}
 
                 <p>
-                    <input className="file_input" type="file" accept="image/*" name="second" placeholder="Optional Image Url" onChange={e => handleImage(e, 2)}/>
+                    <input className="file_input" type="file" accept="image/*" name="second" onChange={e => handleImage(e, 2)}/>
                     { second_url && !second &&
                         <p className="image_and_delete_button">
                             <img className="form_images" src={second_url}></img>
@@ -196,7 +182,7 @@ export default function BusForm({edit})
                 {valErrors.second && <p className="bus_form_errors">{valErrors.second}</p>}
 
                 <p>
-                    <input className="file_input" type="file" accept="image/*" name="third" placeholder="Optional Image Url" onChange={e => handleImage(e, 3)}/>
+                    <input className="file_input" type="file" accept="image/*" name="third" onChange={e => handleImage(e, 3)}/>
                     { third_url && !third &&
                         <p className="image_and_delete_button">
                             <img className="form_images" src={third_url}></img>

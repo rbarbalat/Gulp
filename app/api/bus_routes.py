@@ -170,8 +170,6 @@ def create_business():
         prev_url = form.data["prev_url"]
         prev_url.filename = get_unique_filename(prev_url.filename)
         upload = upload_file_to_s3(prev_url)
-        if "url" not in upload:
-            return {"error": "failed b/c of problem with the preview image file"}, 400
 
         # these keys come from the field names in the form
         keys = ["first", "second", "third"]
@@ -182,12 +180,12 @@ def create_business():
                 val = form.data[key]
                 val.filename = get_unique_filename(val.filename)
                 optional_upload = upload_file_to_s3(val)
-                if "url" not in optional_upload:
-                    return {"error": f"failed b/c of problem with optional image file {key}"}
-                optional_uploads.append(optional_upload)
+                if "url" in optional_upload:
+                    optional_uploads.append(optional_upload)
 
         bus = Business()
-        bus.prev_url = upload["url"]
+        if "url" in upload:
+            bus.prev_url = upload["url"]
 
         bus.owner_id = current_user.id
         bus.name = form.data["name"]
@@ -246,9 +244,8 @@ def edit_business(id):
             prev_url = form.data["prev_url"]
             prev_url.filename = get_unique_filename(prev_url.filename)
             upload = upload_file_to_s3(prev_url)
-            if "url" not in upload:
-                return {"error": "There was a problem with your preview image"}, 400
-            bus.prev_url = upload["url"]
+            if "url" in upload:
+                bus.prev_url = upload["url"]
 
         keys = ["first", "second", "third"]
         existing_images = bus.images
@@ -351,9 +348,19 @@ def create_review(id):
         # check this error code
 
     if form.validate_on_submit():
+        # these keys come from the field names in the form
+        keys = ["first", "second", "third"]
+        optional_uploads = []
+        for key in keys:
+            #key is always in form.data but form.data[key] can be None
+            if form.data[key]:
+                val = form.data[key]
+                val.filename = get_unique_filename(val.filename)
+                optional_upload = upload_file_to_s3(val)
+                if "url" in optional_upload:
+                    optional_uploads.append(optional_upload)
 
         review = Review()
-        # can't use form.populate_obj(bus) b/c have to populate multiple objects
 
         review.reviewer_id = current_user.id
         review.business_id = id
@@ -363,14 +370,22 @@ def create_review(id):
         db.session.add(review)
         db.session.commit()
 
-        # https://www.google.com/
-        keys = ["first", "second", "third"]
-        images = [ RevImage(review = review, url = form.data[key])
-            for key in keys if form.data[key] ]
+        images = [ RevImage(review = review, url = optional_upload["url"])
+            for optional_upload in optional_uploads ]
 
         _ = [db.session.add(image) for image in images]
         db.session.commit()
         images = [image.to_dict() for image in images]
+
+        # PRE AWS
+        # keys = ["first", "second", "third"]
+        # images = [ RevImage(review = review, url = form.data[key])
+        #     for key in keys if form.data[key] ]
+
+        # _ = [db.session.add(image) for image in images]
+        # db.session.commit()
+        # images = [image.to_dict() for image in images]
+        # PRE AWS
 
         return {
             **review.to_dict(),

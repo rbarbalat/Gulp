@@ -2,7 +2,7 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, URLField, FloatField
 from wtforms.validators import URL, DataRequired, ValidationError, Length, NumberRange, Optional
 from flask_wtf.file import FileField, FileAllowed, FileRequired
-# from app.api.aws import ALLOWED_EXTENSIONS
+from app.api.aws import ALLOWED_EXTENSIONS
 from app.models import Review
 
 def integer_one_through_five(form, field):
@@ -20,6 +20,6 @@ class ReviewForm(FlaskForm):
     review = StringField("review", validators=[DataRequired(), Length(min=20, max=2000)])
     #IntegerField coerces inputs into integers before validations, can't use it
     rating = FloatField("rating", validators=[integer_one_through_five, DataRequired()])
-    first = StringField("image", validators=[Optional(), URL()])
-    second = StringField("image", validators=[Optional(), URL()])
-    third = StringField("image", validators=[Optional(), URL()])
+    first = FileField("preview image", validators=[Optional(), FileRequired(), FileAllowed(list(ALLOWED_EXTENSIONS))])
+    second = FileField("preview image", validators=[Optional(), FileRequired(), FileAllowed(list(ALLOWED_EXTENSIONS))])
+    third = FileField("preview image", validators=[Optional(), FileRequired(), FileAllowed(list(ALLOWED_EXTENSIONS))])

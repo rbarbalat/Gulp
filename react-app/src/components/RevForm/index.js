@@ -20,9 +20,15 @@ export default function RevForm({edit})
     const edit_rev = useSelector(state => state.reviews.singleRev);
     const [rating, setRating] = useState(edit ? edit_rev?.rating : "");
     const [review, setReview] = useState(edit ? edit_rev?.review : "");
-    const [first, setFirst] = useState("");
-    const [second, setSecond] = useState("");
-    const [third, setThird] = useState("");
+
+    const [first, setFirst] = useState(undefined);
+    const [second, setSecond] = useState(undefined);
+    const [third, setThird] = useState(undefined);
+
+    const first_url = edit ? (edit_rev.images?.length >= 1 ? edit_rev.images[0].url : "") : "";
+    const second_url = edit ? (edit_rev.images?.length >= 2 ? edit_rev.images[1].url : "") : "";
+    const third_url =  edit ? (edit_rev.images?.length === 3 ? edit_rev.images[2].url : "") : "" ;
+
     const [valErrors, setValErrors] = useState({});
     const [loaded, setLoaded] = useState(false);
 
@@ -33,37 +39,45 @@ export default function RevForm({edit})
     const dispatch = useDispatch();
     // const user = useSelector((state) => state.session.user);
 
-    useEffect(() => {
+    useEffect(async () => {
         //consider if(edit && Object.keys(edit_revew).length == 0)
         if(edit)
         {
             console.log("USE EFFECT");
-            dispatch(thunkLoadSingleReview(review_id));
+            const res = await dispatch(thunkLoadSingleReview(review_id));
             setLoaded(true);
         }
     }, [review_id])
+
+    const handleImage = (e, index) => {
+        if(index === 1) setFirst(e.target.files[0])
+        if(index === 2) setSecond(e.target.files[0])
+        if(index === 3) setThird(e.target.files[0])
+      };
 
     async function onSubmit(event)
     {
         event.preventDefault();
         //if the user doesn't change the default rating (1)
         //it won't be accepted by the form, have to explictly make it 1
-        const rev = {
-            rating: rating ? Number(rating) : 1,
-            review
-        };
-        if(first) rev.first = first;
-        if(second) rev.second = second;
-        if(third) rev.third = third;
+        const formData = new FormData();
+        formData.append("rating", rating ? Number(rating) : 1);
+        formData.append("review", review);
+
+        if(first) formData.append("first", first);
+        if(second) formData.append("second", second);
+        if(third) formData.append("third", third);
+
+        const new_review = formData;
 
         let res;
         if(!edit)
         {
-            res = await dispatch(thunkReceiveReview(business_id, rev));
+            res = await dispatch(thunkReceiveReview(business_id, new_review));
             console.log("print server response inside onSubmit function");
             console.log(res);
         }else{
-            res = await dispatch(thunkUpdateReview(review_id, rev));
+            res = await dispatch(thunkUpdateReview(review_id, new_review));
             console.log("print server response inside onSubmit function");
             console.log(res);
         }
@@ -82,7 +96,7 @@ export default function RevForm({edit})
     }
     return (
         <div className = "rev_form_wrapper">
-            <form onSubmit={onSubmit}>
+            <form encType="multipart/form-data" onSubmit={onSubmit}>
                 <div>
                     <select value={rating} onChange={e => setRating(e.target.value)}>
                             <option>1</option>
@@ -102,23 +116,17 @@ export default function RevForm({edit})
                 {valErrors.review && <p>{valErrors.review}</p>}
 
                 <div>
-                <input type="text" name="first" placeholder="Optional Image Url"
-                        value={first} onChange={e => setFirst(e.target.value)}
-                    />
+                    <input className="file_input_rev" type="file" accept="image/*" name="first" onChange={e => handleImage(e, 1)}/>
                 </div>
                 {valErrors.first && <p>{valErrors.first}</p>}
 
                 <div>
-                    <input type="text" name="second" placeholder="Optional Image Url"
-                        value={second} onChange={e => setSecond(e.target.value)}
-                    />
+                    <input className="file_input_rev" type="file" accept="image/*" name="second" onChange={e => handleImage(e, 2)}/>
                 </div>
                 {valErrors.second && <p>{valErrors.second}</p>}
 
                 <div>
-                <input type="text" name="third" placeholder="Optional Image Url"
-                        value={third} onChange={e => setThird(e.target.value)}
-                    />
+                    <input className="file_input" type="file" accept="image/*" name="third" onChange={e => handleImage(e, 3)}/>
                 </div>
                 {valErrors.third && <p>{valErrors.third}</p>}
 
