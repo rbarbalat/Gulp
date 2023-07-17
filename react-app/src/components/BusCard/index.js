@@ -20,7 +20,6 @@ export default function BusCard({business, user})
         <div className = "bus_card_wrapper">
             <div className = "preview_image_wrapper">
                 <img alt="bus_preview_image" className ="bus_preview" src={business.preview_image}></img>
-                {/* <img className ="bus_preview"></img> */}
             </div>
             <div className = "bus_info_wrapper">
                 <div className="bus_card_name_and_buttons_wrapper">
@@ -28,8 +27,8 @@ export default function BusCard({business, user})
                     {
                         isOwner &&
                         <div className = "bus_card_buttons">
-                            <button onClick={() => linkEditBus(business.id, dispatch, history)}>Edit</button>
-                            <button onClick={() => deleteBusiness(business.id, user.id, dispatch, history)}>Delete</button>
+                            <div className="bus_edit" onClick={() => linkEditBus(business.id, dispatch, history)}>Edit</div>
+                            <div className="bus_delete" onClick={() => deleteBusiness(business.id, user.id, dispatch, history)}>Delete</div>
                         </div>
                     }
                 </div>
@@ -37,17 +36,18 @@ export default function BusCard({business, user})
                     business.average ?
                     <div className="average_and_stars">
                         <StarRatingInput rating={Math.round(business.average)} form={false}/>
-                        <div>({String(business.average).slice(0,4)})</div>
+                        <div>{business.numReviews}</div>
+                        {/* <div>({String(business.average).slice(0,4)})</div> */}
                     </div>
                     :
                     null
                 }
-                {
+                {/* {
                     business.numReviews > 0 ?
                     <div>{business.numReviews} reviews</div>
                     :
                     <div>No reviews yet!</div>
-                }
+                } */}
                 {/* <div>{business.numReviews} reviews</div> */}
                 <div>{business.description}</div>
             </div>

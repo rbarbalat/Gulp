@@ -27,13 +27,6 @@ export default function AllBusinesses()
         fetchData()
     }, [dispatch])
 
-    // function individualPage(id)
-    // {
-    //     console.log(id);
-    //     console.log("inside indiv page");
-    //     history.push(`/businesses/${id}`);
-    // }
-
     if(businesses.length === 0) return <div>loading</div>
     return (
         <div className ="all_bus_wrapper">
