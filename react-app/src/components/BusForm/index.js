@@ -159,7 +159,7 @@ export default function BusForm({edit})
                     edit &&
                     <p>
                         <input className="file_input" type="file" accept="image/*" name="prev_url" placeholder="Preview Image Url" onChange={e => handleImage(e, 0)}/>
-                        {prev_url &&
+                        {prev_url && !prev &&
                             <p className="image_and_delete_button">
                                 <img className="form_images" src={prev_url}></img>
                             </p>
@@ -175,7 +175,7 @@ export default function BusForm({edit})
 
                 <p>
                     <input className="file_input" type="file" accept="image/*" name="first" placeholder="Optional Image Url" onChange={e => handleImage(e, 1)}/>
-                    { first_url &&
+                    { first_url && !first &&
                         <p className="image_and_delete_button">
                             <img className="form_images" src={first_url}></img>
                             <div onClick={() => deleteBusImage(1)} className="bus_form_delete_image_div">Delete Image</div>
@@ -186,7 +186,7 @@ export default function BusForm({edit})
 
                 <p>
                     <input className="file_input" type="file" accept="image/*" name="second" placeholder="Optional Image Url" onChange={e => handleImage(e, 2)}/>
-                    { second_url &&
+                    { second_url && !second &&
                         <p className="image_and_delete_button">
                             <img className="form_images" src={second_url}></img>
                             <div onClick={() => deleteBusImage(2)} className="bus_form_delete_image_div">Delete Image</div>
@@ -197,7 +197,7 @@ export default function BusForm({edit})
 
                 <p>
                     <input className="file_input" type="file" accept="image/*" name="third" placeholder="Optional Image Url" onChange={e => handleImage(e, 3)}/>
-                    { third_url &&
+                    { third_url && !third &&
                         <p className="image_and_delete_button">
                             <img className="form_images" src={third_url}></img>
                             <div onClick={() => deleteBusImage(3)} className="bus_form_delete_image_div">Delete Image</div>
