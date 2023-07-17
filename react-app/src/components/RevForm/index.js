@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { thunkReceiveReview, thunkUpdateReview, thunkLoadSingleReview } from "../../store/review";
+import StarRatingInput from "../StarRatingInput";
 import "./RevForm.css";
 
 export default function RevForm({edit})
@@ -71,11 +72,17 @@ export default function RevForm({edit})
         return null;
     }
 
-    const handleImage = (e, index) => {
-        if(index === 1) setFirst(e.target.files[0])
-        if(index === 2) setSecond(e.target.files[0])
-        if(index === 3) setThird(e.target.files[0])
-      };
+    function handleImage(e, index)
+    {
+        if(index === 1) setFirst(e.target.files[0]);
+        if(index === 2) setSecond(e.target.files[0]);
+        if(index === 3) setThird(e.target.files[0]);
+    };
+
+    function onRatingChange(number)
+    {
+        setRating(parseInt(number));
+    }
 
     async function onSubmit(event)
     {
@@ -122,13 +129,15 @@ export default function RevForm({edit})
             <form encType="multipart/form-data" onSubmit={onSubmit}>
                 <div>
                     <div>How many stars?</div>
-                    <select value={rating} onChange={e => setRating(e.target.value)}>
+                    <StarRatingInput onRatingChange={onRatingChange} rating={rating}/>
+                    {/* <StarRatingInputRatingInput disabled={false} onChange={onChange} rating={rating}/> */}
+                    {/* <select value={rating} onChange={e => setRating(e.target.value)}>
                             <option>1</option>
                             <option>2</option>
                             <option>3</option>
                             <option>4</option>
                             <option>5</option>
-                    </select>
+                    </select> */}
                 </div>
                 {valErrors.rating && <p className="rev_form_errors">{valErrors.rating}</p>}
 

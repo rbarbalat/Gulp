@@ -1,0 +1,9 @@
+.rating-input{
+    display:flex;
+    flex-direction:row;
+    gap: .3rem;
+}
+
+.filled {
+    color: red;
+}
