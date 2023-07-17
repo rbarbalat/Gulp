@@ -115,7 +115,8 @@ export default function RevForm({edit})
                 {valErrors.rating && <p>{valErrors.rating}</p>}
 
                 <div>
-                    <input type="text" name="review" placeholder="Review"
+                    <textarea type="text" name="review" placeholder="Review"
+                    // <input type="text" name="review" placeholder="Review"
                         value={review} onChange={e => setReview(e.target.value)}
                     />
                 </div>
