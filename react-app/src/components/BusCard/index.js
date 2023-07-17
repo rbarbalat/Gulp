@@ -17,13 +17,13 @@ export default function BusCard({business, user})
     if(Object.keys(business).length === 0) return <div>loading</div>
     // return <div>Hello World!!! from business {business.id}</div>
     return(
-        <div className = "bus_card_wrapper">
+        <div className = "bus_card_wrapper" onClick={linkBusiness}>
             <div className = "preview_image_wrapper">
                 <img alt="bus_preview_image" className ="bus_preview" src={business.preview_image}></img>
             </div>
             <div className = "bus_info_wrapper">
                 <div className="bus_card_name_and_buttons_wrapper">
-                    <div className = "business_name" onClick={linkBusiness}>{business.name}</div>
+                    <div className = "business_name">{business.name}</div>
                     {
                         isOwner &&
                         <div className = "bus_card_buttons">
@@ -50,6 +50,7 @@ export default function BusCard({business, user})
                 } */}
                 {/* <div>{business.numReviews} reviews</div> */}
                 <div>{business.description}</div>
+                <div>Some words from the first view that need to be in a sep div</div>
             </div>
         </div>
     )

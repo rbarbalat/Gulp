@@ -27,15 +27,17 @@ export default function AllBusinesses()
         fetchData()
     }, [dispatch])
 
+
+
     if(businesses.length === 0) return <div>loading</div>
     return (
         <div className ="all_bus_wrapper">
             {
                 // change onClick later to a function on a div that checks the event target like in old project
                 businesses.map(business => (
-                    <Link key = {business.id} to={`/businesses/${business.id}`}>
+                    // <Link key = {business.id} to={`/businesses/${business.id}`}>
                         <BusCard business={business} user={user} />
-                    </Link>
+                    // </Link>
                 ))
             }
         </div>

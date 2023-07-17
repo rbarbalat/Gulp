@@ -9,6 +9,8 @@
     padding-left:1rem;
     padding-right:1rem;
     padding-top: 2rem;
+
+    cursor:pointer;
 }
 
 .bus_info_wrapper {
@@ -33,6 +35,10 @@
     color:black;
     font-weight:bold;
     font-size: 20px;
+}
+
+.business_name:hover{
+    text-decoration:underline;
 }
 
 .bus_card_buttons {
