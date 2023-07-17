@@ -134,7 +134,7 @@ export default function RevForm({edit})
                             <option>5</option>
                     </select>
                 </div>
-                {valErrors.rating && <p>{valErrors.rating}</p>}
+                {valErrors.rating && <p className="rev_form_errors">{valErrors.rating}</p>}
 
                 <div>
                     <textarea className="rev_text_area" type="text" name="review" placeholder="Review"
@@ -142,7 +142,7 @@ export default function RevForm({edit})
                         value={review} onChange={e => setReview(e.target.value)}
                     />
                 </div>
-                {valErrors.review && <p>{valErrors.review}</p>}
+                {valErrors.review && <p className="rev_form_errors">{valErrors.review}</p>}
 
                 <div>
                     <input className="file_input_rev" type="file" accept="image/*" name="first" onChange={e => handleImage(e, 1)}/>
@@ -153,7 +153,7 @@ export default function RevForm({edit})
                         </p>
                     }
                 </div>
-                {valErrors.first && <p>{valErrors.first}</p>}
+                {valErrors.first && <p className="rev_form_errors">{valErrors.first}</p>}
 
                 <div>
                     <input className="file_input_rev" type="file" accept="image/*" name="second" onChange={e => handleImage(e, 2)}/>
@@ -164,7 +164,7 @@ export default function RevForm({edit})
                         </p>
                     }
                 </div>
-                {valErrors.second && <p>{valErrors.second}</p>}
+                {valErrors.second && <p className="rev_form_errors">{valErrors.second}</p>}
 
                 <div>
                     <input className="file_input" type="file" accept="image/*" name="third" onChange={e => handleImage(e, 3)}/>
@@ -175,7 +175,7 @@ export default function RevForm({edit})
                         </p>
                     }
                 </div>
-                {valErrors.third && <p>{valErrors.third}</p>}
+                {valErrors.third && <p className="rev_form_errors">{valErrors.third}</p>}
 
                 {   edit ?
                     <button className="rev_form_submit_button" type="submit">Edit Review</button>
