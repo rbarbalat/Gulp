@@ -51,13 +51,13 @@ export default function BusForm({edit})
         const res = await fetch(`/api/businesses/images/${image_id}`, {method: "Delete"});
         if(res.error)
         {
-            console.log("bad response from thunkDeleteBusinessImage");
-            console.log(res)
-            alert("could not delete the image")
+            console.log("bad response from delete bus image route");
+            console.log(res);
+            alert("could not delete the image");
         }else
         {
-            console.log("good response from thunkDeleteBusinessImage")
-            console.log(res)
+            console.log("good response from delete bus image route");
+            console.log(res);
             setRender(prev => !prev);
         }
         return null;
@@ -122,7 +122,11 @@ export default function BusForm({edit})
     <div className="bus_form_page_wrapper">
 
         <div className = "bus_form_wrapper">
-            <div className ="add_your_business">Add Your Business</div>
+            {   edit ?
+                <div className ="add_your_business">Update Your Business</div>
+                :
+                <div className ="add_your_business">Add Your Business</div>
+            }
             <form onSubmit={onSubmit} encType="multipart/form-data">
                 <p><input className="not_file_input" type="text" name="name" placeholder="Name" value={name} onChange={e => setName(e.target.value)} required/></p>
                 {valErrors.name && <p className="bus_form_errors">{valErrors.name}</p>}
@@ -191,8 +195,11 @@ export default function BusForm({edit})
                     }
                 </p>
                 {valErrors.third && <p className="bus_form_errors">{valErrors.third}</p>}
-
-                <button className="bus_form_submit_button" type="submit">Submit</button>
+                {   edit ?
+                    <button className="bus_form_submit_button" type="submit">Edit Business</button>
+                    :
+                    <button className="bus_form_submit_button" type="submit">Submit Business</button>
+                }
             </form>
         </div>
 

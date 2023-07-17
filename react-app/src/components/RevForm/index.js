@@ -36,6 +36,8 @@ export default function RevForm({edit})
     const { business_id} = useParams();
     const { review_id } = useParams();
 
+    const [render, setRender] = useState(false)
+
     const dispatch = useDispatch();
     const history = useHistory();
     //const user = useSelector((state) => state.session.user);
@@ -46,12 +48,26 @@ export default function RevForm({edit})
         {
             console.log("USE EFFECT");
             const res = await dispatch(thunkLoadSingleReview(review_id));
+            //check if setLoaded is still needed
             setLoaded(true);
         }
-    }, [review_id])
+    }, [render])
 
-    function deleteRevImage(index)
+    async function deleteRevImage(index)
     {
+        const image_id = edit_rev.images[index-1].id;
+        const res = await fetch(`/api/reviews/images/${image_id}`, {method: "Delete"});
+        if(res.error)
+        {
+            console.log("bad response from delete rev image route");
+            console.log(res);
+            alert("could not delete the image");
+        }else
+        {
+            console.log("good response from delete rev image route");
+            console.log(res);
+            setRender(prev => !prev);
+        }
         return null;
     }
 
@@ -102,8 +118,14 @@ export default function RevForm({edit})
     }
     return (
         <div className = "rev_form_wrapper">
+            {   edit ?
+                <div className ="add_your_review">Update Your Review</div>
+                :
+                <div className ="add_your_review">Create Your Review</div>
+            }
             <form encType="multipart/form-data" onSubmit={onSubmit}>
                 <div>
+                    <div>How many stars?</div>
                     <select value={rating} onChange={e => setRating(e.target.value)}>
                             <option>1</option>
                             <option>2</option>
@@ -115,7 +137,7 @@ export default function RevForm({edit})
                 {valErrors.rating && <p>{valErrors.rating}</p>}
 
                 <div>
-                    <textarea type="text" name="review" placeholder="Review"
+                    <textarea className="rev_text_area" type="text" name="review" placeholder="Review"
                     // <input type="text" name="review" placeholder="Review"
                         value={review} onChange={e => setReview(e.target.value)}
                     />
@@ -155,7 +177,11 @@ export default function RevForm({edit})
                 </div>
                 {valErrors.third && <p>{valErrors.third}</p>}
 
-                <button type="submit">Submit Review</button>
+                {   edit ?
+                    <button className="rev_form_submit_button" type="submit">Edit Review</button>
+                    :
+                    <button className="rev_form_submit_button" type="submit">Submit Review</button>
+                }
 
             </form>
         </div>

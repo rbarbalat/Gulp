@@ -135,7 +135,7 @@ def get_review_by_id(id):
 
 #DELETE Review Image by Id
 @rev_routes.route("/images/<int:id>", methods = ["DELETE"])
-def delete_business_image_by_id(id):
+def delete_review_image_by_id(id):
     if not current_user.is_authenticated:
         return {"error": "not authenticated"}, 401
 
