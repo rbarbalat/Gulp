@@ -64,7 +64,21 @@ export default function SingleBusiness()
     if(busIsEmpty) return <div>loading</div>
     return(
         <>
-        <TopCard business={business} />
+                <TopCard business={business} />
+            {
+                business.images.length > 0 ?
+                <div className = "single_bus_submitted_images">
+                    {
+                        business.images.map(image => (
+                            <div key = {image.id} className = "single_bus_submitted_image_wrapper">
+                                <img className = "single_bus_submitted_image" src={image.url} alt="bus_preview_image"></img>
+                            </div>
+                        ))
+                    }
+                </div>
+                :
+                null
+            }
 
         { isOwner && <p><button onClick={linkEdit}>Edit</button></p>}
         { isOwner && <p><button onClick={deleteBus}>Delete</button></p>}
