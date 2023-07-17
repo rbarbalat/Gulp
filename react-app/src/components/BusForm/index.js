@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { thunkLoadSingleBusiness, thunkReceiveBusiness } from "../../store/business"
+import { thunkDeleteBusiness, thunkLoadSingleBusiness, thunkReceiveBusiness } from "../../store/business"
 import { thunkUpdateBusiness } from "../../store/business";
 import "./BusForm.css";
 
@@ -16,12 +16,12 @@ export default function BusForm({edit})
     const [state, setState] = useState(edit ? business.state : "");
     const [address, setAddress] = useState(edit ? business.address : "");
 
-    const [prev_url, setPrevUrl] = useState(edit ? business.preview_image : undefined);
-
+    const [prev, setPrev] = useState(undefined)
     const [first, setFirst] = useState(undefined);
     const [second, setSecond] = useState(undefined);
     const [third, setThird] = useState(undefined);
 
+    const [prev_url, setPrevUrl] = useState(edit ? business.preview_image : "");
     const first_url = edit ? (business.images?.length >= 1 ? business.images[0].url : "") : "";
     const second_url = edit ? (business.images?.length >= 2 ? business.images[1].url : "") : "";
     const third_url =  edit ? (business.images?.length === 3 ? business.images[2].url : "") : "" ;
@@ -35,7 +35,9 @@ export default function BusForm({edit})
     const sessionUser = useSelector((state) => state.session.user);
     const history = useHistory();
     const dispatch = useDispatch();
+
     const {business_id} = useParams();
+    const [render, setRender] = useState(false)
 
     useEffect(() => {
         if(edit)
@@ -43,14 +45,31 @@ export default function BusForm({edit})
             console.log("USE EFFECT")
             dispatch(thunkLoadSingleBusiness(business_id));
         }
-    }, [])
+    }, [render])
     //don't think you need anything in the dep array, took out business_id
 
 
+    async function deleteBusImage(index)
+    {
+        const image_id = business.images[index-1].id;
+        const res = await fetch(`/api/businesses/images/${image_id}`, {method: "Delete"});
+        if(res.error)
+        {
+            console.log("bad response from thunkDeleteBusinessImage");
+            console.log(res)
+            alert("could not delete the image")
+        }else
+        {
+            console.log("good response from thunkDeleteBusinessImage")
+            console.log(res)
+            setRender(prev => !prev);
+        }
+        return null;
+    }
     const handleImage = (e, index) => {
         // if(!edit)
         // {
-            if(index === 0) setPrevUrl(e.target.files[0])
+            if(index === 0) setPrev(e.target.files[0])
             if(index === 1) setFirst(e.target.files[0])
             if(index === 2) setSecond(e.target.files[0])
             if(index === 3) setThird(e.target.files[0])
@@ -66,13 +85,6 @@ export default function BusForm({edit})
     async function onSubmit(event)
     {
         event.preventDefault();
-        //reusing business as a name of variable but looks ok in this scope
-        //pre_aws format
-        // const business = {name, description, city, state, address, prev_url }
-        // if(first) business.first = first;
-        // if(second) business.second = second;
-        // if(third) business.third = third;
-        //pre_aws format
 
         const formData = new FormData();
         formData.append("name", name);
@@ -81,8 +93,8 @@ export default function BusForm({edit})
         formData.append("state", state);
         formData.append("address", address);
 
-        if(typeof prev_url !== "string") formData.append("prev_url", prev_url);
-
+        // if(typeof prev_url !== "string") formData.append("prev_url", prev_url);
+        if(prev) formData.append("prev_url", prev);
         if(first) formData.append("first", first);
         if(second) formData.append("second", second);
         if(third) formData.append("third", third);
@@ -144,7 +156,15 @@ export default function BusForm({edit})
 
                 <p>Mandatory Preview Image</p>
                 {
-                    edit && <p><input className="file_input" type="file" accept="image/*" name="prev_url" placeholder="Preview Image Url" onChange={e => handleImage(e, 0)}/></p>
+                    edit &&
+                    <p>
+                        <input className="file_input" type="file" accept="image/*" name="prev_url" placeholder="Preview Image Url" onChange={e => handleImage(e, 0)}/>
+                        {prev_url &&
+                            <p className="image_and_delete_button">
+                                <img className="form_images" src={prev_url}></img>
+                            </p>
+                        }
+                    </p>
                 }
                 {
                     !edit && <p><input className="file_input" type="file" accept="image/*" name="prev_url" placeholder="Preview Image Url" onChange={e => handleImage(e, 0)} required/></p>
@@ -153,12 +173,12 @@ export default function BusForm({edit})
 
                 <p>Optional Images</p>
 
-                <p className="optionalImagePar">
+                <p>
                     <input className="file_input" type="file" accept="image/*" name="first" placeholder="Optional Image Url" onChange={e => handleImage(e, 1)}/>
                     { first_url &&
                         <p className="image_and_delete_button">
                             <img className="form_images" src={first_url}></img>
-                            <button className="bus_form_delete_image_button">Delete Image</button>
+                            <div onClick={() => deleteBusImage(1)} className="bus_form_delete_image_div">Delete Image</div>
                         </p>
                     }
                 </p>
@@ -166,11 +186,24 @@ export default function BusForm({edit})
 
                 <p>
                     <input className="file_input" type="file" accept="image/*" name="second" placeholder="Optional Image Url" onChange={e => handleImage(e, 2)}/>
-                    { second_url && <p><img className="form_images" src={second_url}></img></p> }
+                    { second_url &&
+                        <p className="image_and_delete_button">
+                            <img className="form_images" src={second_url}></img>
+                            <div onClick={() => deleteBusImage(2)} className="bus_form_delete_image_div">Delete Image</div>
+                        </p>
+                    }
                 </p>
                 {valErrors.second && <p className="bus_form_errors">{valErrors.second}</p>}
 
-                <p><input className="file_input" type="file" accept="image/*" name="third" placeholder="Optional Image Url" onChange={e => handleImage(e, 3)}/></p>
+                <p>
+                    <input className="file_input" type="file" accept="image/*" name="third" placeholder="Optional Image Url" onChange={e => handleImage(e, 3)}/>
+                    { third_url &&
+                        <p className="image_and_delete_button">
+                            <img className="form_images" src={third_url}></img>
+                            <div onClick={() => deleteBusImage(3)} className="bus_form_delete_image_div">Delete Image</div>
+                        </p>
+                    }
+                </p>
                 {valErrors.third && <p className="bus_form_errors">{valErrors.third}</p>}
 
                 <button className="bus_form_submit_button" type="submit">Submit</button>

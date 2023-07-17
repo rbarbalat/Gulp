@@ -251,29 +251,23 @@ def edit_business(id):
             bus.prev_url = upload["url"]
 
         keys = ["first", "second", "third"]
-        # bool_keys = ["update_first", "update_second", "update_third"]
         existing_images = bus.images
         new_urls = []
         for i in range(3):
             if form.data[keys[i]]:
-                # disallow updating second/third if first not updated, disallow updating third if not first/second
-                # if the first condition fails, the second won't be tested so there won't be a key error
-                # form.data[keys[i]] is a file not a url, need form.data[bool_keys[i]]
                 if len(existing_images) >= i + 1:
-                    # delete_from_aws.append(existing_images[i].url)
-                    temp = existing_images[i].url
+                    url_to_remove = existing_images[i].url
                     val = form.data[keys[i]]
                     val.filename = get_unique_filename(val.filename)
                     optional_upload = upload_file_to_s3(val)
                     if "url" in optional_upload:
                         existing_images[i].url = optional_upload["url"]
-                        aws = remove_file_from_s3(temp)
+                        aws = remove_file_from_s3(url_to_remove)
                 else:
                     val = form.data[keys[i]]
                     val.filename = get_unique_filename(val.filename)
                     optional_upload = upload_file_to_s3(val)
                     if "url" in optional_upload:
-                        # new_urls.append(optional_upload["url"])
                         new_image = BusImage(business_id = id, url = optional_upload["url"])
                         existing_images.append(new_image)
                         db.session.add(new_image)
@@ -385,3 +379,32 @@ def create_review(id):
         }, 201
 
     return {"error": form.errors}, 400
+
+#DELETE Business Image by Id
+@bus_routes.route("/images/<int:id>", methods = ["DELETE"])
+def delete_business_image_by_id(id):
+    if not current_user.is_authenticated:
+        return {"error": "not authenticated"}, 401
+
+    image = BusImage.query.get(id)
+    if not image:
+        return {"error": "Image not found"}, 404
+
+    if current_user.id != image.business.owner_id:
+        return {"error": "not authorized"}, 403
+
+    errors = []
+    if image.url: #should always be true but just in case
+        aws = remove_file_from_s3(image.url)
+        if isinstance(aws, dict):
+            errors.append(aws["errors"])
+
+    db.session.delete(image)
+    db.session.commit()
+
+    if not errors:
+        return {"message": "Successfully deleted the business image"}
+    else:
+        return {
+            "message": f"Successfully deleted the image but have the following error {errors[0]}"
+        }

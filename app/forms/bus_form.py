@@ -29,7 +29,3 @@ class BusForm(FlaskForm):
     first = FileField("preview image", validators=[Optional(), FileRequired(), FileAllowed(list(ALLOWED_EXTENSIONS))])
     second = FileField("preview image", validators=[Optional(), FileRequired(), FileAllowed(list(ALLOWED_EXTENSIONS))])
     third = FileField("preview image", validators=[Optional(), FileRequired(), FileAllowed(list(ALLOWED_EXTENSIONS))])
-
-    update_first = BooleanField("update_first", validators=[Optional()])
-    update_second = BooleanField("update_second", validators=[Optional()])
-    update_third = BooleanField("update_third", validators=[Optional()])
