@@ -26,6 +26,8 @@ class Review(db.Model):
             "id": self.id,
             "rating": self.rating,
             "review": self.review,
+            "reviewer_id": self.reviewer_id,
+            "business_id": self.business_id,
             "created_at": self.created_at,
             "updated_at": self.updated_at
         }

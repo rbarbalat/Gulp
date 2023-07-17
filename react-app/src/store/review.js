@@ -71,10 +71,7 @@ export const thunkReceiveReview = (bus_id, review) => async (dispatch) => {
     try {
         const options = {
             method: "Post",
-            headers: { "Content-Type":  "application/json" },
-            body: JSON.stringify(review)
-            // no header when using aws
-            // body: business whe using aws
+            body: review
         };
         const res = await fetch(`/api/businesses/${bus_id}/reviews`, options);
         if(res.ok)
@@ -106,10 +103,7 @@ export const thunkUpdateReview = (id, review) => async (dispatch) => {
     try {
         const options = {
             method: "Put",
-            headers: { "Content-Type":  "application/json" },
-            body: JSON.stringify(review)
-            // no header when using aws
-            // body: business whe using aws
+            body: review
         }
         const res = await fetch(`/api/reviews/${id}`, options);
         if(res.ok)

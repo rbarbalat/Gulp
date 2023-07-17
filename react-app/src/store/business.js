@@ -92,8 +92,6 @@ export const thunkReceiveBusiness = (business) => async (dispatch) => {
     try {
         const options = {
             method: "Post",
-            // headers: { "Content-Type":  "application/json" },
-            // body: JSON.stringify(business)
             body: business
         }
         const res = await fetch(`/api/businesses/`, options);
@@ -125,8 +123,6 @@ export const thunkUpdateBusiness = (id, business) => async (dispatch) => {
     try {
         const options = {
             method: "Put",
-            // headers: { "Content-Type":  "application/json" },
-            // body: JSON.stringify(business)
             body: business
         }
         const res = await fetch(`/api/businesses/${id}`, options);
