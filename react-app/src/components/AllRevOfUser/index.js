@@ -37,7 +37,7 @@ export default function AllRevOfUser()
         <div className ="all_rev_of_user_wrapper">
             {
                 reviews.map(review => (
-                    <ReviewCard key = {review.id} review={review} user={user} />
+                    <ReviewCard key = {review.id} review={review} user={user} user_profile={true} />
                 ))
             }
         </div>

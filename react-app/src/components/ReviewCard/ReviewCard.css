@@ -8,6 +8,32 @@
     /*can't give a height b/c need to display full text of review*/
 }
 
+.bus_name_in_review{
+    font-size:16px;
+    font-weight:bold;
+}
+
+.bus_name_link{
+    color:teal
+}
+
+.bus_name_link:hover{
+    text-decoration:underline;
+    cursor:pointer;
+}
+
+.business_and_edit_delete_section{
+    display:flex;
+    flex-direction: row;
+    justify-content:space-between;
+}
+
+.rev_card_buttons_wrapper{
+    display:flex;
+    flex-direction:row;
+    gap: .5rem;
+}
+
 .reviewer_section {
     height: 65px;
 

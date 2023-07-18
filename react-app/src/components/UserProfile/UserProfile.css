@@ -1,6 +1,6 @@
 .user_profile_wrapper {
-    margin-left: 15%;
-    margin-right: 15%;
+    margin-left: 7.5%;
+    margin-right: 7.5%;
 
     display: flex;
     flex-direction: row;
@@ -9,8 +9,8 @@
 
 .user_profile_left_wrapper {
     height: 400px;
-    width: 29%;
-    border: 1px solid gray;
+    width: 41%;
+    box-shadow:0 0 2px black;
     padding: 1rem;
     padding-top:3rem;
 
@@ -18,12 +18,19 @@
     flex-direction:column;
     align-items:center;
     gap: 1rem;
+
+    /* background-color:white; */
 }
 
 .user_profile_image_wrapper{
     height: 35%;
-    width: 50%;
-    border: 1px solid gray;
+    width: 59%;
+    /* border: 1px solid gray; */
+}
+
+.user_profile_image{
+    height:100%;
+    width:100%;
 }
 
 .user_profile_username{
@@ -31,7 +38,26 @@
     font-size: 20px;
 }
 
+.user_profile_options{
+    display:flex;
+    flex-direction:row;
+    align-items:center;
+    gap:1rem;
+}
+.user_profile_single_option{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:.2rem;
+    cursor:pointer;
+}
+
+.single_option_text {
+    font-weight:bold;
+    font-size:12px;
+}
+
 .user_profile_middle_wrapper {
-    width:71%;
+    width:59%;
     /* border: 1px dashed blue; */
 }
