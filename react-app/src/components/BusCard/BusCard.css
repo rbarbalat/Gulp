@@ -130,10 +130,20 @@
     /*overflow-wrap: break-word; */
 }
 
+.bus_card_description {
+    font-size:14px;
+}
+
 .bus_card_order_button{
     position: absolute;
     bottom:1rem;
     right:1rem;
     width: 100px;
     height: 40px;
+
+    font-weight:bold;
+}
+
+.bus_card_read_more{
+    color:teal;
 }

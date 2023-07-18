@@ -71,9 +71,10 @@ export default function BusCard({business, user})
                 <div className= "bus_card_city_state">{business.city}, {business.state}</div>
                 <div className = "bus_card_description">
                     {
-                        business.description.length < 75 ? business.description
-                        : business.description.slice(0, 75) + "..."
+                        business.description.length < 100 ? business.description
+                        : business.description.slice(0, 100) + "..."
                     }
+                    {business.description.length >= 100 && <span className="bus_card_read_more">Read More</span>}
                     </div>
                 <button className = "bus_card_order_button" onClick={startOrder}>Start Order</button>
             </div>
