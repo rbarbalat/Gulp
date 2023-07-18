@@ -18,9 +18,9 @@ export default function BusCard({business, user})
     {
         urls[i] = urls[i].url
     }
-    function linkBusiness()
+    function linkBusiness(event)
     {
-        history.push(`/businesses/${business.id}`)
+        if(event.target.className != "bus_card_order_button") history.push(`/businesses/${business.id}`)
     }
     function nextImage()
     {
@@ -29,6 +29,11 @@ export default function BusCard({business, user})
     function prevImage()
     {
         setIndex(index === 0 ? urls.length - 1 : index - 1 )
+    }
+    function startOrder()
+    {
+        alert("Feature Coming Soon");
+        return null;
     }
 
     if(Object.keys(business).length === 0) return <div>loading</div>
@@ -60,12 +65,19 @@ export default function BusCard({business, user})
                         {/* <div>({String(business.average).slice(0,4)})</div> */}
                     </div>
                     :
-                    <div className="first_review">Leave the first review!</div>
+                    <div className="first_review">No reviews yet!</div>
                 }
-                <div>{business.address}</div>
-                <div>{business.city}, {business.state}</div>
-                <div>{business.description}</div>
+                <div className = "bus_card_address">{business.address}</div>
+                <div className= "bus_card_city_state">{business.city}, {business.state}</div>
+                <div className = "bus_card_description">
+                    {
+                        business.description.length < 75 ? business.description
+                        : business.description.slice(0, 75) + "..."
+                    }
+                    </div>
+                <button className = "bus_card_order_button" onClick={startOrder}>Start Order</button>
             </div>
+
         </div>
     )
 }

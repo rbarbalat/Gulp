@@ -12,7 +12,8 @@
     border-top:1px solid gray;
     /* border-bottom: .5px solid gray; */
 
-    cursor:pointer;
+    position:relative;
+    /*to position the absolute button*/
 }
 .bus_card_wrapper:hover {
     /* border-left:1px solid gray;
@@ -23,7 +24,7 @@
 }
 
 .bus_info_wrapper {
-    height: 80%;
+    height: 100%;
     width: 70%;
     /* border: 2px dashed orange; */
 
@@ -31,6 +32,8 @@
     flex-direction: column;
     justify-content: flex-start;
     gap: .5rem;
+
+    cursor:pointer;
 }
 
 .bus_card_name_and_buttons_wrapper{
@@ -59,7 +62,7 @@
 .bus_edit{
     font-size: 20px;
 
-    color:blue;
+    color:black;
 }
 .bus_delete{
     font-size: 20px;
@@ -101,6 +104,8 @@
     left: 0;
     color:red;
     font-weight:bold;
+    /*don't think font-weight does anything for <i>*/
+    cursor:pointer;
 }
 
 .fa-arrow-right.bus_card {
@@ -109,4 +114,26 @@
     right: 0;
     color:red;
     font-weight:bold;
+    /*don't think font weight does anything for <i>*/
+    cursor:pointer;
+}
+
+.bus_card_address, .bus_card_city_state, .bus_card_description{
+    word-break: break-all;
+    /* break the words at any character to prevent overflow*/
+
+    /* word-wrap: break-word; */
+    /* break words at arbitrary points to prevent overflow*/
+
+    /* overflow: scroll; */
+    overflow:hidden;
+    /*overflow-wrap: break-word; */
+}
+
+.bus_card_order_button{
+    position: absolute;
+    bottom:1rem;
+    right:1rem;
+    width: 100px;
+    height: 40px;
 }
