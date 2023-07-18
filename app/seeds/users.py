@@ -21,7 +21,7 @@ def seed_users():
     # db.session.commit()
 
     lst = [demo, marnie, bobbie]
-    num = 22
+    num = 12
 
     names = []
     emails = []
