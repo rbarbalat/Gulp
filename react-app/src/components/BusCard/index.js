@@ -1,5 +1,6 @@
 import {useHistory} from "react-router-dom";
 import {useDispatch} from "react-redux";
+import {useState} from "react";
 // import {thunkLoadSingleBusiness } from "../../store/business";
 import { linkEditBus, deleteBusiness } from "../../helpers";
 import StarRatingInput from "../StarRatingInput";
@@ -10,23 +11,26 @@ export default function BusCard({business, user})
     const isOwner = user?.id === business?.owner_id;
     const history = useHistory();
     const dispatch = useDispatch();
+
+    const [index, setIndex] = useState(0)
+    const urls = [business.preview_image, ...business.images]
     function linkBusiness()
     {
         history.push(`/businesses/${business.id}`)
     }
-
-    // const style = {
-    //     borderBottom: "1px solid gray"
-    // }
+    function nextImage()
+    {
+        return null;
+    }
 
     if(Object.keys(business).length === 0) return <div>loading</div>
     // return <div>Hello World!!! from business {business.id}</div>
     return(
-        <div className = "bus_card_wrapper" onClick={linkBusiness}>
-            <div className = "preview_image_wrapper">
+        <div className = "bus_card_wrapper">
+            <div className = "preview_image_wrapper" onClick={nextImage}>
                 <img alt="bus_preview_image" className ="bus_preview" src={business.preview_image}></img>
             </div>
-            <div className = "bus_info_wrapper">
+            <div className = "bus_info_wrapper" onClick={linkBusiness}>
                 <div className="bus_card_name_and_buttons_wrapper">
                     <div className = "business_name">{business.name}</div>
                     {
