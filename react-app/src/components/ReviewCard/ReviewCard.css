@@ -26,6 +26,11 @@
 
 .reviwer_username {
     font-weight:bold;
+    font-size:20px;
+}
+
+.reviewer_numReviews {
+    font-size:15px;
 }
 
 .reviewer_rating {
@@ -37,6 +42,7 @@
 .review_text {
     /* word-break: break-all; */
     word-wrap: break-word;
+    font-size:17px;
 }
 
 .reviewer_image_wrapper {
@@ -57,6 +63,8 @@
     gap: .6rem;
 
     height: 150px;
+
+    margin-top:1rem;
     /* border: 1px dashed blue; */
 }
 .submitted_image_wrapper {
@@ -66,4 +74,5 @@
 .submitted_image {
     height: 100%;
     width: 100%;
+    border-radius:5px;
 }

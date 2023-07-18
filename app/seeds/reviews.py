@@ -11,7 +11,7 @@ def seed_reviews(users, businesses):
             reviewer = choice(users),
             business = choice(businesses),
             rating = randint(1, 5),
-            review = fake.text(max_nb_chars=randint(50, 150)),
+            review = fake.text(max_nb_chars=randint(50, 950)),
         )
         db.session.add(review)
         lst.append(review)
