@@ -35,11 +35,10 @@ export default function AllBusinesses()
             {
                 // change onClick later to a function on a div that checks the event target like in old project
                 businesses.map(business => (
-                    // <Link key = {business.id} to={`/businesses/${business.id}`}>
-                        <BusCard business={business} user={user} />
-                    // </Link>
+                    <BusCard business={business} user={user} />
                 ))
             }
+            <div className="all_bus_bottom_border"></div>
         </div>
     )
 }

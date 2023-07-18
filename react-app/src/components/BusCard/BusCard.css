@@ -3,14 +3,23 @@
     flex-direction: row;
     gap: 1.5rem;
     height: 250px;
-    border: 2px dashed blue;
-    margin-bottom: 2rem;
+    /* margin-bottom: 2rem; */
 
     padding-left:1rem;
     padding-right:1rem;
     padding-top: 2rem;
 
+    border-top:1px solid gray;
+    /* border-bottom: .5px solid gray; */
+
     cursor:pointer;
+}
+.bus_card_wrapper:hover {
+    /* border-left:1px solid gray;
+    border-right:1px solid gray; */
+    border:none;
+    background-color:white;
+    box-shadow:0 0 3px gray;
 }
 
 .bus_info_wrapper {
@@ -70,10 +79,15 @@
     height: 100%;
     width: 100%;
     /* border: 2px dashed purple; */
+    border-radius:5px;
 }
 
 .average_and_stars{
     display:flex;
     flex-direction:row;
     gap: .2rem;
+}
+
+.first_review{
+    color:red;
 }

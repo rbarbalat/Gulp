@@ -14,6 +14,11 @@ export default function BusCard({business, user})
     {
         history.push(`/businesses/${business.id}`)
     }
+
+    // const style = {
+    //     borderBottom: "1px solid gray"
+    // }
+
     if(Object.keys(business).length === 0) return <div>loading</div>
     // return <div>Hello World!!! from business {business.id}</div>
     return(
@@ -36,21 +41,15 @@ export default function BusCard({business, user})
                     business.average ?
                     <div className="average_and_stars">
                         <StarRatingInput rating={Math.round(business.average)} form={false}/>
-                        <div>{business.numReviews}</div>
+                        <div>{business.numReviews} reviews</div>
                         {/* <div>({String(business.average).slice(0,4)})</div> */}
                     </div>
                     :
-                    null
+                    <div className="first_review">Leave the first review!</div>
                 }
-                {/* {
-                    business.numReviews > 0 ?
-                    <div>{business.numReviews} reviews</div>
-                    :
-                    <div>No reviews yet!</div>
-                } */}
-                {/* <div>{business.numReviews} reviews</div> */}
+                <div>{business.address}</div>
+                <div>{business.city}, {business.state}</div>
                 <div>{business.description}</div>
-                <div>Some words from the first view that need to be in a sep div</div>
             </div>
         </div>
     )

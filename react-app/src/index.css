@@ -6,7 +6,8 @@
 
 body {
     font-family: "Neue Plak", sans-serif;
-    background-color: white;
+    /* background-color: white; */
+    background-color: #eeedf2;
     /* margin: 0; */
     /* check margin later */
 }

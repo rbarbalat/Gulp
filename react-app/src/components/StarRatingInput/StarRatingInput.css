@@ -7,3 +7,7 @@
 .filled {
     color: red;
 }
+
+.hide {
+    display: none;
+}
