@@ -23,8 +23,22 @@ export default function UserProfile()
                     <img className="user_profile_image" alt="default avatar" src="https://s3-media0.fl.yelpcdn.com/assets/public/default_user_avatar_120x120_v2.yji-1fea61f9163feb39bc9a115a97bd99eb.png"></img>
                 </div>
                 <div className = "user_profile_username">{user.username}</div>
-                <div>{user.numBusinesses} business(es)</div>
-                <div>{user.numReviews} review(s)</div>
+                <div>
+                    {
+                        user.numBusinesses === 1 ?
+                        `${user.numBusinesses} business`
+                        :
+                        `${user.numBusinesses} businesses`
+                    }
+                </div>
+                <div>
+                    {
+                        user.numReviews === 1 ?
+                        `${user.numReviews} review`
+                        :
+                        `${user.numReviews} reviews`
+                    }
+                </div>
                 <div>Joined on Sep 22, 2022</div>
                 <div className = "user_profile_options">
                     <div className = "user_profile_single_option" onClick={comingSoon}>

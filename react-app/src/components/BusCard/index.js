@@ -60,9 +60,16 @@ export default function BusCard({business, user})
                 {
                     business.average ?
                     <div className="average_and_stars">
+                        {/* change to a half star eventually */}
                         <StarRatingInput rating={Math.round(business.average)} form={false}/>
-                        <div>{business.numReviews} reviews</div>
-                        {/* <div>({String(business.average).slice(0,4)})</div> */}
+                        <div>
+                            {
+                                business.numReviews === 1 ?
+                                `${business.numReviews} review`
+                                :
+                                `${business.numReviews} reviews`
+                            }
+                        </div>
                     </div>
                     :
                     <div className="first_review">No reviews yet!</div>
