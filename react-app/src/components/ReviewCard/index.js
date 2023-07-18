@@ -18,6 +18,7 @@ export default function ReviewCard({review, user, business_id})
     return(
         <div className = "rev_card_wrapper">
             <div className = "reviewer_section">
+
                 <div className = "reviewer_image_wrapper">
                     <img className = "reviewer_image" alt="default avatar" src="https://s3-media0.fl.yelpcdn.com/assets/public/default_user_avatar_120x120_v2.yji-1fea61f9163feb39bc9a115a97bd99eb.png"></img>
                 </div>
@@ -25,11 +26,8 @@ export default function ReviewCard({review, user, business_id})
                     <div className = "reviwer_username">
                         {review.reviewer.username}
                     </div>
-                    {/* <div className = "reviewer_location">
-                        Pittsburgh, Pennsylvania
-                    </div> */}
                     <div className = "reviewer_numReviews">
-                        {review.reviewer.numReviews} 5 reviews
+                        {review.reviewer.numReviews} reviews
                     </div>
                 </div>
                 {

@@ -53,7 +53,8 @@
 
 .reviewer_image {
     height: 100%;
-    width: 100%
+    width: 100%;
+    border-radius:5px;
 }
 
 .submitted_images_wrapper {

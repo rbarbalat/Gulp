@@ -61,7 +61,10 @@ def get_business_by_id(id):
         reviews.append({
            **review.to_dict(),
            "images": rev_images,
-           "reviewer": review.reviewer.to_dict()
+           "reviewer": {
+               **review.reviewer.to_dict(),
+                "numReviews": len(review.reviewer.user_reviews)
+               }
         })
 
     average = [review["rating"] for review in reviews ]

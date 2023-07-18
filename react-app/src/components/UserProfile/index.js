@@ -15,7 +15,7 @@ export default function UserProfile()
         <div className="user_profile_wrapper">
             <div className = "user_profile_left_wrapper">
                 <div className = "user_profile_image_wrapper">
-                    <img></img>
+                    <img alt="default avatar" src="https://s3-media0.fl.yelpcdn.com/assets/public/default_user_avatar_120x120_v2.yji-1fea61f9163feb39bc9a115a97bd99eb.png"></img>
                 </div>
                 <div className = "user_profile_username">{user.username}</div>
                 <div>{user.numBusinesses} business(es)</div>
