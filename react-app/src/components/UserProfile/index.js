@@ -14,10 +14,13 @@ export default function UserProfile()
     return (
         <div className="user_profile_wrapper">
             <div className = "user_profile_left_wrapper">
-                <div className = "user_profile_image_wrapper"><img></img></div>
-                <div>{user.username}</div>
-                <div>city, state</div>
-                <div>num Reviews</div>
+                <div className = "user_profile_image_wrapper">
+                    <img></img>
+                </div>
+                <div className = "user_profile_username">{user.username}</div>
+                <div>{user.numBusinesses} business(es)</div>
+                <div>{user.numReviews} review(s)</div>
+                <div>start date</div>
             </div>
 
             <div className = "user_profile_middle_wrapper">
@@ -29,14 +32,6 @@ export default function UserProfile()
                 { !showRev && <AllBusOfUser /> }
                 { showRev && <p>Your Reviews</p>}
                 { showRev && <AllRevOfUser /> }
-            </div>
-
-            <div className = "user_profile_right_wrapper">
-                <div>About</div>
-                <div>Location</div>
-                <div>city, state</div>
-                <div>Gulping Since</div>
-                <div>Things I love</div>
             </div>
         </div>
     )
