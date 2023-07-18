@@ -1,5 +1,11 @@
 .rev_card_wrapper {
     margin-top: 2rem;
+
+    display:flex;
+    flex-direction:column;
+    gap: .5rem;
+
+    /*can't give a height b/c need to display full text of review*/
 }
 
 .reviewer_section {
@@ -8,7 +14,29 @@
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
+    align-items: center;
     gap: 1rem;
+}
+
+.reviewer_info_wrapper{
+    display:flex;
+    flex-direction: column;
+    gap: .3rem;
+}
+
+.reviwer_username {
+    font-weight:bold;
+}
+
+.reviewer_rating {
+    display:flex;
+    flex-direction:row;
+    gap: 1rem;
+}
+
+.review_text {
+    /* word-break: break-all; */
+    word-wrap: break-word;
 }
 
 .reviewer_image_wrapper {
@@ -22,14 +50,14 @@
     width: 100%
 }
 
-.submitted_images {
+.submitted_images_wrapper {
     display: flex;
     flex-direction: row;
     flex-direction: space-evenly;
-    gap: 1rem;
+    gap: .6rem;
 
-    height: 100px;
-    border: 1px dashed blue;
+    height: 150px;
+    /* border: 1px dashed blue; */
 }
 .submitted_image_wrapper {
     height: 100%;

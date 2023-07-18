@@ -25,11 +25,11 @@ export default function ReviewCard({review, user, business_id})
                     <div className = "reviwer_username">
                         {review.reviewer.username}
                     </div>
-                    <div className = "reviewer_location">
-                        city,state
-                    </div>
+                    {/* <div className = "reviewer_location">
+                        Pittsburgh, Pennsylvania
+                    </div> */}
                     <div className = "reviewer_numReviews">
-                        {review.reviewer.numReviews} reviews
+                        {review.reviewer.numReviews} 5 reviews
                     </div>
                 </div>
                 {
@@ -43,6 +43,7 @@ export default function ReviewCard({review, user, business_id})
 
             <div className = "reviewer_rating">
                 <StarRatingInput rating={review.rating} form={false}/>
+                <div>{review.created_at.split(",")[1].split(":")[0].slice(0,-3)}</div>
             </div>
 
             {/* {review.updated_at ? review.updated_at : review.created_at} */}
@@ -53,7 +54,7 @@ export default function ReviewCard({review, user, business_id})
 
             {
                 review.images.length > 0 ?
-                <div className = "submitted_images">
+                <div className = "submitted_images_wrapper">
                     {
                         review.images.map(image => (
                             <div key = {image.id} className = "submitted_image_wrapper">

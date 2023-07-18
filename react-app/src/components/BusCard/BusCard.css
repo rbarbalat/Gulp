@@ -101,8 +101,8 @@
 .fa-arrow-left.bus_card {
     position: absolute;
     top: 60px;
-    left: 0;
-    color:red;
+    left: -15px;
+    color:black;
     font-weight:bold;
     /*don't think font-weight does anything for <i>*/
     cursor:pointer;
@@ -111,8 +111,8 @@
 .fa-arrow-right.bus_card {
     position: absolute;
     top: 60px;
-    right: 0;
-    color:red;
+    right: -15px;
+    color:black;
     font-weight:bold;
     /*don't think font weight does anything for <i>*/
     cursor:pointer;
