@@ -72,7 +72,10 @@
     display:flex;
     flex-direction: row;
     align-items:center;
-    /* border: 2px dashed red; */
+
+    position:relative;
+    /*this relative so i can position the absolutely
+    positioned arrows relatie to this div*/
 }
 
 .bus_preview {
@@ -90,4 +93,20 @@
 
 .first_review{
     color:red;
+}
+
+.fa-arrow-left.bus_card {
+    position: absolute;
+    top: 60px;
+    left: 0;
+    color:red;
+    font-weight:bold;
+}
+
+.fa-arrow-right.bus_card {
+    position: absolute;
+    top: 60px;
+    right: 0;
+    color:red;
+    font-weight:bold;
 }

@@ -20,8 +20,7 @@ def get_all_businesses():
 
     lst = []
     for bus in all_bus:
-        # if needed
-        # images = [image.to_dict() for image in bus.images]
+        images = [image.to_dict() for image in bus.images]
         # reviews = [review.to_dict() for review in bus.bus_reviews]
         average = [review.rating for review in bus.bus_reviews]
         numReviews = len(average)
@@ -33,8 +32,8 @@ def get_all_businesses():
             **bus.to_dict(),
             "owner": bus.owner.to_dict(),
             "average": average,
-            "numReviews": numReviews
-            # "images": images,
+            "numReviews": numReviews,
+            "images": images
             # "reviews": reviews
         })
     return lst, 200
@@ -97,7 +96,7 @@ def get_all_businesses_by_current_user():
 
     lst = []
     for bus in all_bus:
-        # images = [image.to_dict() for image in bus.images]
+        images = [image.to_dict() for image in bus.images]
         # reviews = [review.to_dict() for review in bus.bus_reviews]
         average = [review.rating for review in bus.bus_reviews]
         numReviews = len(average)
@@ -109,8 +108,8 @@ def get_all_businesses_by_current_user():
             **bus.to_dict(),
             "owner": bus.owner.to_dict(),
             "average": average,
-            "numReviews": numReviews
-            # "images": images,
+            "numReviews": numReviews,
+            "images": images
             # "reviews": reviews
         })
     return lst, 200
