@@ -61,7 +61,7 @@ export default function BusCard({business, user})
                     business.average ?
                     <div className="average_and_stars">
                         {/* change to a half star eventually */}
-                        <StarRatingInput rating={Math.round(business.average)} form={false}/>
+                        <StarRatingInput rating={business.average} form={false}/>
                         <div>
                             {
                                 business.numReviews === 1 ?
