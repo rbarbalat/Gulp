@@ -14,13 +14,13 @@ export default function UserProfile()
 
     const dispatch = useDispatch();
 
-    //if you delete a business or review from the profile page
-    //need to to get the user's updated numBusinesses and numReviews
-
-    //if delete from elsewhere and link here, useEffect runs after first render
-    //if delete from this page need to force a rerender
+    //if you delete a business or review from the profile page,
+    //authenticate is dispatched by the delete function so the new
+    //numReviews and/or numBusinesses counts can be displayed on the page
     useEffect(() => {
-        //update the error handling and console logs for this thunk
+        //this needs to run b/c the first user info in the store is pulled
+        //from the login route which doesn't have numBus and numRev which
+        //are displayed on the user profile
         dispatch(authenticate());
     }, [])
 
