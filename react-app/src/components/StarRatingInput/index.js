@@ -18,8 +18,6 @@ export default function StarRatingInput({ rating, onRatingChange, form })
     setActiveRating(rating);
   },[rating])
 
-  //<i class="fa-solid fa-star-half-stroke"></i>
-  //<i class="fa-regular fa-star-half-stroke"></i>
   return (
       <div className="rating-input">
         {/* <div className={activeRating >= 1 ? "filled" : "empty"}> */}

@@ -57,24 +57,31 @@
     text-decoration:underline;
 }
 
-.bus_card_buttons {
+/* .bus_card_buttons {
+    display: flex;
+    flex-direction: row;
+    gap: .5rem;
+} */
+
+.bus_card_buttons_not_confirm, .bus_card_buttons_confirm{
     display: flex;
     flex-direction: row;
     gap: .5rem;
 }
 
-.bus_edit{
+.bus_edit, .bus_cancel_delete{
     font-size: 20px;
     color:black;
     cursor:pointer;
 }
-.bus_delete{
+.bus_delete, .bus_confirm_delete{
     font-size: 20px;
     color:red;
     cursor:pointer;
 }
 
-.bus_edit:hover, .bus_delete:hover{
+.bus_edit:hover, .bus_delete:hover,
+.bus_confirm_delete:hover, .bus_cancel_delete:hover{
     font-weight:bold;
 }
 

@@ -8,9 +8,7 @@ function Navigation({ isLoaded }){
 	const sessionUser = useSelector(state => state.session.user);
 	console.log(sessionUser);
 	const history = useHistory();
-	//<i class="fa-regular fa-bell"></i>
-	//<i class="fa-regular fa-message"></i>
-	//<i class="fa-solid fa-user"></i>
+
 	function login()
 	{
 		history.push("/login")
@@ -35,11 +33,11 @@ function Navigation({ isLoaded }){
 		<div className="header">
 			<div className = "header_gulp_and_logo">
 				<div className="gulp" onClick={landingPage}>gulp</div>
-				<div><i class="fa-brands fa-yelp"></i></div>
+				<div><i className="fa-brands fa-yelp"></i></div>
 			</div>
 			<div className = "header_input_and_glass">
 				<input type="text" placeholder="search"/>
-				<div className="glassWrapper" onClick={soon}><i class="fa-solid fa-magnifying-glass"></i></div>
+				<div className="glassWrapper" onClick={soon}><i className="fa-solid fa-magnifying-glass"></i></div>
 			</div>
 			{
 				isLoaded && !sessionUser &&
@@ -55,8 +53,8 @@ function Navigation({ isLoaded }){
 			{
 				isLoaded && sessionUser &&
 				<div className ="nav_icon_wrapper">
-					<i class="fa-regular fa-bell" onClick={soon}></i>
-					<i class="fa-regular fa-message" onClick={soon}></i>
+					<i className="fa-regular fa-bell" onClick={soon}></i>
+					<i className="fa-regular fa-message" onClick={soon}></i>
 					{/* <i class="fa-solid fa-user"></i> */}
 					<ProfileButton user={sessionUser} />
 				</div>

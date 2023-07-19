@@ -12,17 +12,24 @@ export default function BusCard({business, user})
     const history = useHistory();
     const dispatch = useDispatch();
 
+    const [confirm, setConfirm] = useState(false);
+
     const [index, setIndex] = useState(0);
     const urls = [business.preview_image, ...business.images];
 
-    const confirmDelete = false;
+    let confirm_delete = false;
+
     for(let i = 1; i<urls.length; i++)
     {
         urls[i] = urls[i].url
     }
     function linkBusiness(event)
     {
-        if(event.target.className != "bus_card_order_button") history.push(`/businesses/${business.id}`)
+        const list = [
+                        "bus_card_order_button", "bus_delete", "bus_edit",
+                        "bus_confirm_delete", "bus_cancel_delete"
+                    ];
+        if(list.includes(event.target.className) === false) history.push(`/businesses/${business.id}`)
     }
     function nextImage()
     {
@@ -54,8 +61,19 @@ export default function BusCard({business, user})
                     {
                         isOwner &&
                         <div className = "bus_card_buttons">
-                            <div className="bus_edit" onClick={() => linkEditBus(business.id, dispatch, history)}>Edit</div>
-                            <div className="bus_delete" onClick={() => deleteBusiness(business.id, user.id, dispatch, history)}>Delete</div>
+                        {
+                            confirm ?
+                            <div className = "bus_card_buttons_confirm">
+                                <div className = "bus_confirm_delete" onClick={() => deleteBusiness(business.id, user.id, dispatch, history)}>Confirm</div>
+                                <div className = "bus_cancel_delete" onClick={() => setConfirm(false)}>Cancel</div>
+                            </div>
+                            :
+                            <div className = "bus_card_buttons_not_confirm">
+                                <div className="bus_edit" onClick={() => linkEditBus(business.id, dispatch, history)}>Edit</div>
+                                {/* <div className="bus_delete" onClick={() => deleteBusiness(business.id, user.id, dispatch, history)}>Delete</div> */}
+                                <div className="bus_delete" onClick={() => setConfirm(true) }>Delete</div>
+                            </div>
+                        }
                         </div>
                     }
                 </div>
