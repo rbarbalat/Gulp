@@ -36,17 +36,18 @@
     gap: .5rem;
 }
 
-.rev_edit{
+.rev_edit, .rev_cancel_delete{
     font-size: 20px;
     color:black;
     cursor:pointer;
 }
-.rev_delete{
+.rev_delete, .rev_confirm_delete{
     font-size: 20px;
     color:red;
     cursor:pointer;
 }
-.rev_edit:hover, .rev_delete:hover{
+.rev_edit:hover, .rev_delete:hover,
+.rev_cancel_delete:hover, .rev_confirm_delete:hover{
     /* text-decoration:underline; */
     font-weight:bold;
 }
@@ -56,6 +57,7 @@
 
     display: flex;
     flex-direction: row;
+    /* this is why edit/delete buttons positioned close */
     justify-content: flex-start;
     align-items: center;
     gap: 1rem;
