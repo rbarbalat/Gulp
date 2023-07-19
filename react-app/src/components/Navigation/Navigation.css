@@ -6,6 +6,11 @@
   width: 200px;
   border: 1px solid lightgray;
   box-shadow: 0 0 2px gray;
+
+  /* clicking logout in the dropdown wasn't working when
+  the dropdown was over the background image in the single bus page
+  giving it a z-index fixed the issue*/
+  z-index: 1;
 }
 .profile-dropdown > li {
   margin-bottom: .5rem;

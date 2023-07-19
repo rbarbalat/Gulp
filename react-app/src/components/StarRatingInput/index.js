@@ -61,7 +61,7 @@ export default function StarRatingInput({ rating, onRatingChange, form })
                 onClick ={() => onRatingChange(5)}>
               </i>
         </div>
-        <div className={!form && rating !== Math.round(rating) ? "filled" : "hide"}>
+        <div className={!form && rating && (rating - Math.floor(rating) > .25) ? "filled" : "hide"}>
               <i className="fa-regular fa-star-half-stroke"></i>
         </div>
     </div>

@@ -17,12 +17,22 @@
 
 .single_bus_name {
     font-size: 45px;
-    color: white
+    color: white;
+    font-weight:bold;
+}
+.no_reviews_top_card{
+    font-size:30px;
+    color:white;
+    font-weight:bold;
+}
+.star_wrapper{
+    font-size: 30px;
+    font-weight:bold;
 }
 
 .single_bus_rating {
     font-size: 25px;
-    color:white
+    color:white;
 }
 
 .single_bus_address, .single_bus_location {

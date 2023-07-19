@@ -5,6 +5,7 @@ import { thunkLoadSingleBusiness, thunkDeleteBusiness } from "../../store/busine
 import TopCard from "../TopCard";
 import ReviewCard from "../ReviewCard";
 import {deleteBusiness} from "../../helpers";
+import StarRatingInput from "../StarRatingInput";
 
 import "./SingleBusiness.css";
 
@@ -84,15 +85,14 @@ export default function SingleBusiness()
                 {/* MAJOR BUG LOGOUT FROM DROPDOWN DOESN'T WORK OVER BACKGROUND IMAGE */}
             <TopCard business={business} />
             <div className="single_bus_middle_wrapper">
-                <div className="single_bus_about">{business.name}</div>
+                <div className="single_bus_about">
+                    {business.name}
+                    {/* <StarRatingInput rating={business.average} form={false}/> */}
+                </div>
                 <div>{business.description}</div>
-                { isOwner && confirm && confirmAndCancel}
-                { isOwner && !confirm && editAndDelete}
-                { !isOwner && <button className="review_button" onClick={linkReview}>Write a Review!</button>}
-            </div>
-            {/* {
-                business.images.length > 0 ?
-                <div className = "single_bus_submitted_images">
+                {
+                    business.images.length > 0 &&
+                    <div className = "single_bus_submitted_images">
                     {
                         business.images.map(image => (
                             <div key = {image.id} className = "single_bus_submitted_image_wrapper">
@@ -100,10 +100,13 @@ export default function SingleBusiness()
                             </div>
                         ))
                     }
-                </div>
-                :
-                null
-            } */}
+                    </div>
+                }
+                { isOwner && confirm && confirmAndCancel}
+                { isOwner && !confirm && editAndDelete}
+                { !isOwner && <button className="review_button" onClick={linkReview}>Write a Review!</button>}
+                {/* add an update a review button */}
+            </div>
 
         <div className ="single_bus_wrapper">
             {

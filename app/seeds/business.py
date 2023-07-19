@@ -6,10 +6,10 @@ from random import choice, sample, randint
 
 def seed_businesses(users):
     urls = [
-        "https://upload.wikimedia.org/wikipedia/commons/6/62/Barbieri_-_ViaSophia25668.jpg",
-        "https://upload.wikimedia.org/wikipedia/commons/3/3a/Chef%27s_table_at_Marcus.jpg",
-        "https://upload.wikimedia.org/wikipedia/commons/c/cd/Desire_Oyster_Bar_interior.jpg",
-        "https://bucket-rb22.s3.us-east-2.amazonaws.com/sunda_1.jpeg",
+        "https://bucket-rb22.s3.us-east-2.amazonaws.com/earl.jpeg",
+        "https://bucket-rb22.s3.us-east-2.amazonaws.com/brueggers.png",
+        "https://bucket-rb22.s3.us-east-2.amazonaws.com/mastros.jpeg",
+        "https://bucket-rb22.s3.us-east-2.amazonaws.com/mesa.jpeg",
         "https://bucket-rb22.s3.us-east-2.amazonaws.com/sunda_1.jpeg"
     ]
     addresses = [
