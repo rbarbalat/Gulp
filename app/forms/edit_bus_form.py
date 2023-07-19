@@ -18,8 +18,8 @@ def bus_name_exists(form, field):
 class EditBusForm(FlaskForm):
     # name = StringField("name", validators=[DataRequired(), bus_name_exists, Length(min=2, max=50)], )
     # the bus_name_exists was applied on edits as well...
-    name = StringField("name", validators=[DataRequired(), Length(min=3, max=15)], )
-    description = StringField("description", validators=[DataRequired(), Length(min=20, max=300)] )
+    name = StringField("name", validators=[DataRequired(), Length(min=3, max=20)], )
+    description = StringField("description", validators=[DataRequired(), Length(min=20, max=700)] )
     address = StringField("address", validators=[DataRequired(), Length(min=4, max=30)] )
     city = StringField("state", validators=[DataRequired(), Length(min=2, max=15)] )
     state = StringField("state", validators=[DataRequired(), Length(min=2, max=15)] )

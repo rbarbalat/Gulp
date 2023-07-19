@@ -10,8 +10,9 @@ def seed_rev_images(reviews):
         "https://upload.wikimedia.org/wikipedia/commons/a/ad/Oberhafenkantine_%28Hamburger_Rundst%C3%BCck%29.jpg",
         "https://upload.wikimedia.org/wikipedia/commons/f/f6/Eataly_Las_Vegas_-_Feb_2019_-_Sarah_Stierch_12.jpg",
         "https://upload.wikimedia.org/wikipedia/commons/b/b0/NewYorkSlices.jpg",
-        "https://upload.wikimedia.org/wikipedia/commons/5/5d/2014_smoked_salmon_and_egg_salad_toasted_baguette.JPG"
-        ]
+        "https://upload.wikimedia.org/wikipedia/commons/5/5d/2014_smoked_salmon_and_egg_salad_toasted_baguette.JPG",
+    ]
+    # urls = ["https://bucket-rb22.s3.us-east-2.amazonaws.com/sunda_1.jpeg"]
     for i in range(len(reviews)):
         for j in range(3):
             rev_image = RevImage(

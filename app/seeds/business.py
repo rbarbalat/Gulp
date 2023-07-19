@@ -8,7 +8,9 @@ def seed_businesses(users):
     urls = [
         "https://upload.wikimedia.org/wikipedia/commons/6/62/Barbieri_-_ViaSophia25668.jpg",
         "https://upload.wikimedia.org/wikipedia/commons/3/3a/Chef%27s_table_at_Marcus.jpg",
-        "https://upload.wikimedia.org/wikipedia/commons/c/cd/Desire_Oyster_Bar_interior.jpg"
+        "https://upload.wikimedia.org/wikipedia/commons/c/cd/Desire_Oyster_Bar_interior.jpg",
+        "https://bucket-rb22.s3.us-east-2.amazonaws.com/sunda_1.jpeg",
+        "https://bucket-rb22.s3.us-east-2.amazonaws.com/sunda_1.jpeg"
     ]
     addresses = [
         "5000 Forbes ave",
@@ -65,7 +67,7 @@ def seed_businesses(users):
             owner = choice(users),
             name = names[i],
             description = descriptions[i],
-            prev_url = choice(urls),
+            prev_url = urls[i],
             address = addresses[i],
             city = cities[i],
             state = states[i]
