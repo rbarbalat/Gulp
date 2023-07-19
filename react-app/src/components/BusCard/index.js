@@ -68,7 +68,6 @@ export default function BusCard({business, user})
                             :
                             <div className = "bus_card_buttons_not_confirm">
                                 <div className="bus_edit" onClick={() => linkEditBus(business.id, dispatch, history)}>Edit</div>
-                                {/* <div className="bus_delete" onClick={() => deleteBusiness(business.id, user.id, dispatch, history)}>Delete</div> */}
                                 <div className="bus_delete" onClick={() => setConfirm(true) }>Delete</div>
                             </div>
                         }
