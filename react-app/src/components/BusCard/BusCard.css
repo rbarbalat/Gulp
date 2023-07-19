@@ -1,4 +1,7 @@
 .bus_card_wrapper {
+    /*test*/
+    margin-top: 2rem;
+
     display:flex;
     flex-direction: row;
     gap: 1.5rem;
