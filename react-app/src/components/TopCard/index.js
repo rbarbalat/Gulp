@@ -4,7 +4,6 @@ import "./TopCard.css";
 export default function TopCard({business})
 {
     if(Object.keys(business).length === 0) return <div>loading</div>
-    // return <div>Hello World!!! from business {business.id}</div>
 
     //the non variable styles can be moved to the css file later
     const styles = {
@@ -24,7 +23,7 @@ export default function TopCard({business})
                 }
                 {
                     business.numReviews > 0 &&
-                    <div className = "single_bus_rating">{String(business.average).slice(0,4)} stars and <span>{business.numReviews} reviews</span></div>
+                    <div className = "single_bus_rating">{String(business.average).slice(0,4)} stars, <span>{business.numReviews} reviews</span></div>
                 }
                 {
                     business.numReviews === 0 &&

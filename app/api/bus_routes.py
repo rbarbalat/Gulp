@@ -56,7 +56,9 @@ def get_business_by_id(id):
     # need to add image info and reviewer info to the reviews key!
 
     reviews = []
+    reviewers = []
     for review in bus.bus_reviews:
+        reviewers.append(review.reviewer_id)
         rev_images = [image.to_dict() for image in review.images]
         reviews.append({
            **review.to_dict(),
@@ -79,7 +81,8 @@ def get_business_by_id(id):
         "reviews": reviews,
         "images": images,
         "numReviews": len(reviews),
-        "average": average
+        "average": average,
+        "reviewers": reviewers
     }, 200
 
 #GET ALL BUSINESSES BY CURRENT USER

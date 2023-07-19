@@ -1,11 +1,10 @@
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams, useHistory } from "react-router-dom";
-import { thunkLoadSingleBusiness, thunkDeleteBusiness } from "../../store/business";
+import { thunkLoadSingleBusiness } from "../../store/business";
 import TopCard from "../TopCard";
 import ReviewCard from "../ReviewCard";
 import {deleteBusiness} from "../../helpers";
-import StarRatingInput from "../StarRatingInput";
 
 import "./SingleBusiness.css";
 
@@ -21,6 +20,7 @@ export default function SingleBusiness()
     //make sure this line never causes a typeerror
     //initial state for both is an object, so worst case undefined === undefined
     const isOwner = user?.id === business?.owner_id;
+    const hasReviewed = business?.reviewers.includes(user?.id);
 
     const { business_id } = useParams();
     const dispatch = useDispatch();
@@ -82,13 +82,9 @@ export default function SingleBusiness()
     if(busIsEmpty) return <div>loading</div>
     return(
         <>
-                {/* MAJOR BUG LOGOUT FROM DROPDOWN DOESN'T WORK OVER BACKGROUND IMAGE */}
             <TopCard business={business} />
             <div className="single_bus_middle_wrapper">
-                <div className="single_bus_about">
-                    {business.name}
-                    {/* <StarRatingInput rating={business.average} form={false}/> */}
-                </div>
+                <div className="single_bus_about">{business.name}</div>
                 <div>{business.description}</div>
                 {
                     business.images.length > 0 &&
@@ -104,8 +100,8 @@ export default function SingleBusiness()
                 }
                 { isOwner && confirm && confirmAndCancel}
                 { isOwner && !confirm && editAndDelete}
-                { !isOwner && <button className="review_button" onClick={linkReview}>Write a Review!</button>}
-                {/* add an update a review button */}
+                { !isOwner && hasReviewed && <div className="ty_for_review">Thank you for your review!</div> }
+                { !isOwner && !hasReviewed && <button className="review_button" onClick={linkReview}>Write a Review!</button>}
             </div>
 
         <div className ="single_bus_wrapper">
