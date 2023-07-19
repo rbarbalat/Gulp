@@ -20,7 +20,7 @@ export default function SingleBusiness()
     //make sure this line never causes a typeerror
     //initial state for both is an object, so worst case undefined === undefined
     const isOwner = user?.id === business?.owner_id;
-    const hasReviewed = business?.reviewers.includes(user?.id);
+    const hasReviewed = business?.reviewers?.includes(user?.id);
 
     const { business_id } = useParams();
     const dispatch = useDispatch();
