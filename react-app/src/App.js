@@ -10,7 +10,6 @@ import AllBusinesses from "./components/AllBusinesses";
 import SingleBusiness from "./components/SingleBusiness";
 import BusForm from "./components/BusForm";
 import RevForm from "./components/RevForm";
-import AllBusOfUser from "./components/AllBusOfUser";
 import UserProfile from "./components/UserProfile";
 import LandingPage from "./components/LandingPage";
 

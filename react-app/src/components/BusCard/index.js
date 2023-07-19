@@ -17,8 +17,6 @@ export default function BusCard({business, user})
     const [index, setIndex] = useState(0);
     const urls = [business.preview_image, ...business.images];
 
-    let confirm_delete = false;
-
     for(let i = 1; i<urls.length; i++)
     {
         urls[i] = urls[i].url

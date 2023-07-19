@@ -10,7 +10,8 @@ export default function TopCard({business})
         backgroundImage: `url(${business.preview_image})`,
         backgroundPosition: "center",
         backgroundSize: "cover",
-        backgroundRepeat: "no-repeat"
+        backgroundRepeat: "no-repeat",
+        opacity: ".59"
     }
     return(
         <div className = "top_card_wrapper" style={styles}>

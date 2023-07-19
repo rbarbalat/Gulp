@@ -23,14 +23,12 @@ export default function ReviewCard({review, user, business_id, user_profile})
 
     const editAndDelete = (
         <div className="rev_card_buttons_wrapper">
-        {/* <div className="rev_card_buttons_not_confirm"> */}
             <div className = "rev_edit" onClick={() => linkEditReview(review.id, dispatch, history)}>Edit</div>
             <div className = "rev_delete" onClick={() => setConfirm(true)}>Delete</div>
         </div>
     )
     const confirmAndCancel = (
         <div className="rev_card_buttons_wrapper">
-            {/* <div className = "rev_card_buttons_confirm"> */}
             <div className = "rev_confirm_delete" onClick={() => deleteReview(review.id, dispatch, business_id)}>Confirm</div>
             <div className = "rev_cancel_delete" onClick={() => setConfirm(false)}>Cancel</div>
         </div>
@@ -46,7 +44,6 @@ export default function ReviewCard({review, user, business_id, user_profile})
                 <div className="bus_name_in_review">
                     You wrote a review for <span onClick={linkBusiness} className="bus_name_link">{review.business.name}</span>
                 </div>
-                {/* {isReviewer && editAndDelete} */}
                 { isReviewer && confirm && confirmAndCancel}
                 { isReviewer && !confirm && editAndDelete}
             </div>
@@ -63,7 +60,6 @@ export default function ReviewCard({review, user, business_id, user_profile})
                         {review.reviewer.numReviews} reviews
                     </div>
                 </div>
-                {/* { isReviewer && editAndDelete } */}
                 { isReviewer && confirm && confirmAndCancel}
                 { isReviewer && !confirm && editAndDelete}
             </div>

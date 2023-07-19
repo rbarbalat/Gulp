@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { thunkDeleteBusiness, thunkLoadSingleBusiness, thunkReceiveBusiness } from "../../store/business"
+import { thunkLoadSingleBusiness, thunkReceiveBusiness } from "../../store/business"
 import { thunkUpdateBusiness } from "../../store/business";
 import "./BusForm.css";
 
@@ -28,7 +28,8 @@ export default function BusForm({edit})
 
     const [valErrors, setValErrors] = useState({});
 
-    const sessionUser = useSelector((state) => state.session.user);
+    // const user = useSelector((state) => state.session.user);
+    // do some check on the edit form with user
     const history = useHistory();
     const dispatch = useDispatch();
 
@@ -145,7 +146,7 @@ export default function BusForm({edit})
                         <input className="file_input" type="file" accept="image/*" name="prev_url" placeholder="Preview Image Url" onChange={e => handleImage(e, 0)}/>
                         {prev_url && !prev &&
                             <p className="image_and_delete_button">
-                                <img className="form_images" src={prev_url}></img>
+                                <img alt="preview" className="form_images" src={prev_url}></img>
                             </p>
                         }
                     </p>
@@ -161,7 +162,7 @@ export default function BusForm({edit})
                     <input className="file_input" type="file" accept="image/*" name="first" onChange={e => handleImage(e, 1)}/>
                     { first_url && !first &&
                         <p className="image_and_delete_button">
-                            <img className="form_images" src={first_url}></img>
+                            <img alt="optional one" className="form_images" src={first_url}></img>
                             <div onClick={() => deleteBusImage(1)} className="bus_form_delete_image_div">Delete Image</div>
                         </p>
                     }
@@ -172,7 +173,7 @@ export default function BusForm({edit})
                     <input className="file_input" type="file" accept="image/*" name="second" onChange={e => handleImage(e, 2)}/>
                     { second_url && !second &&
                         <p className="image_and_delete_button">
-                            <img className="form_images" src={second_url}></img>
+                            <img alt="optional two" className="form_images" src={second_url}></img>
                             <div onClick={() => deleteBusImage(2)} className="bus_form_delete_image_div">Delete Image</div>
                         </p>
                     }
@@ -183,7 +184,7 @@ export default function BusForm({edit})
                     <input className="file_input" type="file" accept="image/*" name="third" onChange={e => handleImage(e, 3)}/>
                     { third_url && !third &&
                         <p className="image_and_delete_button">
-                            <img className="form_images" src={third_url}></img>
+                            <img alt="optional three" className="form_images" src={third_url}></img>
                             <div onClick={() => deleteBusImage(3)} className="bus_form_delete_image_div">Delete Image</div>
                         </p>
                     }

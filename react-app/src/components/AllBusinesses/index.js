@@ -1,8 +1,7 @@
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useHistory } from "react-router-dom";
+// import { useHistory } from "react-router-dom";
 import { thunkLoadBusinesses } from "../../store/business";
-import { Link } from "react-router-dom";
 import BusCard from "../BusCard";
 
 import "./AllBusinesses.css";
@@ -14,7 +13,7 @@ export default function AllBusinesses()
     //initialized to an empty array before the useEffect runs, singe intialState = {}
     const businesses = useSelector(state => Object.values(state.businesses.allBus))
     const user = useSelector(state => state.session.user);
-    const history = useHistory();
+    // const history = useHistory();
     const dispatch = useDispatch();
     useEffect(() => {
         //if(Number(business_id) !== business.id)
