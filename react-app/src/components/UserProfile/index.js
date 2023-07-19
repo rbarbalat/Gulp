@@ -39,7 +39,7 @@ export default function UserProfile()
                         `${user.numReviews} reviews`
                     }
                 </div>
-                <div>Joined on Sep 22, 2022</div>
+                <div>Joined on Sep 22, 2022 (adj)</div>
                 <div className = "user_profile_options">
                     <div className = "user_profile_single_option" onClick={comingSoon}>
                         <i className="fa-solid fa-pen-to-square"></i>
@@ -57,14 +57,20 @@ export default function UserProfile()
             </div>
 
             <div className = "user_profile_middle_wrapper">
-                <div>
+                {/* <div>
                     <button onClick={() => setShowRev(false)}>My Businesses</button>
                     <button onClick={() => setShowRev(true)}>My Reviews</button>
+                </div> */}
+                <div className = "bus_rev_selection_wrapper">
+                    <div onClick={() => setShowRev(false)} className = {`user_profile_caption ${showRev ? "inactive" : "active"}`}>
+                        My Businesses
+                    </div>
+                    <div onClick={() => setShowRev(true)} className = {`user_profile_caption ${showRev ? "active" : "inactive"}`}>
+                        My Reviews
+                    </div>
                 </div>
-                { !showRev && <p>Your Businesses</p> }
-                { !showRev && <AllBusOfUser /> }
-                { showRev && <p>Your Reviews</p>}
-                { showRev && <AllRevOfUser /> }
+                {/* { !showRev && <div className="margin_bottom"></div>} */}
+                { showRev ? <AllRevOfUser /> : <AllBusOfUser />}
             </div>
         </div>
     )

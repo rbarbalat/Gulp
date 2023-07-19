@@ -20,8 +20,10 @@ export default function ReviewCard({review, user, business_id, user_profile})
 
     const editAndDelete = (
         <div className="rev_card_buttons_wrapper">
-            <button onClick={() => linkEditReview(review.id, dispatch, history)}>Edit Review</button>
-            <button onClick={() => deleteReview(review.id, dispatch, business_id)}>Delete Review</button>
+            {/* <button onClick={() => linkEditReview(review.id, dispatch, history)}>Edit Review</button>
+            <button onClick={() => deleteReview(review.id, dispatch, business_id)}>Delete Review</button> */}
+            <div className = "rev_edit" onClick={() => linkEditReview(review.id, dispatch, history)}>Edit</div>
+            <div className = "rev_delete" onClick={() => deleteReview(review.id, dispatch, business_id)}>Delete</div>
         </div>
     )
 

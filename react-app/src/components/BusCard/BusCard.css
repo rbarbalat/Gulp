@@ -19,8 +19,9 @@
     /* border-left:1px solid gray;
     border-right:1px solid gray; */
     border:none;
-    background-color:white;
-    box-shadow:0 0 3px gray;
+    /* background-color:white; */
+    background-color:rgb(242,242,242);
+    box-shadow:0 0 5px gray;
 }
 
 .bus_info_wrapper {
@@ -61,12 +62,17 @@
 
 .bus_edit{
     font-size: 20px;
-
     color:black;
+    cursor:pointer;
 }
 .bus_delete{
     font-size: 20px;
     color:red;
+    cursor:pointer;
+}
+
+.bus_edit:hover, .bus_delete:hover{
+    font-weight:bold;
 }
 
 .preview_image_wrapper {
@@ -142,6 +148,7 @@
     height: 40px;
 
     font-weight:bold;
+    cursor:pointer;
 }
 
 .bus_card_read_more{

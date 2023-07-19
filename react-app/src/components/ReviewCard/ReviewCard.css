@@ -19,6 +19,7 @@
 
 .bus_name_link:hover{
     text-decoration:underline;
+    font-weight:bold;
     cursor:pointer;
 }
 
@@ -26,12 +27,28 @@
     display:flex;
     flex-direction: row;
     justify-content:space-between;
+    align-items:center;
 }
 
 .rev_card_buttons_wrapper{
     display:flex;
     flex-direction:row;
     gap: .5rem;
+}
+
+.rev_edit{
+    font-size: 20px;
+    color:black;
+    cursor:pointer;
+}
+.rev_delete{
+    font-size: 20px;
+    color:red;
+    cursor:pointer;
+}
+.rev_edit:hover, .rev_delete:hover{
+    /* text-decoration:underline; */
+    font-weight:bold;
 }
 
 .reviewer_section {

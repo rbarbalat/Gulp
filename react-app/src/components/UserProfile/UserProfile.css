@@ -50,6 +50,7 @@
     align-items:center;
     gap:.2rem;
     cursor:pointer;
+    color:teal;
 }
 
 .single_option_text {
@@ -60,4 +61,23 @@
 .user_profile_middle_wrapper {
     width:59%;
     /* border: 1px dashed blue; */
+}
+
+.bus_rev_selection_wrapper{
+    display:flex;
+    flex-direction:row;
+    gap:1rem;
+}
+
+.user_profile_caption{
+    font-weight:bold;
+    font-size:20px;
+}
+
+.inactive {
+    color:teal;
+}
+.inactive:hover{
+    text-decoration:underline;
+    cursor:pointer;
 }
