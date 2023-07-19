@@ -48,7 +48,7 @@ def delete_review_by_id(id):
     db.session.commit()
 
     if not errors:
-        return {"message": "Successfully deleted the business"}
+        return {"message": "Successfully deleted the review"}
     else:
         return {
             "message": "Successfully deleted but have AWS errors",
