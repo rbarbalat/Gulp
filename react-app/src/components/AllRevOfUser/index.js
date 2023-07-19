@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-// import { useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { thunkLoadReviewsOfUser } from "../../store/review";
 import ReviewCard from "../ReviewCard";
 
-// import "./AllRevOfUser.css";
+import "./AllRevOfUser.css";
 
 export default function AllRevOfUser()
 {
@@ -14,6 +14,12 @@ export default function AllRevOfUser()
 
     const user = useSelector(state => state.session.user)
     const dispatch = useDispatch();
+    const history = useHistory();
+
+    function list_bus()
+    {
+        history.push("/businesses");
+    }
     useEffect(() => {
         async function fetchData()
         {
@@ -30,7 +36,7 @@ export default function AllRevOfUser()
     if(loaded)
     {
         //REPLACE THE DIV WITH SOMETHING ELSE LATER
-        if(reviews.length === 0) return <div>You have no reviews</div>
+        if(reviews.length === 0) return <div className="start_rev" onClick={list_bus}>Find a business to review!</div>
     }
     if(!loaded) return <div>loading</div>
     return (

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 // import { useHistory } from "react-router-dom";
 import { thunkLoadBusinessesOfUser } from "../../store/business";
 import BusCard from "../BusCard";
@@ -14,6 +15,12 @@ export default function AllBusOfUser()
 
     const user = useSelector(state => state.session.user)
     const dispatch = useDispatch();
+    const history = useHistory();
+
+    function start_bus()
+    {
+        history.push("/businesses/new");
+    }
     useEffect(() => {
         async function fetchData()
         {
@@ -29,7 +36,8 @@ export default function AllBusOfUser()
     //might be zero b/c it hasn't loaded or it might be zero b/c he has no businesses
     if(loaded)
     {
-        if(businesses.length === 0) return <div>You have no businesses</div>
+        if(businesses.length === 0)
+        return <div className="start_business" onClick={start_bus}>Start you first business!</div>
     }
     if(!loaded) return <div>loading</div>
     return (

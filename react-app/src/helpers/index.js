@@ -1,5 +1,6 @@
 import { thunkLoadSingleReview, thunkDeleteReview } from "../store/review";
 import { thunkLoadSingleBusiness, thunkDeleteBusiness } from "../store/business";
+import { authenticate } from "../store/session";
 
 export async function linkEditReview(review_id, dispatch, history)
 {
@@ -22,7 +23,6 @@ export async function linkEditReview(review_id, dispatch, history)
 
 export async function deleteReview(review_id, dispatch, business_id)
 {
-    //const res = await dispatch(thunkDeleteReview(review.id));
     const res = await dispatch(thunkDeleteReview(review_id));
     if(res.error)
     {
@@ -47,6 +47,9 @@ export async function deleteReview(review_id, dispatch, business_id)
                 console.log(res_two)
             }
         }
+        //after deleting a business or review, need to pull new usr session info
+        //to get his updated numReviews/numBusinesses for the user profile
+        await dispatch(authenticate());
         return;
     }
 }
@@ -80,6 +83,10 @@ export async function deleteBusiness(business_id, user_id, dispatch, history)
         console.log("good response from inside deleteBusiness");
         console.log(res);
         //owner linked back to his profile after deleting a business
+
+        //after deleting a business or review (from the user profile), need to pull new user session info
+        //to get the users updated numReviews/numBusinesses for the user profile
+        await dispatch(authenticate());
         history.push(`/users/${user_id}`);
         return;
     }

@@ -1,9 +1,9 @@
-.start_business{
+.start_rev{
     margin-top: 2rem;
     cursor:pointer;
     color:teal;
 }
 
-.start_business:hover{
+.start_rev:hover{
     font-weight:bold;
 }

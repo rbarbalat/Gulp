@@ -1,15 +1,28 @@
 import { useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { useState, useEffect } from "react";
 import AllBusOfUser from "../AllBusOfUser";
 import AllRevOfUser from "../AllRevOfUser";
+import { authenticate } from "../../store/session";
 import "./UserProfile.css";
 
 export default function UserProfile()
 {
     const user = useSelector((state) => state.session.user);
     const { user_id } = useParams();
-    const [showRev, setShowRev] = useState(true);
+    const [showRev, setShowRev] = useState(false);
+
+    const dispatch = useDispatch();
+
+    //if you delete a business or review from the profile page
+    //need to to get the user's updated numBusinesses and numReviews
+
+    //if delete from elsewhere and link here, useEffect runs after first render
+    //if delete from this page need to force a rerender
+    useEffect(() => {
+        //update the error handling and console logs for this thunk
+        dispatch(authenticate());
+    }, [])
 
     function comingSoon()
     {
