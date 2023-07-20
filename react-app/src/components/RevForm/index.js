@@ -121,14 +121,21 @@ export default function RevForm({edit})
     }
     return (
         <div className = "rev_form_wrapper">
+            { edit ?
+                <div className ="add_your_review">{edit_rev.business.name}</div>
+                :
+                <div className ="add_your_review">{business.name}</div>
+            }
             {   edit ?
                 <div className ="add_your_review">Update Your Review</div>
                 :
-                <div className ="add_your_review">Create Your Review</div>
+                <div className ="add_your_review">Create a Review</div>
             }
             <form encType="multipart/form-data" onSubmit={onSubmit}>
 
-                <StarRatingInput form={true} onRatingChange={onRatingChange} rating={rating}/>
+                <div className="form_stars">
+                    <StarRatingInput form={true} onRatingChange={onRatingChange} rating={rating}/>
+                </div>
                 {valErrors.rating && <p className="rev_form_errors">{valErrors.rating}</p>}
 
                 <div>
@@ -138,6 +145,8 @@ export default function RevForm({edit})
                     />
                 </div>
                 {valErrors.review && <p className="rev_form_errors">{valErrors.review}</p>}
+
+                <div>Add up to 3 pictures!</div>
 
                 <div>
                     <input className="file_input_rev" type="file" accept="image/*" name="first" onChange={e => handleImage(e, 1)}/>

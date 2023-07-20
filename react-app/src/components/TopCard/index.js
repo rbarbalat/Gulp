@@ -23,7 +23,7 @@ export default function TopCard({business})
                 }
                 {
                     business.numReviews > 0 &&
-                    <div className = "single_bus_rating">{String(business.average).slice(0,4)} stars, <span>{business.numReviews} reviews</span></div>
+                    <div className = "single_bus_rating">{String(business.average).slice(0,4)} stars <span>{business.numReviews} reviews</span></div>
                 }
                 {
                     business.numReviews === 0 &&
