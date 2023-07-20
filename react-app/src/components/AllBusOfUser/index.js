@@ -11,15 +11,10 @@ export default function AllBusOfUser()
 {
     //initialized to an empty array before the useEffect runs, singe intialState = {}
     const businesses = useSelector(state => Object.values(state.businesses.allBus))
-    console.log("businesses in allbusofusr");
-    console.log(businesses);
-
     const [loaded, setLoaded] = useState(false);
-
     const user = useSelector(state => state.session.user)
     const dispatch = useDispatch();
     const history = useHistory();
-
     function start_bus()
     {
         history.push("/businesses/new");

@@ -20,14 +20,14 @@ export default function LandingPage()
 
     const [loaded, setLoaded] = useState(false);
 
-    const first_index = businesses?.length <= 6 ? 0 : businesses?.length - 6;
-    const second_index = businesses?.length <= 6 ? 3 : businesses?.length - 3;
+    const first_index = businesses.length <= 6 ? 0 : businesses.length - 6;
+    const second_index = businesses.length <= 6 ? 3 : businesses.length - 3;
 
     const [index, setIndex] = useState(0);
     console.log("index ------- ", index);
 
     const styles = {
-        backgroundImage: `linear-gradient(rgba(0,0,0,.2), rgba(0,0,0,.2)), url(${businesses?.[index]?.preview_image})`,
+        backgroundImage: `linear-gradient(rgba(0,0,0,.2), rgba(0,0,0,.2)), url(${businesses[index]?.preview_image})`,
         backgroundPosition: "center",
         backgroundSize: "cover",
         backgroundRepeat: "no-repeat"
