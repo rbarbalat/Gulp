@@ -146,37 +146,37 @@ export default function RevForm({edit})
                 </div>
                 {valErrors.review && <p className="rev_form_errors">{valErrors.review}</p>}
 
-                <div>Add up to 3 pictures!</div>
+                <p className = "add_pictures">Add up to 3 pictures!</p>
 
-                <div>
+                <div className="file_input_wrapper">
                     <input className="file_input_rev" type="file" accept="image/*" name="first" onChange={e => handleImage(e, 1)}/>
                     { first_url && !first &&
-                        <p className="rev_image_and_delete_button">
+                        <div className="rev_image_and_delete_button">
                             <img className="rev_form_images" src={first_url}></img>
                             <div onClick={() => deleteRevImage(1)} className="rev_form_delete_image_div">Delete Image</div>
-                        </p>
+                        </div>
                     }
                 </div>
                 {valErrors.first && <p className="rev_form_errors">{valErrors.first}</p>}
 
-                <div>
+                <div className="file_input_wrapper">
                     <input className="file_input_rev" type="file" accept="image/*" name="second" onChange={e => handleImage(e, 2)}/>
                     { second_url && !second &&
-                        <p className="rev_image_and_delete_button">
+                        <div className="rev_image_and_delete_button">
                             <img className="rev_form_images" src={first_url}></img>
                             <div onClick={() => deleteRevImage(2)} className="rev_form_delete_image_div">Delete Image</div>
-                        </p>
+                        </div>
                     }
                 </div>
                 {valErrors.second && <p className="rev_form_errors">{valErrors.second}</p>}
 
-                <div>
+                <div className="file_input_wrapper">
                     <input className="file_input" type="file" accept="image/*" name="third" onChange={e => handleImage(e, 3)}/>
                     { third_url && !third &&
-                        <p className="rev_image_and_delete_button">
+                        <div className="rev_image_and_delete_button">
                             <img className="rev_form_images" src={first_url}></img>
                             <div onClick={() => deleteRevImage(3)} className="rev_form_delete_image_div">Delete Image</div>
-                        </p>
+                        </div>
                     }
                 </div>
                 {valErrors.third && <p className="rev_form_errors">{valErrors.third}</p>}

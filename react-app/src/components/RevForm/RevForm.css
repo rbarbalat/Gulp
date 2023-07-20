@@ -13,6 +13,10 @@
     font-size:25px;
     margin-bottom:1rem;
 }
+.add_pictures{
+    font-size:18px;
+    font-weight:bold;
+}
 
 .rev_text_area {
     width: 100%;
@@ -23,6 +27,18 @@
     height: 50px;
     width: 50px;
 }
+
+.file_input_wrapper{
+    margin-bottom:.7rem;
+}
+
+.file_input_rev{
+    margin-bottom:.3rem;
+}
+
+/* input[type="file"] {
+    display:none;
+} */
 
 .rev_image_and_delete_button{
     display:flex;
