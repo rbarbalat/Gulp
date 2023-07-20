@@ -127,7 +127,8 @@ export default function BusForm({edit})
                 {valErrors.name && <p className="bus_form_errors">{valErrors.name}</p>}
 
                 {/* change to textarea later */}
-                <p><input className="not_file_input" type="text" name="description" placeholder="Description" value={description} onChange={e => setDescription(e.target.value)} required/></p>
+                {/* <p><input className="not_file_input" type="text" name="description" placeholder="Description" value={description} onChange={e => setDescription(e.target.value)} required/></p> */}
+                <p><textarea className="bus_form_text_area" type="text" name="description" placeholder="Description" value={description} onChange={e => setDescription(e.target.value)} required/></p>
                 {valErrors.description && <p className="bus_form_errors">{valErrors.description}</p>}
 
                 <p><input className="not_file_input" type="text" name="address" placeholder="Address" value={address} onChange={e => setAddress(e.target.value)} required/></p>

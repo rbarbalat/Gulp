@@ -55,6 +55,11 @@
     height: 27px;
 }
 
+.bus_form_text_area{
+    width: 100%;
+    height: 150px;
+}
+
 .file_input {
     height: 27px;
 }

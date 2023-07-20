@@ -55,24 +55,12 @@ function Navigation({ isLoaded }){
 				<div className ="nav_icon_wrapper">
 					<i className="fa-regular fa-bell" onClick={soon}></i>
 					<i className="fa-regular fa-message" onClick={soon}></i>
-					{/* <i class="fa-solid fa-user"></i> */}
+					{/* <i className="fa-solid fa-user"></i> */}
 					<ProfileButton user={sessionUser} />
 				</div>
 			}
 		</div>
 	);
 }
-		// <ul>
-			{/* <li>
-				<NavLink exact to="/">Home</NavLink>
-			</li>
-			{isLoaded && (
-				<li>
-					<ProfileButton user={sessionUser} />
-				</li>
-			)}
-		</ul>
-	);
-} */}
 
 export default Navigation;
