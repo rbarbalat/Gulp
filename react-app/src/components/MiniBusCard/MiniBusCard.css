@@ -1,0 +1,33 @@
+.mini_bus_card_wrapper{
+    display:flex;
+    flex-direction:column;
+    gap: .5rem;
+
+    cursor:pointer;
+}
+
+.mini_preview_image_wrapper{
+    height: 150px;
+    width: 250px;
+}
+
+.mini_bus_preview{
+    height: 100%;
+    width: 100%;
+    border-radius:5px;
+}
+
+.mini_average_and_stars{
+    display:flex;
+    flex-direction:row;
+    gap: .3rem;
+}
+
+.mini_first_review{
+    color:red;
+}
+
+.mini_business_name{
+    font-weight:bold;
+    color:teal;
+}

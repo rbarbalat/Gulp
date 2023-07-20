@@ -1,19 +1,36 @@
 import {NavLink} from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useEffect} from "react";
+// import {thunkLoadReviews} from "../../store/review";
+import { thunkLoadBusinesses } from "../../store/business";
+// import ReviewCard from "../ReviewCard";
+import MiniBusCard from "../MiniBusCard";
 
 import "./LandingPage.css";
 
 export default function LandingPage()
 {
     const user = useSelector((state) => state.session.user);
+    const reviews = useSelector(state => Object.values(state.reviews.allRev));
+    const businesses = useSelector(state => Object.values(state.businesses.allBus));
+    // console.log("review");
+    // console.log(reviews);
+    const dispatch = useDispatch();
+
+    const first_index = businesses?.length <= 6 ? 0 : businesses?.length - 6;
+    const second_index = businesses?.length <= 6 ? 3 : businesses?.length - 3;
 
     function soon()
     {
         alert("Feature Coming Soon");
     }
 
-    useEffect(() => {},[])
+    useEffect(() => {
+        // dispatch(thunkLoadReviews())
+        dispatch(thunkLoadBusinesses());
+    },[])
+
+    if(businesses.length === 0) return <div>loading</div>
     return (
         <>
         <div>
@@ -23,7 +40,21 @@ export default function LandingPage()
         <div className="landing_middle_bottom_wrapper">
 
             <div className = "recent_activity_wrapper">
-                <div className="recent_activity">Recent Activity</div>
+                <div className="recent_activity">Recent Additions</div>
+                <div className="new_businesses new_one">
+                {
+                    businesses.slice(first_index, second_index).map(business => (
+                        <MiniBusCard key={business.id} business={business} />
+                    ))
+                }
+                </div>
+                <div className="new_businesses">
+                {
+                    businesses.slice(second_index).map(business => (
+                        <MiniBusCard key={business.id} business={business} />
+                    ))
+                }
+                </div>
             </div>
 
             <div className = "categories_wrapper">

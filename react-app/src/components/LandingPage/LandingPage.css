@@ -14,9 +14,19 @@
     align-items:center;
     font-size:25px;
     font-weight: bold;
+    margin-bottom:1rem;
 }
 
+.new_businesses{
+    display:flex;
+    flex-direction:row;
+    justify-content:space-between;
+    align-items:center;
+}
 
+.new_one{
+    margin-bottom:1rem;
+}
 
 .categories_wrapper{
     display:flex;
@@ -52,6 +62,7 @@
     box-shadow:0 0 3px black;
 
     font-weight:bold;
+    color:teal;
 }
 
 .category, .bottom_item,
