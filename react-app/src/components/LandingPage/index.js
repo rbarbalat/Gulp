@@ -18,13 +18,15 @@ export default function LandingPage()
     const dispatch = useDispatch();
     const history = useHistory();
 
+    const [loaded, setLoaded] = useState(false);
+
     const first_index = businesses?.length <= 6 ? 0 : businesses?.length - 6;
     const second_index = businesses?.length <= 6 ? 3 : businesses?.length - 3;
 
     const [index, setIndex] = useState(0);
+    console.log("index ------- ", index);
 
     const styles = {
-        // backgroundImage: `url(${business.preview_image})`,
         backgroundImage: `linear-gradient(rgba(0,0,0,.2), rgba(0,0,0,.2)), url(${businesses?.[index]?.preview_image})`,
         backgroundPosition: "center",
         backgroundSize: "cover",
@@ -41,19 +43,23 @@ export default function LandingPage()
         alert("Feature Coming Soon");
     }
 
-    useEffect(() => {
+    useEffect( async () => {
         // dispatch(thunkLoadReviews())
-        dispatch(thunkLoadBusinesses());
+        const res = await dispatch(thunkLoadBusinesses());
+        console.log("res for thunkLoadBusinesses in landing page useEffect ");
+        console.log(res);
+        setLoaded(true);
     },[])
 
     useEffect(() => {
+        console.log("hello from the interval useEffect")
         const my_interval = setInterval(() => {
             setIndex(prev => prev === businesses?.length - 1 ? 0 : prev + 1 )
         }, 4000)
         return () => clearInterval(my_interval)
     }, [])
 
-    if(businesses.length === 0) return <div>loading</div>
+    if(!loaded) return <div>loading</div>
     return (
         <>
         <div className = "top_landing_page" style={styles}>

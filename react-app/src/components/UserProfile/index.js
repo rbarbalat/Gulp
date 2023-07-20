@@ -70,10 +70,7 @@ export default function UserProfile()
             </div>
 
             <div className = "user_profile_middle_wrapper">
-                {/* <div>
-                    <button onClick={() => setShowRev(false)}>My Businesses</button>
-                    <button onClick={() => setShowRev(true)}>My Reviews</button>
-                </div> */}
+
                 <div className = "bus_rev_selection_wrapper">
                     <div onClick={() => setShowRev(false)} className = {`user_profile_caption ${showRev ? "inactive" : "active"}`}>
                         My Businesses
@@ -82,8 +79,9 @@ export default function UserProfile()
                         My Reviews
                     </div>
                 </div>
-                {/* { !showRev && <div className="margin_bottom"></div>} */}
                 { showRev ? <AllRevOfUser /> : <AllBusOfUser />}
+                {/* <AllRevOfUser /> */}
+                {/* <AllBusOfUser /> */}
             </div>
         </div>
     )
