@@ -1,6 +1,6 @@
-import {NavLink} from "react-router-dom";
+import {useHistory} from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { useEffect} from "react";
+import { useEffect, useState} from "react";
 // import {thunkLoadReviews} from "../../store/review";
 import { thunkLoadBusinesses } from "../../store/business";
 // import ReviewCard from "../ReviewCard";
@@ -16,9 +16,25 @@ export default function LandingPage()
     // console.log("review");
     // console.log(reviews);
     const dispatch = useDispatch();
+    const history = useHistory();
 
     const first_index = businesses?.length <= 6 ? 0 : businesses?.length - 6;
     const second_index = businesses?.length <= 6 ? 3 : businesses?.length - 3;
+
+    const [index, setIndex] = useState(0);
+
+    const styles = {
+        // backgroundImage: `url(${business.preview_image})`,
+        backgroundImage: `linear-gradient(rgba(0,0,0,.2), rgba(0,0,0,.2)), url(${businesses?.[index]?.preview_image})`,
+        backgroundPosition: "center",
+        backgroundSize: "cover",
+        backgroundRepeat: "no-repeat"
+    }
+
+    function seeAll()
+    {
+        history.push("/businesses")
+    }
 
     function soon()
     {
@@ -30,17 +46,24 @@ export default function LandingPage()
         dispatch(thunkLoadBusinesses());
     },[])
 
+    useEffect(() => {
+        const my_interval = setInterval(() => {
+            setIndex(prev => prev === businesses?.length - 1 ? 0 : prev + 1 )
+        }, 4000)
+        return () => clearInterval(my_interval)
+    }, [])
+
     if(businesses.length === 0) return <div>loading</div>
     return (
         <>
-        <div>
-            <div><NavLink to="/businesses">All Businesses</NavLink></div>
+        <div className = "top_landing_page" style={styles}>
+
         </div>
 
         <div className="landing_middle_bottom_wrapper">
 
             <div className = "recent_activity_wrapper">
-                <div className="recent_activity">Recent Additions</div>
+                <div className="recent_activity">Recent Additions &nbsp;<span onClick={seeAll} className="see_all">(see all)</span></div>
                 <div className="new_businesses new_one">
                 {
                     businesses.slice(first_index, second_index).map(business => (

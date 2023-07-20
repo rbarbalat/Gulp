@@ -1,3 +1,8 @@
+.top_landing_page {
+    height: 500px;
+    margin-bottom:3rem;
+}
+
 .landing_middle_bottom_wrapper{
     margin-left: 5%;
     margin-right: 5%;
@@ -15,6 +20,12 @@
     font-size:25px;
     font-weight: bold;
     margin-bottom:1rem;
+}
+
+.see_all{
+    color:teal;
+    font-size: 20px;
+    cursor:pointer;
 }
 
 .new_businesses{
@@ -76,6 +87,7 @@
     justify-content:space-between;
 
     margin-top:1.5rem;
+    padding-bottom:3rem;
 }
 
 .bottom_column{
