@@ -38,7 +38,9 @@ function ProfileButton({ user }) {
 
   function profile()
   {
+    setShowMenu(false);
     history.push(`/users/${user.id}`)
+
   }
 
   const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
