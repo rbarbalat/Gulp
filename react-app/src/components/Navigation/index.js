@@ -33,6 +33,7 @@ function Navigation({ isLoaded }){
 		<div className="header">
 			<div className = "header_gulp_and_logo">
 				<div className="gulp" onClick={landingPage}>gulp</div>
+				{/* <NavLink to="/">gulp</NavLink> */}
 				<div><i className="fa-brands fa-yelp"></i></div>
 			</div>
 			<div className = "header_input_and_glass">

@@ -20,6 +20,11 @@ export default function LandingPage()
 
     const [loaded, setLoaded] = useState(false);
 
+    // let length = businesses.length;
+    let length = 0;
+    if(loaded) length = businesses.length;
+
+
     const first_index = businesses.length <= 6 ? 0 : businesses.length - 6;
     const second_index = businesses.length <= 6 ? 3 : businesses.length - 3;
 
@@ -52,12 +57,16 @@ export default function LandingPage()
     },[])
 
     useEffect(() => {
-        console.log("hello from the interval useEffect")
-        const my_interval = setInterval(() => {
-            setIndex(prev => prev === businesses?.length - 1 ? 0 : prev + 1 )
-        }, 4000)
-        return () => clearInterval(my_interval)
-    }, [])
+        if(length > 0)
+        {
+            console.log("hello from the interval useEffect")
+            const my_interval = setInterval(() => {
+                console.log("length --- ", length);
+                setIndex(prev => prev === length - 1 ? 0 : prev + 1 )
+            }, 4000)
+            return () => clearInterval(my_interval)
+        }
+    }, [length])
 
     if(!loaded) return <div>loading</div>
     return (
