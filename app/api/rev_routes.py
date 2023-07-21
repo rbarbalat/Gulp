@@ -55,24 +55,25 @@ def delete_review_by_id(id):
         return {"error": "Not authorized"}
 
     #remove prev.url any images review.images from aws
-    errors = []
-    urls = [image.url for image in review.images]
-    for url in urls:
-        if url: #should always be true but just in case
-            aws = remove_file_from_s3(url)
-            if isinstance(aws, dict):
-                errors.append(aws["errors"])
+    # errors = []
+    # urls = [image.url for image in review.images]
+    # for url in urls:
+    #     if url: #should always be true but just in case
+    #         aws = remove_file_from_s3(url)
+    #         if isinstance(aws, dict):
+    #             errors.append(aws["errors"])
 
     db.session.delete(review)
     db.session.commit()
+    return {"message": "Successfully deleted the review"}
 
-    if not errors:
-        return {"message": "Successfully deleted the review"}
-    else:
-        return {
-            "message": "Successfully deleted but have AWS errors",
-            "errors": errors
-        }
+    # if not errors:
+    #     return {"message": "Successfully deleted the review"}
+    # else:
+    #     return {
+    #         "message": "Successfully deleted but have AWS errors",
+    #         "errors": errors
+    #     }
 
 #Edit Review by Id
 @rev_routes.route("/<int:id>", methods = ["PUT"])
@@ -102,22 +103,22 @@ def edit_review_by_id(id):
         for i in range(3):
            if form.data[keys[i]]:
                 if len(existing_images) >= i + 1:
-                    url_to_remove = existing_images[i].url
+                    # url_to_remove = existing_images[i].url
                     val = form.data[keys[i]]
                     val.filename = get_unique_filename(val.filename)
                     optional_upload = upload_file_to_s3(val)
                     if "url" in optional_upload:
                         existing_images[i].url = optional_upload["url"]
-                        aws = remove_file_from_s3(url_to_remove)
+                        # aws = remove_file_from_s3(url_to_remove)
                 else:
                     val = form.data[keys[i]]
                     val.filename = get_unique_filename(val.filename)
                     optional_upload = upload_file_to_s3(val)
                     if "url" in optional_upload:
                         new_image = RevImage(review_id = id, url = optional_upload["url"])
-                        existing_images.append(new_image)
+                        # existing_images.append(new_image)
                         db.session.add(new_image)
-                        db.session.commit()
+                        # db.session.commit()
 
         review.rating = form.data["rating"]
         review.review = form.data["review"]
@@ -165,18 +166,19 @@ def delete_review_image_by_id(id):
     if current_user.id != image.review.reviewer_id:
         return {"error": "not authorized"}, 403
 
-    errors = []
-    if image.url: #should always be true but just in case
-        aws = remove_file_from_s3(image.url)
-        if isinstance(aws, dict):
-            errors.append(aws["errors"])
+    # errors = []
+    # if image.url: #should always be true but just in case
+    #     aws = remove_file_from_s3(image.url)
+    #     if isinstance(aws, dict):
+    #         errors.append(aws["errors"])
 
     db.session.delete(image)
     db.session.commit()
+    return {"message": "Successfully deleted the business image"}
 
-    if not errors:
-        return {"message": "Successfully deleted the business image"}
-    else:
-        return {
-            "message": f"Successfully deleted the image but have the following error {errors[0]}"
-        }
+    # if not errors:
+    #     return {"message": "Successfully deleted the business image"}
+    # else:
+    #     return {
+    #         "message": f"Successfully deleted the image but have the following error {errors[0]}"
+    #     }

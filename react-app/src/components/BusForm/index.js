@@ -223,7 +223,7 @@ export default function BusForm({edit})
         </div>
 
         <div className = "bus_form_right_image_wrapper">
-            <img className ="bus_form_logo_image" alt="logo" src="https://s3-media0.fl.yelpcdn.com/assets/2/www/img/7922e77f338d/signup/signup_illustration.png"></img>
+            <img className ="bus_form_logo_image" alt="logo" src="https://bucket-rb22.s3.us-east-2.amazonaws.com/yelp_pic.png"></img>
         </div>
 
     </div>
