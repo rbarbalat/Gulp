@@ -58,7 +58,7 @@ function ProfileButton({ user }) {
       <ul className={ulClassName} ref={ulRef}>
             <li className= "drop_down_profile_username">{user.username}</li>
             <li className= "drop_down_profile_email">{user.email}</li>
-            <li className = "drop_down_profile_all_link" onClick={allRes}>All Restaraunts</li>
+            <li className = "drop_down_profile_all_link" onClick={allRes}>All Businesses</li>
             <li className = "drop_down_profile_link" onClick={profile}>My Profile</li>
             <li className = "drop_down_profile_logout" onClick={handleLogout}>Log Out</li>
         </ul>
