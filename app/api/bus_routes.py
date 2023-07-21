@@ -137,24 +137,26 @@ def delete_business_by_id(id):
         return {"error": "not authorized"}, 403
 
     #remove prev.url any images bus.images from aws
-    errors = []
-    optional_urls = [image.url for image in bus.images]
-    urls = [bus.prev_url, *optional_urls]
-    for url in urls:
-        if url: #should always be true but just in case
-            aws = remove_file_from_s3(url)
-            if isinstance(aws, dict):
-                errors.append(aws["errors"])
+    # errors = []
+    # optional_urls = [image.url for image in bus.images]
+    # urls = [bus.prev_url, *optional_urls]
+    # for url in urls:
+    #     if url: #should always be true but just in case
+    #         aws = remove_file_from_s3(url)
+    #         if isinstance(aws, dict):
+    #             errors.append(aws["errors"])
 
     db.session.delete(bus)
     db.session.commit()
-    if not errors:
-        return {"message": "Successfully deleted the business"}
-    else:
-        return {
-            "message": "Successfully deleted but have AWS errors",
-            "errors": errors
-        }
+    return {"message": "Successfully deleted the business"}
+
+    # if not errors:
+    #     return {"message": "Successfully deleted the business"}
+    # else:
+    #     return {
+    #         "message": "Successfully deleted but have AWS errors",
+    #         "errors": errors
+    #     }
 
 
 #CREATE A BUSINESS
@@ -354,16 +356,6 @@ def create_review(id):
         db.session.commit()
         images = [image.to_dict() for image in images]
 
-        # PRE AWS
-        # keys = ["first", "second", "third"]
-        # images = [ RevImage(review = review, url = form.data[key])
-        #     for key in keys if form.data[key] ]
-
-        # _ = [db.session.add(image) for image in images]
-        # db.session.commit()
-        # images = [image.to_dict() for image in images]
-        # PRE AWS
-
         return {
             **review.to_dict(),
             "images": images,
@@ -385,18 +377,20 @@ def delete_business_image_by_id(id):
     if current_user.id != image.business.owner_id:
         return {"error": "not authorized"}, 403
 
-    errors = []
-    if image.url: #should always be true but just in case
-        aws = remove_file_from_s3(image.url)
-        if isinstance(aws, dict):
-            errors.append(aws["errors"])
+    # errors = []
+    # if image.url: #should always be true but just in case
+    #     aws = remove_file_from_s3(image.url)
+    #     if isinstance(aws, dict):
+    #         errors.append(aws["errors"])
 
     db.session.delete(image)
     db.session.commit()
 
-    if not errors:
-        return {"message": "Successfully deleted the business image"}
-    else:
-        return {
-            "message": f"Successfully deleted the image but have the following error {errors[0]}"
-        }
+    return {"message": "Successfully deleted the business image"}
+
+    # if not errors:
+    #     return {"message": "Successfully deleted the business image"}
+    # else:
+    #     return {
+    #         "message": f"Successfully deleted the image but have the following error {errors[0]}"
+    #     }
