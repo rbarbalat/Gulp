@@ -10,6 +10,7 @@ export default function BusForm({edit})
     const business = useSelector(state => state.businesses.singleBus);
     //the edit version is linked from the page for the specific business
     //so that business is guaranteed to be the singleBus in the store
+    //NOT TRUE b/c you can be linked from the user profile
     const [name, setName] = useState(edit ? business.name : "");
     const [description, setDescription] = useState(edit ? business.description : "");
     const [city, setCity] = useState(edit ? business.city : "");
@@ -21,7 +22,16 @@ export default function BusForm({edit})
     const [second, setSecond] = useState(undefined);
     const [third, setThird] = useState(undefined);
 
+    console.log("start");
+    console.log(prev);
+    console.log(first);
+    console.log(second);
+    console.log(third);
+
     const [prev_url, setPrevUrl] = useState(edit ? business.preview_image : "");
+    console.log(prev_url);
+    console.log("end");
+
     const first_url = edit ? (business.images?.length >= 1 ? business.images[0].url : "") : "";
     const second_url = edit ? (business.images?.length >= 2 ? business.images[1].url : "") : "";
     const third_url =  edit ? (business.images?.length === 3 ? business.images[2].url : "") : "" ;
@@ -43,8 +53,25 @@ export default function BusForm({edit})
             dispatch(thunkLoadSingleBusiness(business_id));
         }
     }, [render])
-    //don't think you need anything in the dep array, took out business_id
 
+    //handle the case where you are on the edit form with pre-loaded data
+    //and click the link at the top to add a new business, prevent stat var from keeping vals from edit
+    useEffect(() => {
+        //triggered when changing from edit to create form only
+        if(!edit)
+        {
+            setName("");
+            setDescription("");
+            setCity("");
+            setState("");
+            setAddress("");
+
+            setPrevUrl("");
+            setFirst(undefined);
+            setSecond(undefined);
+            setThird(undefined);
+        }
+    }, [edit])
 
     async function deleteBusImage(index)
     {
