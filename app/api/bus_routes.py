@@ -16,7 +16,7 @@ def get_all_businesses():
     """
     all_bus = Business.query.all()
     if not all_bus:
-        return [], 404
+        return [], 200
 
     lst = []
     for bus in all_bus:
