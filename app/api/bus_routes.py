@@ -248,6 +248,22 @@ def edit_business(id):
         # check this error code
 
     if form.validate_on_submit():
+        # not using the name_exists validator in the edit_form so need this adjustment here
+        # can use .first b/c the name col has a unique constraint, can't be more than one
+        same_name_bus = Business.query.filter(Business.name == form.data["name"]).first()
+        if same_name_bus and same_name_bus.id != bus.id:
+            return {
+                "error": {
+                    "name": ["Business name is already in use"]
+                }
+            }
+        # make this error message match the structure of others
+        bus.name = form.data["name"]
+        bus.description = form.data["description"]
+        bus.address = form.data["address"]
+        bus.city = form.data["city"]
+        bus.state = form.data["state"]
+
         # if the user did not change the picture, the frontend sends back nothing
         if form.data["prev_url"]:
             prev_url = form.data["prev_url"]
@@ -262,42 +278,25 @@ def edit_business(id):
         for i in range(3):
             if form.data[keys[i]]:
                 if len(existing_images) >= i + 1:
-                    url_to_remove = existing_images[i].url
+                    # url_to_remove = existing_images[i].url
                     val = form.data[keys[i]]
                     val.filename = get_unique_filename(val.filename)
                     optional_upload = upload_file_to_s3(val)
                     if "url" in optional_upload:
                         existing_images[i].url = optional_upload["url"]
-                        aws = remove_file_from_s3(url_to_remove)
+                        # aws = remove_file_from_s3(url_to_remove)
                 else:
                     val = form.data[keys[i]]
                     val.filename = get_unique_filename(val.filename)
                     optional_upload = upload_file_to_s3(val)
                     if "url" in optional_upload:
                         new_image = BusImage(business_id = id, url = optional_upload["url"])
-                        existing_images.append(new_image)
                         db.session.add(new_image)
-                        db.session.commit()
-
-        # not using the name_exists validator in the edit_form so need this adjustment here
-        # can use .first b/c the name col has a unique constraint, can't be more than one
-        same_name_bus = Business.query.filter(Business.name == form.data["name"]).first()
-        if same_name_bus and same_name_bus.id != bus.id:
-            return {
-                "error": {
-                    "name": ["Business name is already in use"]
-                }
-            }
-        # make this error message match the structure of others
-        bus.name = form.data["name"]
-
-        bus.description = form.data["description"]
-        bus.address = form.data["address"]
-        bus.city = form.data["city"]
-        bus.state = form.data["state"]
+                        # db.session.add(new_image) updates bus.images but not existing_images....
+                        # so the length of existing_images is fixed to the original length of bus.images
+                        # meaning you don't need to db.session.commit() here
 
         db.session.commit()
-
         return {
             **bus.to_dict(),
             "images": [image.to_dict() for image in bus.images]
