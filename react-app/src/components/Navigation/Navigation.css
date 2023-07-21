@@ -7,6 +7,8 @@
   border: 1px solid lightgray;
   box-shadow: 0 0 2px gray;
 
+  /* list-style-type: none; */
+
   /* clicking logout in the dropdown wasn't working when
   the dropdown was over the background image in the single bus page
   giving it a z-index fixed the issue*/
@@ -22,6 +24,16 @@
   border:none;
   color:black;
   font-size:14px;
+}
+.drop_down_profile_all_link{
+  cursor:pointer;
+  word-wrap:break-word;
+}
+
+.drop_down_profile_username,
+.drop_down_profile_email{
+  word-break:break-all;
+  overflow:hidden;
 }
 
 .hidden {
