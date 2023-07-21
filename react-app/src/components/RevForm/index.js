@@ -80,10 +80,10 @@ export default function RevForm({edit})
     async function onSubmit(event)
     {
         event.preventDefault();
-        //if the user doesn't change the default rating (1)
-        //it won't be accepted by the form, have to explictly make it 1
+
         const formData = new FormData();
-        formData.append("rating", rating ? Number(rating) : 1);
+        // formData.append("rating", rating ? Number(rating) : 1);
+        formData.append("rating", rating);
         formData.append("review", review);
 
         if(first) formData.append("first", first);
