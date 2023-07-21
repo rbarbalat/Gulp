@@ -10,13 +10,6 @@ export default function RevForm({edit})
     //for create review form will always be coming from a single business page
     //singleBus will be loaded in the store
 
-    //if you have multiple reviews of the same business, if you click on a card
-    //it will take you to the right one
-    //make a button at the top of the single bus page that will take you to the most recent
-
-    //rating is loaded correctly but if it isn't changed in the edit will it cause typerror
-    //as in the case with default 1 in the create review case????
-
     const business = useSelector(state => state.businesses.singleBus);
     const edit_rev = useSelector(state => state.reviews.singleRev);
     const [rating, setRating] = useState(edit ? edit_rev?.rating : "");

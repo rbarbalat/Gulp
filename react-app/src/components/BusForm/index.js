@@ -8,9 +8,6 @@ import "./BusForm.css";
 export default function BusForm({edit})
 {
     const business = useSelector(state => state.businesses.singleBus);
-    //the edit version is linked from the page for the specific business
-    //so that business is guaranteed to be the singleBus in the store
-    //NOT TRUE b/c you can be linked from the user profile
     const [name, setName] = useState(edit ? business.name : "");
     const [description, setDescription] = useState(edit ? business.description : "");
     const [city, setCity] = useState(edit ? business.city : "");
@@ -22,15 +19,7 @@ export default function BusForm({edit})
     const [second, setSecond] = useState(undefined);
     const [third, setThird] = useState(undefined);
 
-    // console.log("start");
-    // console.log(prev);
-    // console.log(first);
-    // console.log(second);
-    // console.log(third);
-
     const [prev_url, setPrevUrl] = useState(edit ? business.preview_image : "");
-    // console.log(prev_url);
-    // console.log("end");
 
     const first_url = edit ? (business.images?.length >= 1 ? business.images[0].url : "") : "";
     const second_url = edit ? (business.images?.length >= 2 ? business.images[1].url : "") : "";
@@ -38,8 +27,6 @@ export default function BusForm({edit})
 
     const [valErrors, setValErrors] = useState({});
 
-    // const user = useSelector((state) => state.session.user);
-    // do some check on the edit form with user
     const history = useHistory();
     const dispatch = useDispatch();
 
@@ -57,7 +44,7 @@ export default function BusForm({edit})
     //handle the case where you are on the edit form with pre-loaded data
     //and click the link at the top to add a new business, prevent stat var from keeping vals from edit
     useEffect(() => {
-        //triggered when changing from edit to create form only
+        //need to do this only when on the edit form and click add a business in the navbar
         if(!edit)
         {
             setName("");
@@ -76,13 +63,15 @@ export default function BusForm({edit})
             document.querySelector("#file_input_1").value = "";
             document.querySelector("#file_input_2").value = "";
             document.querySelector("#file_input_3").value = "";
-            //the mandatory one is diff between edit/add so doesn't have to be cleared
+            //the mandatory one is diff between edit/add forms (b/c of required attribute) so doesn't have to be cleared
         }
     }, [edit])
 
     async function deleteBusImage(index)
     {
         const image_id = business.images[index-1].id;
+        //no thunk b/c not store for bus+images,
+        //the setRender will trigger a useEffect to call a thunk to get updated Business
         const res = await fetch(`/api/businesses/images/${image_id}`, {method: "Delete"});
         if(res.error)
         {
@@ -176,7 +165,7 @@ export default function BusForm({edit})
                 {
                     edit &&
                     <p>
-                        <input id="file_input_preview_edit" className="file_input" type="file" accept="image/*" name="prev_url" placeholder="Preview Image Url" onChange={e => handleImage(e, 0)}/>
+                        <input id="file_input_preview_edit" className="file_input" type="file" accept="image/*" name="prev_url" onChange={e => handleImage(e, 0)}/>
                         {prev_url && !prev &&
                             <p className="image_and_delete_button">
                                 <img alt="preview" className="form_images" src={prev_url}></img>
@@ -185,7 +174,9 @@ export default function BusForm({edit})
                     </p>
                 }
                 {
-                    !edit && <p><input id="file_input_preview_add" className="file_input" type="file" accept="image/*" name="prev_url" onChange={e => handleImage(e, 0)} required/></p>
+                    !edit && <p><input id="file_input_preview_add" className="file_input" type="file" accept="image/*" name="prev_url" onChange={e => handleImage(e, 0)}
+                                required/></p>
+                                // this one is required, the edit one is not required b/c if you don't change it, it uses the existing one
                 }
                 {valErrors.prev_url && <p className="bus_form_errors">{valErrors.prev_url}</p>}
 
