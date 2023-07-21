@@ -19,7 +19,7 @@ class BusForm(FlaskForm):
     # the bus_name_exists was applied on edits as well...NEED TO CREATE A DIFFERENT
     # A SEPARATE EDIT FORM ON WHICH NAME IS NOT A FIELD
 
-    name = StringField("name", validators=[DataRequired(), Length(min=3, max=20)], )
+    name = StringField("name", validators=[DataRequired(), bus_name_exists, Length(min=3, max=20)], )
     description = StringField("description", validators=[DataRequired(), Length(min=20, max=700)] )
     address = StringField("address", validators=[DataRequired(), Length(min=4, max=30)] )
     city = StringField("state", validators=[DataRequired(), Length(min=2, max=15)] )

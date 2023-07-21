@@ -67,7 +67,8 @@ export default function ReviewCard({review, user, business_id, user_profile})
 
             <div className = "reviewer_rating">
                 <StarRatingInput rating={review.rating} form={false}/>
-                <div>{review.created_at.split(",")[1].split(":")[0].slice(0,-3)} (adjust)</div>
+                {/* CHANGE THIS WHEN CHANGING DATES */}
+                <div>{review.created_at.split(",")[1].split(":")[0].slice(0,-3)}</div>
             </div>
 
             {/* {review.updated_at ? review.updated_at : review.created_at} */}

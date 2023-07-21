@@ -15,7 +15,12 @@
     font-size:30px;
     font-weight:bold;
 
-    word-break: break-all;
+    word-wrap: break-word;
+}
+.single_bus_description_not_card, .single_bus_about{
+    /* word-break: break-all; */
+    word-wrap: break-word;
+    overflow:hidden;
 }
 .review_button, .bus_edit_button, .bus_delete_button,
 .bus_confirm_delete_button, .bus_cancel_delete_button{

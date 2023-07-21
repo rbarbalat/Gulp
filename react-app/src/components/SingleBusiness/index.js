@@ -57,23 +57,7 @@ export default function SingleBusiness()
         //from this component don't need to dispatch load single bus
         history.push(`/businesses/${business_id}/edit`);
     }
-    //MOVE THIS FUNCTION TO THE BusCard component
-    // async function deleteBus()
-    // {
-    //     const res = await dispatch(thunkDeleteBusiness(business_id));
-    //     if(res.error)
-    //     {
-    //         console.log("bad response from inside deleteBus");
-    //         console.log(res);
-    //         alert("something went wrong with the deletion");
-    //     }else {
-    //         console.log("good response from inside deleteBus");
-    //         console.log(res);
-    //         //owner linked back to his profile after deleting a business
-    //         history.push(`/users/${user.id}`);
-    //         return;
-    //     }
-    // }
+
     function linkReview()
     {
         history.push(`/businesses/${business_id}/reviews`);
@@ -85,7 +69,7 @@ export default function SingleBusiness()
             <TopCard business={business} />
             <div className="single_bus_middle_wrapper">
                 <div className="single_bus_about">{business.name}</div>
-                <div>{business.description}</div>
+                <div className="single_bus_description_not_card">{business.description}</div>
                 {
                     business.images.length > 0 &&
                     <div className = "single_bus_submitted_images">

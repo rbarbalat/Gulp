@@ -86,6 +86,8 @@
 
 .review_text {
     /* word-break: break-all; */
+
+    /* word-wrap better for readability */
     word-wrap: break-word;
     font-size:17px;
 }

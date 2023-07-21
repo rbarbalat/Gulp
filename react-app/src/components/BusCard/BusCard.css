@@ -134,16 +134,17 @@
     cursor:pointer;
 }
 
-.bus_card_address, .bus_card_city_state, .bus_card_description{
-    word-break: break-all;
+.bus_card_address, .bus_card_city_state,
+.bus_card_description, .business_name{
+    /* word-break: break-all; */
     /* break the words at any character to prevent overflow*/
 
-    /* word-wrap: break-word; */
+    word-wrap: break-word;
     /* break words at arbitrary points to prevent overflow*/
 
-    /* overflow: scroll; */
     overflow:hidden;
     /*overflow-wrap: break-word; */
+    /* overflow: scroll; */
 }
 
 .bus_card_description {

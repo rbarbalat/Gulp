@@ -25,9 +25,11 @@
 
 .mini_first_review{
     color:red;
+    word-wrap:break-word;
 }
 
 .mini_business_name{
     font-weight:bold;
     color:teal;
+    word-wrap:break-word;
 }
