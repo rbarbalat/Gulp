@@ -219,6 +219,8 @@ def create_business():
             #if owner is necessary
         }, 201
 
+    print("printing form.errors")
+    print(form.errors)
     return {"error": form.errors}, 400
 
 #EDIT A BUSINESS
@@ -275,55 +277,25 @@ def edit_business(id):
                         db.session.add(new_image)
                         db.session.commit()
 
+        # not using the name_exists validator in the edit_form so need this adjustment here
+        # can use .first b/c the name col has a unique constraint, can't be more than one
+        same_name_bus = Business.query.filter(Business.name == form.data["name"]).first()
+        if same_name_bus and same_name_bus.id != bus.id:
+            return {
+                "error": {
+                    "name": ["Business name is already in use"]
+                }
+            }
+        # make this error message match the structure of others
         bus.name = form.data["name"]
+
         bus.description = form.data["description"]
         bus.address = form.data["address"]
         bus.city = form.data["city"]
         bus.state = form.data["state"]
 
-
         db.session.commit()
 
-        #don't allow deletions of images in the update form
-        #separate delete button
-        # existing_images = bus.images
-        # keys = ["first", "second", "third"]
-        # for i in range(3):
-        #     # works if you force an order of first, second, third on the front end
-        #     # keys[i] in form.data True for all i in range(3) but its value might be None
-        #     if form.data[keys[i]]:
-        #         if len(existing_images) >= i + 1:
-        #             existing_images[i].url = form.data[keys[i]]
-        #         else:
-        #             new_image = BusImage(business_id = id, url = form.data[keys[i]])
-        #             db.session.add(new_image)
-        #             existing_images.append(new_image)
-        #     else:
-        #         #if user sends back an empty string, that means delete (for now)
-        #         if len(existing_images) >= i + 1:
-        #             existing_images[i].url = ""
-
-        #commit the new images added in line 233
-        # db.session.commit()
-        # del_images = []
-        # retain_images = []
-        # for image in existing_images:
-        #     if image.url == "":
-        #         del_images.append(image)
-        #     else:
-        #         retain_images.append(image)
-
-        #these would have to be removed from Amazon as well
-        # _ = [db.session.delete(image) for image in del_images]
-        # db.session.commit()
-
-        # retain_images = [image.to_dict() for image in retain_images]
-
-        #remove lines 236 to 254 EXCLUDING db.session.commit() on 252
-        #this is the end for the original working edit route that doesn't allow for deletions
-        # images = [image.to_dict() for image in existing_images]
-        # singleBus: {...state.singleBus, ...action.business}
-        # should still the reviews, numReviews, average keys in the store b/ they aren't being overwritten
         return {
             **bus.to_dict(),
             "images": [image.to_dict() for image in bus.images]
