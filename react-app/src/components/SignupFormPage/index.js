@@ -77,59 +77,10 @@ function SignupFormPage() {
       </div>
 
       <div className = "signup_right_image_wrapper">
-        <img className ="signup_logo_image" alt="logo" src="https://s3-media0.fl.yelpcdn.com/assets/2/www/img/7922e77f338d/signup/signup_illustration.png"></img>
+        <img className ="signup_logo_image" alt="logo" src="https://bucket-rb22.s3.us-east-2.amazonaws.com/yelp_pic.png"></img>
       </div>
     </div>
   )
 }
-
-  // return (
-  //   <>
-  //     <h1>Sign Up</h1>
-  //     <form onSubmit={handleSubmit}>
-  //       <ul>
-  //         {errors.map((error, idx) => <li key={idx}>{error}</li>)}
-  //       </ul>
-  //       <label>
-  //         Email
-  //         <input
-  //           type="text"
-  //           value={email}
-  //           onChange={(e) => setEmail(e.target.value)}
-  //           required
-  //         />
-  //       </label>
-  //       <label>
-  //         Username
-  //         <input
-  //           type="text"
-  //           value={username}
-  //           onChange={(e) => setUsername(e.target.value)}
-  //           required
-  //         />
-  //       </label>
-  //       <label>
-  //         Password
-  //         <input
-  //           type="password"
-  //           value={password}
-  //           onChange={(e) => setPassword(e.target.value)}
-  //           required
-  //         />
-  //       </label>
-  //       <label>
-  //         Confirm Password
-  //         <input
-  //           type="password"
-  //           value={confirmPassword}
-  //           onChange={(e) => setConfirmPassword(e.target.value)}
-  //           required
-  //         />
-  //       </label>
-  //       <button type="submit">Sign Up</button>
-  //     </form>
-  //   </>
-  // );
-// }
 
 export default SignupFormPage;
