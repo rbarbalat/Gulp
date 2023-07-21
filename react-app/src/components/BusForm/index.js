@@ -22,15 +22,15 @@ export default function BusForm({edit})
     const [second, setSecond] = useState(undefined);
     const [third, setThird] = useState(undefined);
 
-    console.log("start");
-    console.log(prev);
-    console.log(first);
-    console.log(second);
-    console.log(third);
+    // console.log("start");
+    // console.log(prev);
+    // console.log(first);
+    // console.log(second);
+    // console.log(third);
 
     const [prev_url, setPrevUrl] = useState(edit ? business.preview_image : "");
-    console.log(prev_url);
-    console.log("end");
+    // console.log(prev_url);
+    // console.log("end");
 
     const first_url = edit ? (business.images?.length >= 1 ? business.images[0].url : "") : "";
     const second_url = edit ? (business.images?.length >= 2 ? business.images[1].url : "") : "";
@@ -70,6 +70,13 @@ export default function BusForm({edit})
             setFirst(undefined);
             setSecond(undefined);
             setThird(undefined);
+
+            //the file inputs aren't set to have a value equal to a state variable
+            //so they need to be reset separately
+            document.querySelector("#file_input_1").value = "";
+            document.querySelector("#file_input_2").value = "";
+            document.querySelector("#file_input_3").value = "";
+            //the mandatory one is diff between edit/add so doesn't have to be cleared
         }
     }, [edit])
 
@@ -153,8 +160,6 @@ export default function BusForm({edit})
                 <p><input className="not_file_input" type="text" name="name" placeholder="Name" value={name} onChange={e => setName(e.target.value)} required/></p>
                 {valErrors.name && <p className="bus_form_errors">{valErrors.name}</p>}
 
-                {/* change to textarea later */}
-                {/* <p><input className="not_file_input" type="text" name="description" placeholder="Description" value={description} onChange={e => setDescription(e.target.value)} required/></p> */}
                 <p><textarea className="bus_form_text_area" type="text" name="description" placeholder="Description" value={description} onChange={e => setDescription(e.target.value)} required/></p>
                 {valErrors.description && <p className="bus_form_errors">{valErrors.description}</p>}
 
@@ -171,7 +176,7 @@ export default function BusForm({edit})
                 {
                     edit &&
                     <p>
-                        <input className="file_input" type="file" accept="image/*" name="prev_url" placeholder="Preview Image Url" onChange={e => handleImage(e, 0)}/>
+                        <input id="file_input_preview_edit" className="file_input" type="file" accept="image/*" name="prev_url" placeholder="Preview Image Url" onChange={e => handleImage(e, 0)}/>
                         {prev_url && !prev &&
                             <p className="image_and_delete_button">
                                 <img alt="preview" className="form_images" src={prev_url}></img>
@@ -180,14 +185,14 @@ export default function BusForm({edit})
                     </p>
                 }
                 {
-                    !edit && <p><input className="file_input" type="file" accept="image/*" name="prev_url" placeholder="Preview Image Url" onChange={e => handleImage(e, 0)} required/></p>
+                    !edit && <p><input id="file_input_preview_add" className="file_input" type="file" accept="image/*" name="prev_url" onChange={e => handleImage(e, 0)} required/></p>
                 }
                 {valErrors.prev_url && <p className="bus_form_errors">{valErrors.prev_url}</p>}
 
                 <p>Optional Images</p>
 
                 <p>
-                    <input className="file_input" type="file" accept="image/*" name="first" onChange={e => handleImage(e, 1)}/>
+                    <input id="file_input_1" className="file_input" type="file" accept="image/*" name="first" onChange={e => handleImage(e, 1)}/>
                     { first_url && !first &&
                         <p className="image_and_delete_button">
                             <img alt="optional one" className="form_images" src={first_url}></img>
@@ -198,7 +203,7 @@ export default function BusForm({edit})
                 {valErrors.first && <p className="bus_form_errors">{valErrors.first}</p>}
 
                 <p>
-                    <input className="file_input" type="file" accept="image/*" name="second" onChange={e => handleImage(e, 2)}/>
+                    <input id="file_input_2" className="file_input" type="file" accept="image/*" name="second" onChange={e => handleImage(e, 2)}/>
                     { second_url && !second &&
                         <p className="image_and_delete_button">
                             <img alt="optional two" className="form_images" src={second_url}></img>
@@ -209,7 +214,7 @@ export default function BusForm({edit})
                 {valErrors.second && <p className="bus_form_errors">{valErrors.second}</p>}
 
                 <p>
-                    <input className="file_input" type="file" accept="image/*" name="third" onChange={e => handleImage(e, 3)}/>
+                    <input id="file_input_3" className="file_input" type="file" accept="image/*" name="third" onChange={e => handleImage(e, 3)}/>
                     { third_url && !third &&
                         <p className="image_and_delete_button">
                             <img alt="optional three" className="form_images" src={third_url}></img>
