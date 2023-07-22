@@ -2,9 +2,20 @@
     margin-left: 25%;
     margin-right: 25%;
 
+    margin-top:2rem;
+
     padding-bottom:50px;
 }
 
 .all_bus_bottom_border{
     border-bottom:1px solid gray;
+}
+
+.all_bus_caption{
+    display:flex;
+    flex-direction:row;
+    justify-content:center;
+    align-items:center;
+    font-size:25px;
+    font-weight:bold;
 }

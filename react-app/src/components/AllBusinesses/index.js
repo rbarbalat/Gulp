@@ -30,7 +30,8 @@ export default function AllBusinesses()
 
     if(businesses.length === 0) return <div>loading</div>
     return (
-        <div className ="all_bus_wrapper">
+        <div className = "all_bus_wrapper">
+            <div className = "all_bus_caption">All Businesses</div>
             {
                 // change onClick later to a function on a div that checks the event target like in old project
                 businesses.map(business => (
