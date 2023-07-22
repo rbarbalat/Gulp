@@ -17,25 +17,28 @@ export default function SingleBusiness()
     const user = useSelector(state => state.session.user);
     const [confirm, setConfirm] = useState(false);
 
-    const [sort, setSort] = useState("newest");
+    const [sort, setSort] = useState("new");
 
     //initial state for both is an object, so worst case undefined === undefined
     const isOwner = user?.id === business?.owner_id;
     const hasReviewed = business?.reviewers?.includes(user?.id);
 
+    //initial state for singleBus is an empty object
     const reviews = business.reviews?.slice();
+    console.log("reviews is undefined ", reviews === undefined)
 
-    if(sort === "newest") reviews?.sort((a,b) => {
+
+    if(sort === "new") reviews?.sort((a,b) => {
         return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
     });
 
-    if(sort === "oldest") reviews?.sort((a,b) => {
+    if(sort === "old") reviews?.sort((a,b) => {
         return new Date(a.created_at).getTime() - new Date(b.created_at).getTime();
     });
 
-    if(sort === "best") reviews?.sort((a,b) => { return b.rating - a.rating; });
+    if(sort === "high") reviews?.sort((a,b) => { return b.rating - a.rating; });
 
-    if(sort === "worst") reviews?.sort((a,b) => { return a.rating - b.rating; })
+    if(sort === "low") reviews?.sort((a,b) => { return a.rating - b.rating; })
 
     const { business_id } = useParams();
     const dispatch = useDispatch();
@@ -82,10 +85,6 @@ export default function SingleBusiness()
     return(
         <>
             <TopCard business={business} />
-            <button onClick={() => setSort("newest")}>newest</button>
-            <button onClick={() => setSort("oldest")}>oldest</button>
-            <button onClick={() => setSort("best")}>best</button>
-            <button onClick={() => setSort("worst")}>worst</button>
             <div className="single_bus_middle_wrapper">
                 <div className="single_bus_about">{business.name}</div>
                 <div className="single_bus_description_not_card">{business.description}</div>
@@ -108,13 +107,22 @@ export default function SingleBusiness()
             </div>
 
         <div className ="single_bus_wrapper">
-            {
-                reviews.map(review => (
-                // business.reviews.map(review => (
-                    <ReviewCard key = {review.id} review={review}
-                    user={user} business_id = {business_id} user_profile={false} />
-                ))
-            }
+        {
+            reviews.length > 0 &&
+            <div className = "single_bus_sort_wrapper">
+                <div className = {`single_bus_sort_option${sort === "new" ? " active_sort_single" : "" }`} onClick={() => setSort("new")}>new</div>
+                <div className = {`single_bus_sort_option${sort === "old" ? " active_sort_single" : "" }`} onClick={() => setSort("old")}>old</div>
+                <div className = {`single_bus_sort_option${sort === "high" ? " active_sort_single" : "" }`} onClick={() => setSort("high")}>high</div>
+                <div className = {`single_bus_sort_option${sort === "low" ? " active_sort_single" : "" }`} onClick={() => setSort("low")}>low</div>
+            </div>
+        }
+        {
+            reviews.map(review => (
+            // business.reviews.map(review => (
+                <ReviewCard key = {review.id} review={review}
+                user={user} business_id = {business_id} user_profile={false} />
+            ))
+        }
         </div>
 
         <div className="single_bus_bottom_space"></div>

@@ -58,7 +58,9 @@
 
 .single_bus_wrapper {
     margin-left: 25%;
-    margin-right: 25%
+    margin-right: 25%;
+
+    margin-top: 3rem;
 }
 
 .single_bus_submitted_images {
@@ -85,4 +87,25 @@
 
 .single_bus_bottom_space{
     min-height:50px;
+}
+
+.single_bus_sort_wrapper{
+    display:flex;
+    flex-direction:row;
+    justify-content:flex-start;
+    gap: .5rem;
+}
+
+.single_bus_sort_option{
+    color:teal;
+    cursor:pointer;
+    font-size:18px;
+}
+.single_bus_sort_option.active_sort_single{
+    /* double class to override previous one although order is also enough*/
+    color:black;
+    font-weight:bold;
+}
+.single_bus_sort_option:hover{
+    font-weight:bold;
 }
