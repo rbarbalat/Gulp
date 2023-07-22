@@ -86,10 +86,10 @@ def seed_rev_images(reviews):
     urls.extend(bus_urls)
 
     #6 businesses and 3 reviews per business
-    for i in reviews:
+    for i in range(len(reviews)):
         for j in range(3):
             rev_image = RevImage(
-                review=reviews[3*i + j],
+                review=reviews[i],
                 url = urls[3*i + j]
             )
             db.session.add(rev_image)
