@@ -17,25 +17,25 @@ export default function SingleBusiness()
     const user = useSelector(state => state.session.user);
     const [confirm, setConfirm] = useState(false);
 
-    //make sure this line never causes a typeerror
+    const [sort, setSort] = useState("newest");
+
     //initial state for both is an object, so worst case undefined === undefined
     const isOwner = user?.id === business?.owner_id;
     const hasReviewed = business?.reviewers?.includes(user?.id);
 
-    // if(business.reviews)
-    // {
-    //     business.reviews.forEach(review => {console.log(new Date(review.created_at).getTime())})
-    // }
-
     const reviews = business.reviews?.slice();
-    reviews?.sort((a,b) => {
-        return a.rating - b.rating;
-    })
-    console.log(reviews)
 
-    // upcomingEvents.sort((a,b) => {
-    //     return new Date(a.startDate).getTime() - new Date(b.startDate).getTime();
-    // });
+    if(sort === "newest") reviews?.sort((a,b) => {
+        return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
+    });
+
+    if(sort === "oldest") reviews?.sort((a,b) => {
+        return new Date(a.created_at).getTime() - new Date(b.created_at).getTime();
+    });
+
+    if(sort === "best") reviews?.sort((a,b) => { return b.rating - a.rating; });
+
+    if(sort === "worst") reviews?.sort((a,b) => { return a.rating - b.rating; })
 
     const { business_id } = useParams();
     const dispatch = useDispatch();
@@ -82,6 +82,10 @@ export default function SingleBusiness()
     return(
         <>
             <TopCard business={business} />
+            <button onClick={() => setSort("newest")}>newest</button>
+            <button onClick={() => setSort("oldest")}>oldest</button>
+            <button onClick={() => setSort("best")}>best</button>
+            <button onClick={() => setSort("worst")}>worst</button>
             <div className="single_bus_middle_wrapper">
                 <div className="single_bus_about">{business.name}</div>
                 <div className="single_bus_description_not_card">{business.description}</div>
@@ -105,7 +109,8 @@ export default function SingleBusiness()
 
         <div className ="single_bus_wrapper">
             {
-                business.reviews.map(review => (
+                reviews.map(review => (
+                // business.reviews.map(review => (
                     <ReviewCard key = {review.id} review={review}
                     user={user} business_id = {business_id} user_profile={false} />
                 ))
