@@ -22,6 +22,21 @@ export default function SingleBusiness()
     const isOwner = user?.id === business?.owner_id;
     const hasReviewed = business?.reviewers?.includes(user?.id);
 
+    // if(business.reviews)
+    // {
+    //     business.reviews.forEach(review => {console.log(new Date(review.created_at).getTime())})
+    // }
+
+    const reviews = business.reviews?.slice();
+    reviews?.sort((a,b) => {
+        return a.rating - b.rating;
+    })
+    console.log(reviews)
+
+    // upcomingEvents.sort((a,b) => {
+    //     return new Date(a.startDate).getTime() - new Date(b.startDate).getTime();
+    // });
+
     const { business_id } = useParams();
     const dispatch = useDispatch();
     const history = useHistory();
