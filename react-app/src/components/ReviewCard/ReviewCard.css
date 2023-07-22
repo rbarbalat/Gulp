@@ -107,7 +107,6 @@
 .submitted_images_wrapper {
     display: flex;
     flex-direction: row;
-    flex-direction: space-evenly;
     gap: .6rem;
 
     height: 150px;

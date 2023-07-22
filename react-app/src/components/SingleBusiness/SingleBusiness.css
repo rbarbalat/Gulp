@@ -66,7 +66,7 @@
 
     display: flex;
     flex-direction: row;
-    justify-content:center;
+    /* justify-content:center; */
     gap:.5rem;
 
     height: 150px;
@@ -81,4 +81,8 @@
     height: 100%;
     width: 100%;
     border-radius:5px;
+}
+
+.single_bus_bottom_space{
+    min-height:50px;
 }

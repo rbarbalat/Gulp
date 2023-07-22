@@ -57,7 +57,12 @@ export default function ReviewCard({review, user, business_id, user_profile})
                         {review.reviewer.username}
                     </div>
                     <div className = "reviewer_numReviews">
-                        {review.reviewer.numReviews} reviews
+                    {
+                        review.reviewer.numReviews === 1 ?
+                        `${review.reviewer.numReviews} review`
+                        :
+                        `${review.reviewer.numReviews} reviews`
+                    }
                     </div>
                 </div>
                 { isReviewer && confirm && confirmAndCancel}

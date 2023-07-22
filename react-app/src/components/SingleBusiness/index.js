@@ -96,6 +96,8 @@ export default function SingleBusiness()
                 ))
             }
         </div>
+
+        <div className="single_bus_bottom_space"></div>
     </>
     )
 }
