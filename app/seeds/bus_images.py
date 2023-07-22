@@ -40,6 +40,7 @@ def seed_bus_images(businesses):
     for i in range(6):
         for j in range(3):
             bus_image = BusImage(business = businesses[i], url = urls[i][j])
+            db.session.add(bus_image)
 
     db.session.commit()
     print("seeded business images")
