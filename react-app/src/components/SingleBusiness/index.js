@@ -63,8 +63,8 @@ export default function SingleBusiness()
         async function fetchData()
         {
             const res = await dispatch(thunkLoadSingleBusiness(business_id));
-            console.log("res in useEffect");
-            console.log(res);
+            // console.log("res in useEffect");
+            // console.log(res);
         }
         fetchData();
     }, [dispatch, business_id])
