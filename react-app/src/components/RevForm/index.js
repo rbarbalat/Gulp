@@ -8,7 +8,11 @@ import "./RevForm.css";
 export default function RevForm({edit})
 {
     //for create review form will always be coming from a single business page
-    //singleBus will be loaded in the store
+    //singleBus will be loaded in the store, but gone from store if you refresh
+    //but you still get the business_id from useParams which is all you need
+    //except for <div>{business.name}</div> at the top of the page which becomes
+    //undefined and you lose the name of the business on the refresh
+    //form still works b/c you have business_id..
 
     const business = useSelector(state => state.businesses.singleBus);
     const edit_rev = useSelector(state => state.reviews.singleRev);
@@ -24,7 +28,6 @@ export default function RevForm({edit})
     const third_url =  edit ? (edit_rev.images?.length === 3 ? edit_rev.images[2].url : "") : "" ;
 
     const [valErrors, setValErrors] = useState({});
-    const [loaded, setLoaded] = useState(false);
 
     //business_id exists when !edit, review id exists when edit
     const { business_id} = useParams();
@@ -34,16 +37,15 @@ export default function RevForm({edit})
 
     const dispatch = useDispatch();
     const history = useHistory();
-    //const user = useSelector((state) => state.session.user);
 
+    //linkEditReview actually dispatches the same thunk and only links here if there is a good response
+    //this useEffect added after the fact for the situation when an image is deleted before form submission
+    //to rerender the page and also preserve changes to the star rating/text of the review from before image deletion
     useEffect(async () => {
-        //consider if(edit && Object.keys(edit_revew).length == 0)
         if(edit)
         {
-            console.log("USE EFFECT");
+            // console.log("USE EFFECT");
             const res = await dispatch(thunkLoadSingleReview(review_id));
-            //check if setLoaded is still needed
-            setLoaded(true);
         }
     }, [render])
 
@@ -53,13 +55,13 @@ export default function RevForm({edit})
         const res = await fetch(`/api/reviews/images/${image_id}`, {method: "Delete"});
         if(res.error)
         {
-            console.log("bad response from delete rev image route");
-            console.log(res);
+            // console.log("bad response from delete rev image route");
+            // console.log(res);
             alert("could not delete the image");
         }else
         {
-            console.log("good response from delete rev image route");
-            console.log(res);
+            // console.log("good response from delete rev image route");
+            // console.log(res);
             setRender(prev => !prev);
         }
         return null;
@@ -112,10 +114,13 @@ export default function RevForm({edit})
             return null;
         }
     }
+
+    if(edit && Object.keys(edit_rev).length === 0) return <div>loading</div>
+
     return (
         <div className = "rev_form_wrapper">
             { edit ?
-                <div className ="add_your_review">{edit_rev.business.name}</div>
+                <div className ="add_your_review">{edit_rev.business?.name}</div>
                 :
                 <div className ="add_your_review">{business.name}</div>
             }

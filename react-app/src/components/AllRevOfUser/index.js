@@ -24,8 +24,8 @@ export default function AllRevOfUser()
         async function fetchData()
         {
             const res = await dispatch(thunkLoadReviewsOfUser());
-            console.log("res in allBusOfUser useEffect");
-            console.log(res);
+            // console.log("res in allBusOfUser useEffect");
+            // console.log(res);
 
             if(!res.error) setLoaded(true);
         }

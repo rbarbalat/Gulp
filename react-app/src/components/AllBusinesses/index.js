@@ -52,8 +52,8 @@ export default function AllBusinesses()
         async function fetchData()
         {
             const res = await dispatch(thunkLoadBusinesses());
-            console.log("res in allBus useEffect");
-            console.log(res);
+            // console.log("res in allBus useEffect");
+            // console.log(res);
         }
         fetchData()
     }, [dispatch])
@@ -67,11 +67,11 @@ export default function AllBusinesses()
         {
             businesses.length > 0 &&
             <div className = "all_bus_sort_wrapper">
-                <div className = {`all_bus_sort_option${sort === "new" ? " active_sort_all" : "" }`} onClick={() => setSort("new")}>new</div>
-                <div className = {`all_bus_sort_option${sort === "old" ? " active_sort_all" : "" }`} onClick={() => setSort("old")}>old</div>
+                {/* <div className = {`all_bus_sort_option${sort === "new" ? " active_sort_all" : "" }`} onClick={() => setSort("new")}>new</div>
+                <div className = {`all_bus_sort_option${sort === "old" ? " active_sort_all" : "" }`} onClick={() => setSort("old")}>old</div> */}
                 <div className = {`all_bus_sort_option${sort === "high" ? " active_sort_all" : "" }`} onClick={() => setSort("high")}>high</div>
                 <div className = {`all_bus_sort_option${sort === "low" ? " active_sort_all" : "" }`} onClick={() => setSort("low")}>low</div>
-                <div className = {`all_bus_sort_option${sort === "reviews" ? " active_sort_all" : "" }`} onClick={() => setSort("reviews")}>reviews</div>
+                <div className = {`all_bus_sort_option${sort === "reviews" ? " active_sort_all" : "" }`} onClick={() => setSort("reviews")}>most reviewed</div>
             </div>
         }
         {

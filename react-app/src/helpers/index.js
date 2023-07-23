@@ -11,11 +11,11 @@ export async function linkEditReview(review_id, dispatch, history)
     // edit form will be able to get the existing values right away
     if(res.error)
     {
-        console.log("bad response inside linkEdit in ReviewCard")
-        console.log(res);
+        // console.log("bad response inside linkEdit in ReviewCard")
+        // console.log(res);
     }else{
-        console.log("good response inside linkEdit in ReviewCard");
-        console.log(res)
+        // console.log("good response inside linkEdit in ReviewCard");
+        // console.log(res)
         history.push(`/reviews/${review_id}`);
         return;
     }
@@ -26,12 +26,12 @@ export async function deleteReview(review_id, dispatch, business_id)
     const res = await dispatch(thunkDeleteReview(review_id));
     if(res.error)
     {
-        console.log("bad response from inside deleteReview");
-        console.log(res);
-        alert("something went wrong with the deletion");
+        // console.log("bad response from inside deleteReview");
+        // console.log(res);
+        // alert("something went wrong with the deletion");
     }else {
-        console.log("good response from inside deleteReview");
-        console.log(res);
+        // console.log("good response from inside deleteReview");
+        // console.log(res);
         if(business_id)
         {
             //if you are deleting from the single business page
@@ -40,11 +40,11 @@ export async function deleteReview(review_id, dispatch, business_id)
             const res_two = await dispatch(thunkLoadSingleBusiness(business_id));
             if(res_two.error)
             {
-                console.log("problem loading single business after review deletion");
-                console.log(res_two);
+                // console.log("problem loading single business after review deletion");
+                // console.log(res_two);
             }else {
-                console.log("reloaded the single business page after deleting a review")
-                console.log(res_two)
+                // console.log("reloaded the single business page after deleting a review")
+                // console.log(res_two)
             }
         }
         //after deleting a business or review, need to pull new usr session info
@@ -62,11 +62,11 @@ export async function linkEditBus(business_id, dispatch, history)
     const res = await dispatch(thunkLoadSingleBusiness(business_id));
     if(res.error)
     {
-        console.log("bad response from inside linkEdit in BusCard");
-        console.log(res);
+        // console.log("bad response from inside linkEdit in BusCard");
+        // console.log(res);
     }else{
-        console.log("good response from inside linkEdit");
-        console.log(res);
+        // console.log("good response from inside linkEdit");
+        // console.log(res);
         history.push(`/businesses/${business_id}/edit`);
     }
 }
@@ -76,12 +76,12 @@ export async function deleteBusiness(business_id, user_id, dispatch, history)
     const res = await dispatch(thunkDeleteBusiness(business_id));
     if(res.error)
     {
-        console.log("bad response from inside deleteBusiness");
-        console.log(res);
-        alert("something went wrong with the deletion");
+        // console.log("bad response from inside deleteBusiness");
+        // console.log(res);
+        // alert("something went wrong with the deletion");
     }else {
-        console.log("good response from inside deleteBusiness");
-        console.log(res);
+        // console.log("good response from inside deleteBusiness");
+        // console.log(res);
         //owner linked back to his profile after deleting a business
 
         //after deleting a business or review (from the user profile), need to pull new user session info

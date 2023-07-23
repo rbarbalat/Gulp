@@ -51,15 +51,15 @@ export default function LandingPage()
     useEffect( async () => {
         // dispatch(thunkLoadReviews())
         const res = await dispatch(thunkLoadBusinesses());
-        console.log("res for thunkLoadBusinesses in landing page useEffect ");
-        console.log(res);
-        setLoaded(true);
+        // console.log("res for thunkLoadBusinesses in landing page useEffect ");
+        // console.log(res);
+        if(!res.error) setLoaded(true);
     },[])
 
     useEffect(() => {
         if(length > 0)
         {
-            console.log("hello from the interval useEffect")
+            // console.log("hello from the interval useEffect")
             const my_interval = setInterval(() => {
                 // console.log("length --- ", length);
                 setIndex(prev => prev === length - 1 ? 0 : prev + 1 )
