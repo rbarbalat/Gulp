@@ -161,7 +161,7 @@ export default function RevForm({edit})
                     <input className="file_input_rev" type="file" accept="image/*" name="second" onChange={e => handleImage(e, 2)}/>
                     { second_url && !second &&
                         <div className="rev_image_and_delete_button">
-                            <img className="rev_form_images" src={first_url}></img>
+                            <img className="rev_form_images" src={second_url}></img>
                             <div onClick={() => deleteRevImage(2)} className="rev_form_delete_image_div">Delete Image</div>
                         </div>
                     }
@@ -172,7 +172,7 @@ export default function RevForm({edit})
                     <input className="file_input" type="file" accept="image/*" name="third" onChange={e => handleImage(e, 3)}/>
                     { third_url && !third &&
                         <div className="rev_image_and_delete_button">
-                            <img className="rev_form_images" src={first_url}></img>
+                            <img className="rev_form_images" src={third_url}></img>
                             <div onClick={() => deleteRevImage(3)} className="rev_form_delete_image_div">Delete Image</div>
                         </div>
                     }
