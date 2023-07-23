@@ -25,6 +25,8 @@ class Business(db.Model):
 
     images = db.relationship("BusImage", back_populates="business", cascade="all, delete-orphan")
 
+    fans = db.relationship("Favorite", back_populates="business", cascade="all, delete-orphan")
+
     def to_dict(self):
         return {
             "id": self.id,
