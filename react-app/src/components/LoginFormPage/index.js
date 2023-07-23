@@ -45,7 +45,7 @@ function LoginFormPage() {
         <div className = "left_content_top_wrapper">
           <div className = "login_to_gulp">Log in to Gulp</div>
           <div className = "new_to_gulp">
-            New to Gulp? <span><NavLink to="/signup">Sign up</NavLink></span>
+            New to Gulp? <span><NavLink to="/signup" style={{color: "teal"}}>Sign up</NavLink></span>
           </div>
           <div className = "terms">
             By continuing, you agree to Gulp's Terms of Servie and acknowledge
