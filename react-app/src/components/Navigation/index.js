@@ -36,7 +36,7 @@ function Navigation({ isLoaded }){
 				<div><i className="fa-brands fa-yelp"></i></div>
 			</div>
 			<div className = "header_input_and_glass">
-				<input type="text" placeholder="search"/>
+				<input onChange={soon} value={``} type="text" placeholder="search"/>
 				<div className="glassWrapper" onClick={soon}><i className="fa-solid fa-magnifying-glass"></i></div>
 			</div>
 			{
