@@ -10,11 +10,8 @@ import "./LandingPage.css";
 
 export default function LandingPage()
 {
-    const user = useSelector((state) => state.session.user);
-    const reviews = useSelector(state => Object.values(state.reviews.allRev));
     const businesses = useSelector(state => Object.values(state.businesses.allBus));
-    // console.log("review");
-    // console.log(reviews);
+
     const dispatch = useDispatch();
     const history = useHistory();
 
@@ -24,12 +21,15 @@ export default function LandingPage()
     let length = 0;
     if(loaded) length = businesses.length;
 
+    businesses.sort((a,b) => {
+        return new Date(a.created_at).getTime() - new Date(b.created_at).getTime();
+    });
 
     const first_index = businesses.length <= 6 ? 0 : businesses.length - 6;
     const second_index = businesses.length <= 6 ? 3 : businesses.length - 3;
 
     const [index, setIndex] = useState(0);
-    console.log("index ------- ", index);
+    // console.log("index ------- ", index);
 
     const styles = {
         backgroundImage: `linear-gradient(rgba(0,0,0,.2), rgba(0,0,0,.2)), url(${businesses[index]?.preview_image})`,
@@ -61,7 +61,7 @@ export default function LandingPage()
         {
             console.log("hello from the interval useEffect")
             const my_interval = setInterval(() => {
-                console.log("length --- ", length);
+                // console.log("length --- ", length);
                 setIndex(prev => prev === length - 1 ? 0 : prev + 1 )
             }, 4000)
             return () => clearInterval(my_interval)
