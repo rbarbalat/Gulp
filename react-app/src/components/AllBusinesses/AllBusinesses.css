@@ -19,3 +19,27 @@
     font-size:25px;
     font-weight:bold;
 }
+
+.all_bus_sort_wrapper{
+    display:flex;
+    flex-direction:row;
+    justify-content:flex-start;
+    gap: .5rem;
+
+    margin-top:2rem;
+}
+
+.all_bus_sort_option{
+    color:teal;
+    cursor:pointer;
+    font-size:18px;
+}
+
+.all_bus_sort_option.active_sort_all{
+    /* double class to override previous one although order is also enough*/
+    color:black;
+    font-weight:bold;
+}
+.all_bus_sort_option:hover{
+    font-weight:bold;
+}
