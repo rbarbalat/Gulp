@@ -36,7 +36,7 @@ export default function BusForm({edit})
     useEffect(() => {
         if(edit)
         {
-            console.log("USE EFFECT")
+            // console.log("USE EFFECT")
             dispatch(thunkLoadSingleBusiness(business_id));
         }
     }, [render])

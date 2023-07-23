@@ -98,8 +98,8 @@ export default function RevForm({edit})
                     : await dispatch(thunkReceiveReview(business_id, new_review));
         if(res.error)
         {
-            console.log("printing error response from inside onSubmit create/edit review form");
-            console.log(res);
+            // console.log("printing error response from inside onSubmit create/edit review form");
+            // console.log(res);
             const errors = {};
             for(let key in res.error)
             {
@@ -108,8 +108,8 @@ export default function RevForm({edit})
             setValErrors(errors);
             return;
         }else {
-            console.log("printing good response from onSubmit in create/edit review form");
-            console.log(res);
+            // console.log("printing good response from onSubmit in create/edit review form");
+            // console.log(res);
             history.push(`/businesses/${res.business_id}`);
             return null;
         }
