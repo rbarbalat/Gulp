@@ -7,7 +7,20 @@ from datetime import datetime
 fake = Faker()
 
 def seed_replies(reviews):
-    pass
+    # 18 reviews = 6 businesses * reviews per business to start
+    # seed replies for 2/3 of reviews of each business
+    # skip every third review, indexes, 2, 5, 8, 11, 14, 17
+    for i in range(len(reviews)):
+        if i not in [2, 5, 8, 11, 14, 17]:
+            reply = Reply(
+                review = reviews[i],
+                review = fake.text(max_nb_chars=randint(200, 500)),
+                created_at = reviews[i].created_at
+            )
+            db.session.add(reply)
+
+    db.session.commit()
+
 
 def undo_replies():
     if environment == "production":
