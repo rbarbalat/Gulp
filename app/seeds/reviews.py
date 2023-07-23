@@ -17,7 +17,7 @@ def seed_reviews(users, businesses):
                 business = businesses[i],
                 rating = randint(1, 5),
                 review = fake.text(max_nb_chars=randint(100, 950)),
-                created_at = datetime(2023, randint(1,6), randint(1,30), 15)
+                created_at = datetime(2023, randint(1,6), randint(1,25), 15)
             )
             db.session.add(review)
             lst.append(review)
