@@ -25,7 +25,7 @@ export default function SingleBusiness()
 
     //initial state for singleBus is an empty object
     const reviews = business.reviews?.slice();
-    console.log("reviews is undefined ", reviews === undefined)
+    // console.log("reviews is undefined ", reviews === undefined)
 
 
     if(sort === "new") reviews?.sort((a,b) => {

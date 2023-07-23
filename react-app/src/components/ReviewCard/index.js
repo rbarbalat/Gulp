@@ -7,14 +7,20 @@ import "./ReviewCard.css";
 
 export default function ReviewCard({review, user, business_id, user_profile})
 {
-    //prob don't need to use optional chaining on review here
     //user can be null if not logged in so need it
-    const isReviewer = user?.id === review.reviewer.id;
+    const isReviewer = user?.id === review?.reviewer?.id;
 
     const dispatch = useDispatch();
     const history = useHistory();
 
     const [confirm, setConfirm] = useState(false);
+
+    let date = new Date(review?.created_at)?.toDateString()?.slice(4);
+    if(date)
+    {
+       if(date[4] === "0")
+       date = date.slice(0,4) + date.slice(5);
+    }
 
     function linkBusiness()
     {
@@ -72,8 +78,8 @@ export default function ReviewCard({review, user, business_id, user_profile})
 
             <div className = "reviewer_rating">
                 <StarRatingInput rating={review.rating} form={false}/>
-                {/* CHANGE THIS WHEN CHANGING DATES */}
-                <div>{review.created_at.split(",")[1].split(":")[0].slice(0,-3)}</div>
+                {/* <div>{review.created_at.split(",")[1].split(":")[0].slice(0,-3)}</div> */}
+                <div>{date}</div>
             </div>
 
             {/* {review.updated_at ? review.updated_at : review.created_at} */}
