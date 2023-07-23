@@ -15,7 +15,7 @@ def seed_favorites(users, businesses):
         if i in range(6, 13):
             favorite = Favorite(
                 user = users[i],
-                business = businesses[randint(range(len(businesses)))]
+                business = businesses[randint(0, len(businesses) - 1)]
                 #handle created_at later
             )
             db.session.add(favorite)
@@ -35,6 +35,7 @@ def seed_favorites(users, businesses):
             db.session.add(favorite)
 
     db.session.commit()
+    print("seeded favorites")
 
 def undo_favorites():
     if environment == "production":

@@ -14,12 +14,13 @@ def seed_replies(reviews):
         if i not in [2, 5, 8, 11, 14, 17]:
             reply = Reply(
                 review = reviews[i],
-                review = fake.text(max_nb_chars=randint(200, 500)),
+                reply = fake.text(max_nb_chars=randint(200, 500)),
                 created_at = reviews[i].created_at
             )
             db.session.add(reply)
 
     db.session.commit()
+    print("seeded replies")
 
 
 def undo_replies():
