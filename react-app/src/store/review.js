@@ -17,19 +17,19 @@ export const thunkLoadReviews = () => async (dispatch) => {
         if(res.ok)
         {
             const serverData = await res.json();
-            console.log("good response from thunkLoadReviews")
-            console.log(serverData)
+            // console.log("good response from thunkLoadReviews")
+            // console.log(serverData)
             dispatch(actionLoadReviews(serverData));
             return serverData;
         } else {
             const errorData = await res.json();
-            console.log("error response for thunkLoadReviews");
-            console.log(errorData);
+            // console.log("error response for thunkLoadReviews");
+            // console.log(errorData);
             return errorData;
         }
     } catch (error){
-        console.log("CAUGHT error response for thunkLoadReviews")
-        console.log(error);
+        // console.log("CAUGHT error response for thunkLoadReviews")
+        // console.log(error);
     }
 }
 
@@ -40,19 +40,19 @@ export const thunkLoadReviewsOfUser = () => async (dispatch) => {
         if(res.ok)
         {
             const serverData = await res.json();
-            console.log("good response from thunkLoadReviewsOfUser")
-            console.log(serverData)
+            // console.log("good response from thunkLoadReviewsOfUser")
+            // console.log(serverData)
             dispatch(actionLoadReviews(serverData));
             return serverData;
         } else {
             const errorData = await res.json();
-            console.log("error response for thunkLoadReviewsOfUser");
-            console.log(errorData);
+            // console.log("error response for thunkLoadReviewsOfUser");
+            // console.log(errorData);
             return errorData;
         }
     } catch (error){
-        console.log("CAUGHT error response for thunkLoadReviewsOfUser")
-        console.log(error);
+        // console.log("CAUGHT error response for thunkLoadReviewsOfUser")
+        // console.log(error);
     }
 }
 
@@ -69,18 +69,18 @@ export const thunkLoadSingleReview = (review_id) => async (dispatch) => {
         {
             const serverData = await res.json();
             dispatch(actionLoadSingleReview(serverData));
-            console.log("good response for thunkLoadSingleReview");
-            console.log(serverData);
+            // console.log("good response for thunkLoadSingleReview");
+            // console.log(serverData);
             return serverData;
         } else{
             const errorData = await res.json();
-            console.log("error response for thunkLoadSingleReview");
-            console.log(errorData);
+            // console.log("error response for thunkLoadSingleReview");
+            // console.log(errorData);
             return errorData;
         }
     } catch (error){
-        console.log("CAUGHT error response for thunkLoadSingleReview");
-        console.log(error);
+        // console.log("CAUGHT error response for thunkLoadSingleReview");
+        // console.log(error);
     }
 }
 
@@ -101,18 +101,18 @@ export const thunkReceiveReview = (bus_id, review) => async (dispatch) => {
         {
             const serverData = await res.json();
             dispatch(actionReceiveReview(serverData));
-            console.log("good response for thunkReceiveReview");
-            console.log(serverData);
+            // console.log("good response for thunkReceiveReview");
+            // console.log(serverData);
             return serverData;
         }else {
             const errorData = await res.json();
-            console.log("error response for thunkReceiveReview");
-            console.log(errorData);
+            // console.log("error response for thunkReceiveReview");
+            // console.log(errorData);
             return errorData;
         }
     } catch (error){
-        console.log("CAUGHT error response for thunkReceiveReview");
-        console.log(error);
+        // console.log("CAUGHT error response for thunkReceiveReview");
+        // console.log(error);
     }
 }
 
@@ -133,18 +133,18 @@ export const thunkUpdateReview = (id, review) => async (dispatch) => {
         {
             const serverData = await res.json();
             dispatch(actionUpdateReview(serverData));
-            console.log("good response for thunkUpdateReview");
-            console.log(serverData);
+            // console.log("good response for thunkUpdateReview");
+            // console.log(serverData);
             return serverData;
         }else {
             const errorData = await res.json()
-            console.log("error response for thunkUpdateReview");
-            console.log(errorData);
+            // console.log("error response for thunkUpdateReview");
+            // console.log(errorData);
             return errorData;
         }
     } catch (error){
-        console.log("CAUGHT error response for thunkUpdateReview");
-        console.log(error);
+        // console.log("CAUGHT error response for thunkUpdateReview");
+        // console.log(error);
     }
 }
 
@@ -164,19 +164,19 @@ export const thunkDeleteReview = (id) => async (dispatch) => {
         {
             const serverData = await res.json();
             dispatch(actionDeleteReview(id));
-            console.log("good response from thunkDeleteReview")
-            console.log(serverData)
+            // console.log("good response from thunkDeleteReview")
+            // console.log(serverData)
             return serverData;
         } else {
             const errorData = await res.json();
-            console.log("error response for thunkDeleteReview");
-            console.log(errorData);
+            // console.log("error response for thunkDeleteReview");
+            // console.log(errorData);
             return errorData;
         }
     } catch(error)
     {
-        console.log("CAUGHT error response for thunkDeleteReview");
-        console.log(error);
+        // console.log("CAUGHT error response for thunkDeleteReview");
+        // console.log(error);
     }
 }
 

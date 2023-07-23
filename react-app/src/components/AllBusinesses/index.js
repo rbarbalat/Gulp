@@ -17,6 +17,8 @@ export default function AllBusinesses()
     const [sort, setSort] = useState("high");
 
     //businesses an empty array before the thunk is dispatched so can call sort on it
+    //and it auto returns an empty array, won't get typerror from undef.getTime()
+    //b/c no elements to run the operation on
     if(sort === "new") businesses.sort((a,b) => {
         return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
     });
