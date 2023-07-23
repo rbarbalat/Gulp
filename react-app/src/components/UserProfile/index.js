@@ -52,7 +52,7 @@ export default function UserProfile()
                         `${user.numReviews} reviews`
                     }
                 </div>
-                <div>Joined on Sep 22, 2022</div>
+                <div>Joined on July 24, 2023</div>
                 <div className = "user_profile_options">
                     <div className = "user_profile_single_option" onClick={comingSoon}>
                         <i className="fa-solid fa-pen-to-square"></i>
