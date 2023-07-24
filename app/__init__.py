@@ -11,6 +11,8 @@ from .api.user_routes import user_routes
 from .api.auth_routes import auth_routes
 from .api.bus_routes import bus_routes
 from .api.rev_routes import rev_routes
+from .api.reply_routes import reply_routes
+from .api.fav_routes import fav_routes
 
 from .seeds import seed_commands
 from .config import Config
@@ -35,6 +37,9 @@ app.register_blueprint(user_routes, url_prefix='/api/users')
 app.register_blueprint(auth_routes, url_prefix='/api/auth')
 app.register_blueprint(bus_routes, url_prefix='/api/businesses')
 app.register_blueprint(rev_routes, url_prefix='/api/reviews')
+app.register_blueprint(reply_routes, url_prefix='/api/replies')
+app.register_blueprint(fav_routes, url_prefix='/api/favorites')
+
 db.init_app(app)
 Migrate(app, db)
 
