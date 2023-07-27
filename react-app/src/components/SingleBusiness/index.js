@@ -120,7 +120,7 @@ export default function SingleBusiness()
             reviews.map(review => (
             // business.reviews.map(review => (
                 <ReviewCard key = {review.id} review={review}
-                user={user} business_id = {business_id} user_profile={false} />
+                user={user} business_id = {business_id} user_profile={false} owner={business.owner} />
             ))
         }
         </div>

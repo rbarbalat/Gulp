@@ -3,9 +3,10 @@ import { useState } from "react";
 import StarRatingInput from "../StarRatingInput";
 import { useHistory } from "react-router-dom";
 import { linkEditReview, deleteReview } from "../../helpers";
+import ReplyCard from "../ReplyCard";
 import "./ReviewCard.css";
 
-export default function ReviewCard({review, user, business_id, user_profile})
+export default function ReviewCard({review, user, business_id, user_profile, owner})
 {
     //user can be null if not logged in so need it
     const isReviewer = user?.id === review?.reviewer?.id;
@@ -101,6 +102,16 @@ export default function ReviewCard({review, user, business_id, user_profile})
                 </div>
                 :
                 null
+            }
+            {
+                review.replies.length > 0 &&
+                <div className = "all_replies_wrapper">
+                {
+                    review.replies.map(reply => (
+                        <ReplyCard key={reply.id} reply={reply} owner={owner} />
+                    ))
+                }
+                </div>
             }
         </div>
     )
