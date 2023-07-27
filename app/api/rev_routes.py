@@ -1,29 +1,30 @@
 from flask import Blueprint, jsonify, request
 from flask_login import current_user
 from app.api.aws import get_unique_filename, upload_file_to_s3, remove_file_from_s3
-from app.models import db, User, Business, Review, BusImage, RevImage
+from app.models import db, Review, RevImage, Reply
 from app.forms.review_form import ReviewForm
+from app.forms.reply_form import ReplyForm
 
 rev_routes = Blueprint("reviews", __name__)
 
-#GET 6 RECENT Reviews
-@rev_routes.route("/")
-def get_recent_reviews():
-    all_rev = Review.query.all()
-    if not all_rev:
-        return [], 404
+# #GET 6 RECENT Reviews
+# @rev_routes.route("/")
+# def get_recent_reviews():
+#     all_rev = Review.query.all()
+#     if not all_rev:
+#         return [], 404
 
-    if len(all_rev) <= 6:
-        reviews = all_rev
-    else:
-        reviews = all_rev[len(all_rev) - 6:]
-    return [{
-                **review.to_dict(),
-                "business": review.business.to_dict(),
-                "images": [ image.to_dict() for image in review.images ],
-                "reviewer": review.reviewer.to_dict()
-            }
-            for review in reviews]
+#     if len(all_rev) <= 6:
+#         reviews = all_rev
+#     else:
+#         reviews = all_rev[len(all_rev) - 6:]
+#     return [{
+#                 **review.to_dict(),
+#                 "business": review.business.to_dict(),
+#                 "images": [ image.to_dict() for image in review.images ],
+#                 "reviewer": review.reviewer.to_dict()
+#             }
+#             for review in reviews]
 
 #GET ALL REVIEWS BY CURRENT USER
 @rev_routes.route("/current")
@@ -182,3 +183,37 @@ def delete_review_image_by_id(id):
     #     return {
     #         "message": f"Successfully deleted the image but have the following error {errors[0]}"
     #     }
+
+#CREATE A REPLY
+@rev_routes.route("/<int:id>/replies", methods = ["POST"])
+def create_reply(id):
+    if not current_user.is_authenticated:
+        return {"error": "not authenticated"}, 401
+
+    review = Review.query.get(id)
+    if not review:
+        return {"error": "Review does not exist"}, 404
+
+    if current_user.id != review.business.owner_id:
+        return {"error": "not authorized"}, 403
+
+    form = ReplyForm()
+    #form["csrf_token"].data = request.cookies.get("csrf_token")
+    if "csrf_token" in request.cookies:
+        form["csrf_token"].data = request.cookies["csrf_token"]
+    else:
+        return {"error": "Missing csrf_token"}, 404
+        # check this error code
+
+    if form.validate_on_submit():
+        reply = Reply()
+
+        reply.review_id = id
+        reply.reply = form.data["reply"]
+
+        db.session.add(reply)
+        db.session.commit()
+
+        return reply.to_dict()
+
+    return {"error": form.errors}, 400

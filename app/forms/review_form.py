@@ -17,7 +17,6 @@ def integer_one_through_five(form, field):
         raise ValidationError('Star rating must be an integer between 1 and five')
 
 class ReviewForm(FlaskForm):
-    #change to TextAreaField when changing front end to TextArea
     review = StringField("review", validators=[DataRequired(), Length(min=20, max=1000)])
     #IntegerField coerces inputs into integers before validations, can't use it
     rating = FloatField("rating", validators=[integer_one_through_five, DataRequired()])
