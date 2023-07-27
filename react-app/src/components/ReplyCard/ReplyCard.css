@@ -6,19 +6,58 @@
     padding-left: 3rem;
 }
 
+.single_reply_top_section{
+    display:flex;
+    flex-direction: row;
+    justify-content:space-between;
+    align-items:center;
+
+    height:55px;
+    /* border:1px dashed red; */
+}
+
 .single_reply_image_and_owner_wrapper{
     display: flex;
     flex-direction:row;
     justify-content:flex-start;
     align-items:center;
+    height: 100%;
+    gap: .3rem;
 }
 
 .single_reply_image_wrapper{
-    height:50px;
-    width:50px;
+    height:100%;
+    width:55px;/*might need to change in media queries*/
 }
 
 .single_reply_owner_pic{
     height: 100%;
     width: 100%;
+}
+.single_reply_owner{
+    font-weight:bold;
+    font-size:20px;
+    color:teal;
+}
+
+.reply_card_buttons_wrapper{
+    display:flex;
+    flex-direction:row;
+    gap: .5rem;
+}
+
+.reply_edit, .reply_cancel_delete{
+    font-size: 20px;
+    color:black;
+    cursor:pointer;
+}
+.reply_delete, .reply_confirm_delete{
+    font-size: 20px;
+    color:red;
+    cursor:pointer;
+}
+
+.reply_edit:hover, .reply_delete:hover,
+.reply_cancel_delete:hover, .reply_confirm_delete:hover{
+    font-weight:bold;
 }

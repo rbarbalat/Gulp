@@ -46,8 +46,14 @@
     color:red;
     cursor:pointer;
 }
+.owner_reply, .owner_reply_again{
+    font-size: 20px;
+    color:teal;
+    cursor:pointer;
+}
 .rev_edit:hover, .rev_delete:hover,
-.rev_cancel_delete:hover, .rev_confirm_delete:hover{
+.rev_cancel_delete:hover, .rev_confirm_delete:hover,
+.owner_reply:hover, .owner_reply_again:hover{
     /* text-decoration:underline; */
     font-weight:bold;
 }

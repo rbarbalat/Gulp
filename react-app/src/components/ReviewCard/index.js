@@ -10,6 +10,7 @@ export default function ReviewCard({review, user, business_id, user_profile, own
 {
     //user can be null if not logged in so need it
     const isReviewer = user?.id === review?.reviewer?.id;
+    const isOwner = user?.id === owner?.id;
 
     const dispatch = useDispatch();
     const history = useHistory();
@@ -74,6 +75,9 @@ export default function ReviewCard({review, user, business_id, user_profile, own
                 </div>
                 { isReviewer && confirm && confirmAndCancel}
                 { isReviewer && !confirm && editAndDelete}
+
+                { isOwner && review.replies.length === 0 && <div className = "owner_reply">Reply to {review.reviewer.username}</div> }
+                { isOwner && review.replies.length > 0 && <div className = "owner_reply_again">Reply Again</div> }
             </div>
         }
 
@@ -104,11 +108,11 @@ export default function ReviewCard({review, user, business_id, user_profile, own
                 null
             }
             {
-                review.replies.length > 0 &&
+                !user_profile && review.replies.length > 0 &&
                 <div className = "all_replies_wrapper">
                 {
                     review.replies.map(reply => (
-                        <ReplyCard key={reply.id} reply={reply} owner={owner} />
+                        <ReplyCard key={reply.id} reply={reply} owner={owner} user={user} business_id = {business_id} />
                     ))
                 }
                 </div>
