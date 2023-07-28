@@ -81,6 +81,8 @@ export default function ReplyCard({reply, owner, user, business_id})
             <div className = "single_reply_date">{date}</div>
             <div className = "single_reply_text">{reply.reply}</div>
         {
+                //the classNames are being reused from the create reply form
+                //the styles are on ReviewCard.css
                 showForm &&
                 <div className = "reply_form_wrapper">
                     <form onSubmit={onSubmitReply}>

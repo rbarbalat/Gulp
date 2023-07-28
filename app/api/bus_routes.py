@@ -394,3 +394,40 @@ def delete_business_image_by_id(id):
     #     return {
     #         "message": f"Successfully deleted the image but have the following error {errors[0]}"
     #     }
+
+#GET ALL FAVORITE BUSINESSES BY CURRENT USER
+@bus_routes.route("/current/favorites")
+def get_all_fav_businesses_by_current_user():
+    """
+    This route returns an array of dictionaries of all the businesses
+    owned by the current user
+    """
+    if not current_user.is_authenticated:
+        return {"error": "not authenticated"}, 401
+
+    #this is not an error, legit response
+    all_bus = [favorite.business for favorite in current_user.favorites]
+    if not all_bus:
+        return [], 200
+
+    #maybe need to add a status key recheck
+
+    lst = []
+    for bus in all_bus:
+        images = [image.to_dict() for image in bus.images]
+        # reviews = [review.to_dict() for review in bus.bus_reviews]
+        average = [review.rating for review in bus.bus_reviews]
+        numReviews = len(average)
+        if len(average) == 0:
+            average = None
+        else:
+            average = sum(average)/len(average)
+        lst.append({
+            **bus.to_dict(),
+            "owner": bus.owner.to_dict(),
+            "average": average,
+            "numReviews": numReviews,
+            "images": images
+            # "reviews": reviews
+        })
+    return lst, 200

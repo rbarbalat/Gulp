@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
 import AllBusOfUser from "../AllBusOfUser";
 import AllRevOfUser from "../AllRevOfUser";
+import AllFavOfUser from "../AllFavOfUser";
 import { authenticate } from "../../store/session";
 import "./UserProfile.css";
 
@@ -10,7 +11,9 @@ export default function UserProfile()
 {
     const user = useSelector((state) => state.session.user);
     const { user_id } = useParams();
-    const [showRev, setShowRev] = useState(false);
+
+    //reviews are the default selection
+    const [show, setShow] = useState(1);
 
     const dispatch = useDispatch();
 
@@ -72,16 +75,19 @@ export default function UserProfile()
             <div className = "user_profile_middle_wrapper">
 
                 <div className = "bus_rev_selection_wrapper">
-                    <div onClick={() => setShowRev(false)} className = {`user_profile_caption ${showRev ? "inactive" : "active"}`}>
+                    <div onClick={() => setShow(0)} className = {`user_profile_caption ${show === 0 ? "active" : "inactive"}`}>
                         My Businesses
                     </div>
-                    <div onClick={() => setShowRev(true)} className = {`user_profile_caption ${showRev ? "active" : "inactive"}`}>
+                    <div onClick={() => setShow(1)} className = {`user_profile_caption ${show === 1 ? "active" : "inactive"}`}>
                         My Reviews
                     </div>
+                    <div onClick={() => setShow(2)} className = {`user_profile_caption ${show === 2 ? "active" : "inactive"}`}>
+                        My Favorites
+                    </div>
                 </div>
-                { showRev ? <AllRevOfUser /> : <AllBusOfUser />}
-                {/* <AllRevOfUser /> */}
-                {/* <AllBusOfUser /> */}
+                {show === 0 && <AllBusOfUser /> }
+                {show === 1 && <AllRevOfUser /> }
+                {show === 2 && <AllFavOfUser /> }
             </div>
         </div>
     )

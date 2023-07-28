@@ -2,12 +2,13 @@ import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 // import { useHistory } from "react-router-dom";
-import { thunkLoadBusinessesOfUser } from "../../store/business";
+import { thunkLoadFavBusinessesOfUser } from "../../store/business";
 import BusCard from "../BusCard";
 
-import "./AllBusOfUser.css";
+import "./AllFavOfUser.css";
 
-export default function AllBusOfUser()
+//CHANGE CLASSNAMES AND ADD TO THIS CSS FILE
+export default function AllFavOfUser()
 {
     //initialized to an empty array before the useEffect runs, singe intialState = {}
     const businesses = useSelector(state => Object.values(state.businesses.allBus))
@@ -15,15 +16,14 @@ export default function AllBusOfUser()
     const user = useSelector(state => state.session.user)
     const dispatch = useDispatch();
     const history = useHistory();
-    function start_bus()
+    function find_bus()
     {
-        history.push("/businesses/new");
+        history.push("/businesses");
     }
     useEffect(() => {
         async function fetchData()
         {
-            const res = await dispatch(thunkLoadBusinessesOfUser());
-            // console.log("res in allBusOfUser useEffect");
+            const res = await dispatch(thunkLoadFavBusinessesOfUser());
             // console.log(res);
 
             //come back to this line, prob need to rework it
@@ -36,7 +36,7 @@ export default function AllBusOfUser()
     if(loaded)
     {
         if(businesses.length === 0)
-        return <div className="start_business" onClick={start_bus}>Start you first business!</div>
+        return <div className="start_business" onClick={find_bus}>Find a business to favorite!</div>
     }
     if(!loaded) return <div>loading</div>
     return (
