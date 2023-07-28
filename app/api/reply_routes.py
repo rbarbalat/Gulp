@@ -31,7 +31,6 @@ def edit_reply_by_id(id):
         # check this error code
 
     if form.validate_on_submit():
-        reply = Reply()
         reply.reply = form.data["reply"]
 
         db.session.commit()
