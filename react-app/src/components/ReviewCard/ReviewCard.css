@@ -156,7 +156,7 @@
 }
 .submit_reply_button, .cancel_reply_button{
     width: 40%;
-    height: 30px;
+    height: 35px;
     box-shadow: 2px 2px 2px black;
     cursor: pointer;
     color:white

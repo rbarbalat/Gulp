@@ -74,14 +74,14 @@ const actionUpdateReply = (reply) => {
         reply
     }
 }
-export const thunkUpdateReply = (review_id, reply) => async (dispatch) => {
+export const thunkUpdateReply = (reply_id, reply) => async (dispatch) => {
     try {
         const options = {
             method: "Put",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(reply)
         }
-        const res = await fetch(`/api/replies/${review_id}`, options);
+        const res = await fetch(`/api/replies/${reply_id}`, options);
         if(res.ok)
         {
             const serverData = await res.json();
