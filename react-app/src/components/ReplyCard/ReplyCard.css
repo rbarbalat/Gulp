@@ -61,3 +61,7 @@
 .reply_cancel_delete:hover, .reply_confirm_delete:hover{
     font-weight:bold;
 }
+
+.single_reply_text{
+    word-wrap:break-word;
+}
