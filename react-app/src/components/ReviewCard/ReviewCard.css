@@ -140,7 +140,7 @@
     padding-top: 1rem;
     padding-bottom: 1rem;
     border-left:4px solid teal;
-    height: 250px;
+    height: 275px;
 
     display:flex;
     flex-direction:column;
@@ -166,4 +166,8 @@
 }
 .cancel_reply_button{
     background-color:darkblue;
+}
+
+.create_reply_error{
+    color:red;
 }

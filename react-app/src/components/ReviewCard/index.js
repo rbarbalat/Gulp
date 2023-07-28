@@ -23,6 +23,8 @@ export default function ReviewCard({review, user, business_id, user_profile, own
 
     const [showForm, setShowForm] = useState(false);
 
+    const [valErrors, setValErrors] = useState({});
+
     let date = new Date(review?.created_at)?.toDateString()?.slice(4);
     if(date)
     {
@@ -52,22 +54,28 @@ export default function ReviewCard({review, user, business_id, user_profile, own
     {
         setContent("");
         setShowForm(false);
+        setValErrors({});
     }
     async function onSubmitReply(event)
     {
         event.preventDefault();
+
         const res = await dispatch(thunkReceiveReply(review.id, {
             reply: content
         }));
         if(res.error)
         {
             console.log(res);
+            const errors = {}
+            errors.reply = res.error.reply;
+            setValErrors(errors);
         }else{
             // console.log(res)
             const res_two = await dispatch(thunkLoadSingleBusiness(business_id));
             // console.log(res_two);
             setContent("");
             setShowForm(false);
+            setValErrors({});
         }
     }
 
@@ -162,6 +170,7 @@ export default function ReviewCard({review, user, business_id, user_profile, own
                         <button className = "submit_reply_button">Reply</button>
                     </form>
                     <button className = "cancel_reply_button" onClick={closeForm}>Cancel</button>
+                    {valErrors.reply && <div className = "create_reply_error">{valErrors.reply}</div>}
                 </div>
             }
 
