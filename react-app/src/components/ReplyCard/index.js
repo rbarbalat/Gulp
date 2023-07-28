@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
+import { deleteReply } from "../../helpers";
 import "./ReplyCard.css";
 export default function ReplyCard({reply, owner, user, business_id})
 {
@@ -11,7 +12,7 @@ export default function ReplyCard({reply, owner, user, business_id})
     const dispatch = useDispatch();
 
     function linkEditReply(){ return null; }
-    function deleteReply(){ return null; }
+    // function deleteReply(){ return null; }
 
     const editAndDelete = (
         <div className="reply_card_buttons_wrapper">

@@ -1,5 +1,6 @@
 import { thunkLoadSingleReview, thunkDeleteReview } from "../store/review";
 import { thunkLoadSingleBusiness, thunkDeleteBusiness } from "../store/business";
+import { thunkDeleteReply } from "../store/reply";
 import { authenticate } from "../store/session";
 
 export async function linkEditReview(review_id, dispatch, history)
@@ -89,5 +90,34 @@ export async function deleteBusiness(business_id, user_id, dispatch, history)
         await dispatch(authenticate());
         history.push(`/users/${user_id}`);
         return;
+    }
+}
+
+export async function deleteReply(reply_id, dispatch, business_id)
+{
+    const res = await dispatch(thunkDeleteReply(reply_id));
+    if(res.error)
+    {
+        console.log("bad response from inside deleteReply");
+        console.log(res);
+        // alert("something went wrong with the deletion");
+    }else {
+        // console.log("good response from inside deleteReply");
+        // console.log(res);
+        if(business_id)
+        {
+            //if you are deleting from the single business page
+            //the single business component pulls replies from the business
+            //store not the reply store so need to trigger an update
+            const res_two = await dispatch(thunkLoadSingleBusiness(business_id));
+            if(res_two.error)
+            {
+                // console.log("problem loading single business after reply deletion");
+                // console.log(res_two);
+            }else {
+                // console.log("reloaded the single business page after deleting a reply")
+                // console.log(res_two)
+            }
+        }
     }
 }

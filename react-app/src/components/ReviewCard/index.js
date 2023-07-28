@@ -3,7 +3,10 @@ import { useState } from "react";
 import StarRatingInput from "../StarRatingInput";
 import { useHistory } from "react-router-dom";
 import { linkEditReview, deleteReview } from "../../helpers";
+import { thunkReceiveReply } from "../../store/reply";
+import { thunkLoadSingleBusiness } from "../../store/business";
 import ReplyCard from "../ReplyCard";
+import ReplyForm from "../ReplyForm";
 import "./ReviewCard.css";
 
 export default function ReviewCard({review, user, business_id, user_profile, owner})
@@ -16,6 +19,9 @@ export default function ReviewCard({review, user, business_id, user_profile, own
     const history = useHistory();
 
     const [confirm, setConfirm] = useState(false);
+    const [content, setContent] = useState("");
+
+    const [showForm, setShowForm] = useState(false);
 
     let date = new Date(review?.created_at)?.toDateString()?.slice(4);
     if(date)
@@ -41,6 +47,29 @@ export default function ReviewCard({review, user, business_id, user_profile, own
             <div className = "rev_cancel_delete" onClick={() => setConfirm(false)}>Cancel</div>
         </div>
     )
+
+    function closeForm()
+    {
+        setContent("");
+        setShowForm(false);
+    }
+    async function onSubmitReply(event)
+    {
+        event.preventDefault();
+        const res = await dispatch(thunkReceiveReply(review.id, {
+            reply: content
+        }));
+        if(res.error)
+        {
+            console.log(res);
+        }else{
+            // console.log(res)
+            const res_two = await dispatch(thunkLoadSingleBusiness(business_id));
+            // console.log(res_two);
+            setContent("");
+            setShowForm(false);
+        }
+    }
 
     //returning empty review for development for now
     if(Object.keys(review).length === 0) return <div>empty review</div>
@@ -76,8 +105,14 @@ export default function ReviewCard({review, user, business_id, user_profile, own
                 { isReviewer && confirm && confirmAndCancel}
                 { isReviewer && !confirm && editAndDelete}
 
-                { isOwner && review.replies.length === 0 && <div className = "owner_reply">Reply to {review.reviewer.username}</div> }
-                { isOwner && review.replies.length > 0 && <div className = "owner_reply_again">Reply Again</div> }
+                {
+                    isOwner && review.replies.length === 0 &&
+                    <div className = "owner_reply" onClick={() => setShowForm(true)}>Reply to {review.reviewer.username}</div>
+                }
+                {
+                    isOwner && review.replies.length > 0 &&
+                    <div className = "owner_reply_again" onClick={() => setShowForm(true)}>Reply Again</div>
+                }
             </div>
         }
 
@@ -117,6 +152,19 @@ export default function ReviewCard({review, user, business_id, user_profile, own
                 }
                 </div>
             }
+            {
+                showForm &&
+                <div className = "reply_form_wrapper">
+                    <form onSubmit={onSubmitReply}>
+                        <textarea className = "reply_form_text_area" value={content}
+                            onChange={e => setContent(e.target.value)}
+                            placeholder = {`Reply to ${review.reviewer.username}`} />
+                        <button className = "submit_reply_button">Reply</button>
+                    </form>
+                    <button className = "cancel_reply_button" onClick={closeForm}>Cancel</button>
+                </div>
+            }
+
         </div>
     )
 }

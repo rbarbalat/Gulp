@@ -18,18 +18,18 @@ export const thunkLoadRepliesOfUser = () => async (dispatch) => {
         if(res.ok)
         {
             const serverData = await res.json();
-            // console.log("good response from thunkLoadReviewsOfUser")
+            // console.log("good response from thunkLoadRepliesOfUser")
             // console.log(serverData)
             dispatch(actionLoadReplies(serverData));
             return serverData;
         } else {
             const errorData = await res.json();
-            // console.log("error response for thunkLoadReviewsOfUser");
+            // console.log("error response for thunkLoadRepliesOfUser");
             // console.log(errorData);
             return errorData;
         }
     } catch (error){
-        // console.log("CAUGHT error response for thunkLoadReviewsOfUser")
+        // console.log("CAUGHT error response for thunkLoadRepliesOfUser")
         // console.log(error);
     }
 }
@@ -45,7 +45,7 @@ export const thunkReceiveReply = (review_id, reply) => async (dispatch) => {
     try {
         const options = {
             method: "Post",
-            //add headers application/json
+            headers: { "Content-Type": "application/json" },
             body: JSON.stringify(reply)
         };
         const res = await fetch(`/api/reviews/${review_id}/replies`, options);
@@ -53,17 +53,17 @@ export const thunkReceiveReply = (review_id, reply) => async (dispatch) => {
         {
             const serverData = await res.json();
             dispatch(actionReceiveReply(serverData));
-            // console.log("good response for thunkReceiveReview");
+            // console.log("good response for thunkReceiveReply");
             // console.log(serverData);
             return serverData;
         }else {
             const errorData = await res.json();
-            console.log("error response for thunkReceiveReview");
+            console.log("error response for thunkReceiveReply");
             console.log(errorData);
             return errorData;
         }
     } catch (error){
-        // console.log("CAUGHT error response for thunkReceiveReview");
+        // console.log("CAUGHT error response for thunkReceiveReply");
         // console.log(error);
     }
 }
@@ -78,7 +78,7 @@ export const thunkUpdateReply = (review_id, reply) => async (dispatch) => {
     try {
         const options = {
             method: "Put",
-            //add headers application json
+            headers: { "Content-Type": "application/json" },
             body: JSON.stringify(reply)
         }
         const res = await fetch(`/api/replies/${review_id}`, options);
@@ -86,17 +86,17 @@ export const thunkUpdateReply = (review_id, reply) => async (dispatch) => {
         {
             const serverData = await res.json();
             dispatch(actionUpdateReply(serverData));
-            // console.log("good response for thunkUpdateReview");
+            // console.log("good response for thunkUpdateReply");
             // console.log(serverData);
             return serverData;
         }else {
             const errorData = await res.json()
-            console.log("error response for thunkUpdateReview");
+            console.log("error response for thunkUpdateReply");
             console.log(errorData);
             return errorData;
         }
     } catch (error){
-        // console.log("CAUGHT error response for thunkUpdateReview");
+        // console.log("CAUGHT error response for thunkUpdateReply");
         // console.log(error);
     }
 }
@@ -118,18 +118,18 @@ export const thunkDeleteReply = (id) => async (dispatch) => {
         {
             const serverData = await res.json();
             dispatch(actionDeleteReply(id));
-            // console.log("good response from thunkDeleteReview")
+            // console.log("good response from thunkDeleteReply")
             // console.log(serverData)
             return serverData;
         } else {
             const errorData = await res.json();
-            console.log("error response for thunkDeleteReview");
+            console.log("error response for thunkDeleteReply");
             console.log(errorData);
             return errorData;
         }
     } catch(error)
     {
-        // console.log("CAUGHT error response for thunkDeleteReview");
+        // console.log("CAUGHT error response for thunkDeleteReply");
         // console.log(error);
     }
 }
