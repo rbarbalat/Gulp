@@ -94,6 +94,7 @@ export default function ReviewCard({review, user, business_id, user_profile, own
             </div>
             :
             <div className = "reviewer_section">
+            <div className = "reviewer_section_left">
                 <div className = "reviewer_image_wrapper">
                     <img className = "reviewer_image" alt="default avatar" src="https://s3-media0.fl.yelpcdn.com/assets/public/default_user_avatar_120x120_v2.yji-1fea61f9163feb39bc9a115a97bd99eb.png"></img>
                 </div>
@@ -110,6 +111,7 @@ export default function ReviewCard({review, user, business_id, user_profile, own
                     }
                     </div>
                 </div>
+            </div>
                 { isReviewer && confirm && confirmAndCancel}
                 { isReviewer && !confirm && editAndDelete}
 
