@@ -14,6 +14,14 @@ def seed_businesses(users):
         "https://bucket-rb22.s3.us-east-2.amazonaws.com/sunda_1.jpeg",
         "https://bucket-rb22.s3.us-east-2.amazonaws.com/frontera_2.jpeg"
     ]
+    tags = [
+        ["Sandwich", "Wrap"],
+        ["Kurdish", "Mediterranean"],
+        ["Steak", "Seafood"],
+        ["Italian", "Cocktail"],
+        ["Asian", "Fusion"],
+        ["Mexican", "Dessert"]
+    ]
     addresses = [
         "5000 Forbes ave",
         "3000 Shady Ave",
@@ -73,6 +81,8 @@ def seed_businesses(users):
             owner = users[i],
             name = names[i],
             description = descriptions[i],
+            tag_one = tags[i][0],
+            tag_two = tags[i][1],
             prev_url = urls[i],
             address = addresses[i],
             city = cities[i],

@@ -14,6 +14,9 @@ class Business(db.Model):
     address = db.Column(db.String(100))
     city = db.Column(db.String(50))
     state = db.Column(db.String(50))
+    tag_one = db.Column(db.String(20), nullable=False)
+    tag_two = db.Column(db.String(20), nullable=False)
+
     created_at = db.Column(db.DateTime, default=datetime.now(), nullable=False)
     updated_at = db.Column(db.DateTime)
 
@@ -33,6 +36,8 @@ class Business(db.Model):
             "name": self.name,
             "owner_id": self.owner_id,
             "description": self.description,
+            "tag_one": self.tag_one,
+            "tag_two": self.tag_two,
             "preview_image": self.prev_url,
             "address": self.address,
             "city": self.city,

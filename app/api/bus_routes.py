@@ -202,6 +202,9 @@ def create_business():
         bus.city = form.data["city"]
         bus.state = form.data["state"]
 
+        bus.tag_one = form.data["tag_one"]
+        bus.tag_two = form.data["tag_two"]
+
         db.session.add(bus)
         db.session.commit()
 
@@ -264,6 +267,9 @@ def edit_business(id):
         bus.address = form.data["address"]
         bus.city = form.data["city"]
         bus.state = form.data["state"]
+
+        bus.tag_one = form.data["tag_one"]
+        bus.tag_two = form.data["tag_two"]
 
         # if the user did not change the picture, the frontend sends back nothing
         if form.data["prev_url"]:

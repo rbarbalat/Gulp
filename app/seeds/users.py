@@ -2,6 +2,7 @@ from app.models import db, User, environment, SCHEMA
 from sqlalchemy.sql import text
 from faker import Faker
 from random import choice, sample
+from datetime import datetime
 
 
 # Adds a demo user, you can add other users here if you want
@@ -9,11 +10,17 @@ def seed_users():
     fake = Faker()
 
     demo = User(
-        username='Demo', email='demo@aa.io', password='password')
+        username='Demo', email='demo@aa.io', password='password',
+        created_at = datetime(2022, 10, 1, 15)
+    )
     marnie = User(
-        username='marnie', email='marnie@aa.io', password='password')
+        username='Marnie', email='marnie@aa.io', password='password',
+        created_at = datetime(2022, 10, 2, 15)
+    )
     bobbie = User(
-        username='bobbie', email='bobbie@aa.io', password='password')
+        username='Bobbie', email='bobbie@aa.io', password='password',
+        created_at = datetime(2022, 10, 3, 15)
+    )
 
     db.session.add(demo)
     db.session.add(marnie)
@@ -34,20 +41,13 @@ def seed_users():
             emails.append(email)
             count = count + 1
 
-    # emails = []
-    # count = 0
-    # while count <= num:
-    #     email = fake.email()
-    #     if email not in emails:
-    #         emails.append(email)
-    #         count = count + 1
-
     for i in range(num):
         user = User(
             username = names[i],
             email = emails[i],
-            password = "password"
-            )
+            password = "password",
+            created_at = datetime(2022, 11, i + 1, 15)
+        )
         db.session.add(user)
         lst.append(user)
 

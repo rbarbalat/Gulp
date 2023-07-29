@@ -14,6 +14,9 @@ export default function BusForm({edit})
     const [state, setState] = useState(edit ? business.state : "");
     const [address, setAddress] = useState(edit ? business.address : "");
 
+    const [tag_one, setTagOne] = useState(edit ? business.address : "");
+    const [tag_two, setTagTwo] = useState(edit ? business.address : "");
+
     const [prev, setPrev] = useState(undefined)
     const [first, setFirst] = useState(undefined);
     const [second, setSecond] = useState(undefined);
@@ -52,6 +55,8 @@ export default function BusForm({edit})
             setCity("");
             setState("");
             setAddress("");
+            setTagOne("");
+            setTagTwo("");
 
             setPrevUrl("");
             setFirst(undefined);
@@ -103,6 +108,8 @@ export default function BusForm({edit})
         formData.append("city", city);
         formData.append("state", state);
         formData.append("address", address);
+        formData.append("tag_one", tag_one);
+        formData.append("tag_two", tag_two);
 
         if(prev) formData.append("prev_url", prev);
         if(first) formData.append("first", first);
@@ -151,6 +158,12 @@ export default function BusForm({edit})
 
                 <p><textarea className="bus_form_text_area" type="text" name="description" placeholder="Description" value={description} onChange={e => setDescription(e.target.value)} required/></p>
                 {valErrors.description && <p className="bus_form_errors">{valErrors.description}</p>}
+
+                <p><input className="not_file_input" type="text" name="tag_one" placeholder="Category (one word)" value={tag_one} onChange={e => setTagOne(e.target.value)} required/></p>
+                {valErrors.tag_one && <p className="bus_form_errors">{valErrors.tag_one}</p>}
+
+                <p><input className="not_file_input" type="text" name="tag_two" placeholder="Category (one word)" value={tag_two} onChange={e => setTagTwo(e.target.value)} required/></p>
+                {valErrors.tag_two && <p className="bus_form_errors">{valErrors.tag_two}</p>}
 
                 <p><input className="not_file_input" type="text" name="address" placeholder="Address" value={address} onChange={e => setAddress(e.target.value)} required/></p>
                 {valErrors.address && <p className="bus_form_errors">{valErrors.address}</p>}

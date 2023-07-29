@@ -5,7 +5,6 @@ from random import choice, sample, randint
 from datetime import datetime
 
 fake = Faker()
-
 def seed_favorites(users, businesses):
     # 6 owners and 16 non-owner users in the seed data, (0,..,21)
     # for now the 6 owners (0,..,5) have no favorites
