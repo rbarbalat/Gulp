@@ -1,7 +1,7 @@
 from flask import Blueprint, jsonify, request
 from flask_login import current_user
 from app.api.aws import get_unique_filename, upload_file_to_s3, remove_file_from_s3
-from app.models import db, User, Business, Review, BusImage, RevImage
+from app.models import db, User, Business, Review, BusImage, RevImage, Favorite
 from app.forms.bus_form import BusForm
 from app.forms.edit_bus_form import EditBusForm
 from app.forms.review_form import ReviewForm
@@ -431,3 +431,23 @@ def get_all_fav_businesses_by_current_user():
             # "reviews": reviews
         })
     return lst, 200
+
+#CREATE A FAVORITE
+@bus_routes.route("/<int:id>/favorites", methods = ["POST"])
+def create_favorite(id):
+    if not current_user.is_authenticated:
+        return {"error": "not authenticated"}, 401
+
+    bus = Business.query.get(id)
+    if not bus:
+        return {"error": "Business does not exist"}, 404
+
+    print("request.data")
+    print(request.data)
+    print("request.get_json")
+    print(request.get_json)
+    fav = Favorite(business_id = id, user_id = current_user.id, super = False)
+
+    db.session.add(fav)
+    db.session.commit()
+    return fav.to_dict()

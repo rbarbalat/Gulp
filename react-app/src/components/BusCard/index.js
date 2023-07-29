@@ -1,16 +1,27 @@
-import {useHistory} from "react-router-dom";
+import {useHistory, useLocation} from "react-router-dom";
 import {useDispatch} from "react-redux";
 import {useState} from "react";
 // import {thunkLoadSingleBusiness } from "../../store/business";
 import { linkEditBus, deleteBusiness } from "../../helpers";
 import StarRatingInput from "../StarRatingInput";
 import "./BusCard.css";
+import { thunkLoadBusinesses, thunkLoadFavBusinessesOfUser } from "../../store/business";
+import { authenticate } from "../../store/session";
 
 export default function BusCard({business, user})
 {
     const isOwner = user?.id === business?.owner_id;
+    const favorite = user?.favorites.find(favorite => favorite.business_id === business.id);
+    //find returns undefined if no match
+    const userFavorite = favorite !== undefined;
     const history = useHistory();
     const dispatch = useDispatch();
+    const { pathname } = useLocation();
+
+    // console.log("pathname is ", pathname);
+    // /users/14 or /businesses
+    // console.log(favorite);
+    // console.log(`business_${business.id} and ${userFavorite}`);
 
     const [confirm, setConfirm] = useState(false);
 
@@ -25,7 +36,8 @@ export default function BusCard({business, user})
     {
         const list = [
                         "bus_card_order_button", "bus_delete", "bus_edit",
-                        "bus_confirm_delete", "bus_cancel_delete"
+                        "bus_confirm_delete", "bus_cancel_delete",
+                        "fa-solid fa-heart black", "fa-solid fa-heart red"
                     ];
         if(list.includes(event.target.className) === false) history.push(`/businesses/${business.id}`)
     }
@@ -40,6 +52,25 @@ export default function BusCard({business, user})
     function startOrder()
     {
         alert("Feature Coming Soon");
+        return null;
+    }
+    async function modifyFavorite()
+    {
+        if(!userFavorite)
+        {
+            const options = { method: "POST" };
+            const res = await fetch(`/api/businesses/${business.id}/favorites`, options);
+            const data = await res.json();
+            console.log(data)
+            if(res.ok && pathname === "/businesses") await dispatch(thunkLoadBusinesses());
+            if(res.ok && pathname === `/users/${user.id}`) await dispatch(thunkLoadFavBusinessesOfUser())
+        }else{
+            const options = { method: "Delete"};
+            const res = await fetch(`/api/favorites/${favorite.id}`, options);
+            if(res.ok) await dispatch(authenticate());
+            if(res.ok && pathname === "/businesses") await dispatch(thunkLoadBusinesses());
+            if(res.ok && pathname === `/users/${user.id}`) await dispatch(thunkLoadFavBusinessesOfUser())
+        }
         return null;
     }
 
@@ -62,7 +93,7 @@ export default function BusCard({business, user})
                 <div className="bus_card_name_and_buttons_wrapper">
                     <div className = "business_name">{business.name}</div>
                     {
-                        isOwner &&
+                        isOwner ?
                         <div className = "bus_card_buttons">
                         {
                             confirm ?
@@ -77,6 +108,9 @@ export default function BusCard({business, user})
                             </div>
                         }
                         </div>
+                        :
+                        <i className={userFavorite ? "fa-solid fa-heart red" : "fa-solid fa-heart black"}
+                            onClick={modifyFavorite}></i>
                     }
                 </div>
                 {

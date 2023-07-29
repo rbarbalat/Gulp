@@ -22,5 +22,6 @@ class Favorite(db.Model):
             "id": self.id,
             "user_id": self.user_id,
             "business_id": self.business_id,
+            "super": self.super,
             "created_at": self.created_at
         }

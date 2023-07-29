@@ -27,7 +27,8 @@ def authenticate():
         return {
             **current_user.to_dict(),
             "numBusinesses": len(current_user.businesses),
-            "numReviews": len(current_user.user_reviews)
+            "numReviews": len(current_user.user_reviews),
+            "favorites": [favorite.to_dict() for favorite in current_user.favorites]
         }
     return {'errors': ['Unauthorized']}
 

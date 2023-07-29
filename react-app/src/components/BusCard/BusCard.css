@@ -165,3 +165,26 @@
 .bus_card_read_more{
     color:teal;
 }
+
+.fa-heart.red{
+    color:red;
+    font-weight:bold;
+    cursor:pointer;
+}
+.fa-heart.black{
+    color:black;
+    cursor:pointer;
+}
+
+.favorite_icon_wrapper{
+
+}
+
+.fa-heart.red:hover{
+    color:black;
+    font-weight:bold;
+}
+.fa-heart.black:hover{
+    color:red;
+    font-weight:bold;
+}
