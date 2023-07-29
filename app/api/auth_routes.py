@@ -46,7 +46,13 @@ def login():
         # Add the user to the session, we are logged in!
         user = User.query.filter(User.email == form.data['email']).first()
         login_user(user)
-        return user.to_dict()
+        # return user.to_dict()
+        return {
+            **user.to_dict(),
+            "numBusinesses": len(user.businesses),
+            "numReviews": len(user.user_reviews),
+            "favorites": [favorite.to_dict() for favorite in user.favorites]
+        }
     return {'errors': validation_errors_to_error_messages(form.errors)}, 401
 
 
@@ -75,7 +81,13 @@ def sign_up():
         db.session.add(user)
         db.session.commit()
         login_user(user)
-        return user.to_dict()
+        # return user.to_dict()
+        return {
+            **user.to_dict(),
+            "numBusinesses": 0,
+            "numReviews": 0,
+            "favorites": []
+        }
     return {'errors': validation_errors_to_error_messages(form.errors)}, 401
 
 

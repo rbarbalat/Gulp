@@ -2,31 +2,21 @@ import {useHistory, useLocation} from "react-router-dom";
 import {useDispatch} from "react-redux";
 import {useState} from "react";
 // import {thunkLoadSingleBusiness } from "../../store/business";
-import { linkEditBus, deleteBusiness } from "../../helpers";
+import { linkEditBus, deleteBusiness, createFavorite, deleteFavorite } from "../../helpers";
 import StarRatingInput from "../StarRatingInput";
 import "./BusCard.css";
-import { thunkLoadBusinesses, thunkLoadFavBusinessesOfUser } from "../../store/business";
-import { authenticate } from "../../store/session";
 
 export default function BusCard({business, user})
 {
     const isOwner = user?.id === business?.owner_id;
+
+    //find returns undef if there is no match
     const favorite = user?.favorites.find(favorite => favorite.business_id === business.id);
-    //find returns undefined if no match
-
-    // attempt at fixing the delay between between click and color change but i think it is the over
-    // const [userFavorite, setUserFavorite] = useState(favorite !== undefined);
-
-    const userFavorite = favorite !==undefined;
+    const userFavorite = favorite !== undefined;
 
     const history = useHistory();
     const dispatch = useDispatch();
     const { pathname } = useLocation();
-
-    // console.log("pathname is ", pathname);
-    // /users/14 or /businesses
-    // console.log(favorite);
-    // console.log(`business_${business.id} and ${userFavorite}`);
 
     const [confirm, setConfirm] = useState(false);
 
@@ -61,31 +51,14 @@ export default function BusCard({business, user})
     }
     async function modifyFavorite()
     {
-        if(!userFavorite)
-        {
-            const options = { method: "POST" };
-            const res = await fetch(`/api/businesses/${business.id}/favorites`, options);
-            const data = await res.json();
-            console.log(data)
-
-            // setUserFavorite(true);
-            if(res.ok) await dispatch(authenticate());
-            if(res.ok && pathname === "/businesses") await dispatch(thunkLoadBusinesses());
-            if(res.ok && pathname === `/users/${user.id}`) await dispatch(thunkLoadFavBusinessesOfUser())
-        }else{
-            const options = { method: "Delete"};
-            const res = await fetch(`/api/favorites/${favorite.id}`, options);
-
-            // setUserFavorite(false);
-            if(res.ok) await dispatch(authenticate());
-            if(res.ok && pathname === "/businesses") await dispatch(thunkLoadBusinesses());
-            if(res.ok && pathname === `/users/${user.id}`) await dispatch(thunkLoadFavBusinessesOfUser())
-        }
-        return null;
+        //this card appears on multiple components, the pathname determines which thunk is
+        //invoked after the (favorite) fetch to rerender the correct parent component
+        if(userFavorite) await deleteFavorite(favorite.id, user.id, pathname, dispatch)
+        else await createFavorite(business.id, user.id, pathname, dispatch)
+        return;
     }
 
     if(Object.keys(business).length === 0) return <div>loading</div>
-    // return <div>Hello World!!! from business {business.id}</div>
     return(
         <div className = "bus_card_wrapper">
             <div className = "preview_image_wrapper">

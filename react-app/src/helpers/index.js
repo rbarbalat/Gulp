@@ -1,5 +1,9 @@
 import { thunkLoadSingleReview, thunkDeleteReview } from "../store/review";
-import { thunkLoadSingleBusiness, thunkDeleteBusiness } from "../store/business";
+import {
+            thunkLoadSingleBusiness, thunkDeleteBusiness,
+            thunkLoadBusinesses, thunkLoadFavBusinessesOfUser
+        } from "../store/business";
+
 import { thunkDeleteReply } from "../store/reply";
 import { authenticate } from "../store/session";
 
@@ -119,5 +123,46 @@ export async function deleteReply(reply_id, dispatch, business_id)
                 // console.log(res_two)
             }
         }
+    }
+}
+
+export async function createFavorite(business_id, user_id, pathname, dispatch)
+{
+    const options = { method: "POST" };
+    try{
+        const res = await fetch(`/api/businesses/${business_id}/favorites`, options);
+        if(res.ok)
+        {
+            const data = await res.json();
+            console.log(data);
+            await dispatch(authenticate());
+            if(pathname === "/businesses") await dispatch(thunkLoadBusinesses());
+            if(pathname === `/users/${user_id}`) await dispatch(thunkLoadFavBusinessesOfUser())
+        }else{
+            const error_data = await res.json();
+            console.log(error_data);
+        }
+    }catch(error){
+        console.log(error);
+    }
+}
+export async function deleteFavorite(favorite_id, user_id, pathname, dispatch)
+{
+    const options = { method: "Delete"};
+    try{
+        const res = await fetch(`/api/favorites/${favorite_id}`, options);
+        if(res.ok)
+        {
+            const data = await res.json();
+            console.log(data);
+            await dispatch(authenticate());
+            if(pathname === "/businesses") await dispatch(thunkLoadBusinesses());
+            if(pathname === `/users/${user_id}`) await dispatch(thunkLoadFavBusinessesOfUser())
+        }else{
+            const error_data = await res.json();
+            console.log(error_data);
+        }
+    }catch(error){
+        console.log(error);
     }
 }

@@ -17,6 +17,13 @@ export default function UserProfile()
 
     const dispatch = useDispatch();
 
+    let date = new Date(user?.created_at)?.toDateString()?.slice(4);
+    if(date)
+    {
+       if(date[4] === "0")
+       date = date.slice(0,4) + date.slice(5);
+    }
+
     //if you delete a business or review from the profile page,
     //authenticate is dispatched by the delete function so the new
     //numReviews and/or numBusinesses counts can be displayed on the page
@@ -55,7 +62,7 @@ export default function UserProfile()
                         `${user.numReviews} reviews`
                     }
                 </div>
-                <div>Joined on July 24, 2023</div>
+                <div>{date}</div>
                 <div className = "user_profile_options">
                     <div className = "user_profile_single_option" onClick={comingSoon}>
                         <i className="fa-solid fa-pen-to-square"></i>
