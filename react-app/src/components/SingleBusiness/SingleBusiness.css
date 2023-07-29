@@ -50,10 +50,15 @@
 }
 
 .ty_for_review{
-    color:red;
+    color:teal;
     font-weight:bold;
     font-size:20px;
     align-self:center;
+
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap: 1rem;
 }
 
 .single_bus_wrapper {

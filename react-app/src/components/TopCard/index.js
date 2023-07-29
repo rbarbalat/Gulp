@@ -19,11 +19,15 @@ export default function TopCard({business})
                 <div className = "single_bus_name">{business.name}</div>
                 {
                     business.numReviews > 0 &&
-                    <div className = "star_wrapper"><StarRatingInput rating={business.average} form={false}/></div>
+                    <div className = "star_wrapper">
+                        <StarRatingInput rating={business.average} form={false}/>
+                        <span>&nbsp;{String(business.average).slice(0,4)}</span>
+                    </div>
                 }
                 {
                     business.numReviews > 0 &&
-                    <div className = "single_bus_rating">{String(business.average).slice(0,4)} stars <span>{business.numReviews} reviews</span></div>
+                    // <div className = "single_bus_rating">{String(business.average).slice(0,4)} stars <span>{business.numReviews} reviews</span></div>
+                    <div className = "single_bus_num_reviews">{business.numReviews} reviews</div>
                 }
                 {
                     business.numReviews === 0 &&

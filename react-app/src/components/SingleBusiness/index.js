@@ -102,7 +102,12 @@ export default function SingleBusiness()
                 }
                 { isOwner && confirm && confirmAndCancel}
                 { isOwner && !confirm && editAndDelete}
-                { !isOwner && hasReviewed && <div className="ty_for_review">Thank you for your review!</div> }
+                { !isOwner && hasReviewed &&
+                    <div className="ty_for_review">
+                        Thank you for your review!
+                        <button className="review_button" onClick={linkReview}>New Review</button>
+                    </div>
+                }
                 { !isOwner && !hasReviewed && <button className="review_button" onClick={linkReview}>Write a Review!</button>}
             </div>
 

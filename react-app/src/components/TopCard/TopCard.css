@@ -25,11 +25,17 @@
 .star_wrapper{
     font-size: 30px;
     font-weight:bold;
+    display:flex;
+    flex-direction:row;
+}
+.star_wrapper > span{
+    color:white;
 }
 
-.single_bus_rating {
+.single_bus_num_reviews {
     font-size: 25px;
     color:white;
+    font-weight:bold;
 }
 
 .single_bus_address, .single_bus_location {
