@@ -13,7 +13,12 @@ export default function BusCard({business, user})
     const isOwner = user?.id === business?.owner_id;
     const favorite = user?.favorites.find(favorite => favorite.business_id === business.id);
     //find returns undefined if no match
-    const userFavorite = favorite !== undefined;
+
+    // attempt at fixing the delay between between click and color change but i think it is the over
+    // const [userFavorite, setUserFavorite] = useState(favorite !== undefined);
+
+    const userFavorite = favorite !==undefined;
+
     const history = useHistory();
     const dispatch = useDispatch();
     const { pathname } = useLocation();
@@ -62,11 +67,16 @@ export default function BusCard({business, user})
             const res = await fetch(`/api/businesses/${business.id}/favorites`, options);
             const data = await res.json();
             console.log(data)
+
+            // setUserFavorite(true);
+            if(res.ok) await dispatch(authenticate());
             if(res.ok && pathname === "/businesses") await dispatch(thunkLoadBusinesses());
             if(res.ok && pathname === `/users/${user.id}`) await dispatch(thunkLoadFavBusinessesOfUser())
         }else{
             const options = { method: "Delete"};
             const res = await fetch(`/api/favorites/${favorite.id}`, options);
+
+            // setUserFavorite(false);
             if(res.ok) await dispatch(authenticate());
             if(res.ok && pathname === "/businesses") await dispatch(thunkLoadBusinesses());
             if(res.ok && pathname === `/users/${user.id}`) await dispatch(thunkLoadFavBusinessesOfUser())

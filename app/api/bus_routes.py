@@ -442,10 +442,6 @@ def create_favorite(id):
     if not bus:
         return {"error": "Business does not exist"}, 404
 
-    print("request.data")
-    print(request.data)
-    print("request.get_json")
-    print(request.get_json)
     fav = Favorite(business_id = id, user_id = current_user.id, super = False)
 
     db.session.add(fav)
