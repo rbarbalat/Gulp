@@ -1,6 +1,5 @@
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { SearchContext } from '../../context/Search';
 import { thunkLoadBusinesses } from "../../store/business";
 import BusCard from "../BusCard";
 
@@ -11,9 +10,6 @@ export default function AllBusinesses()
     //initialized to an empty array before the useEffect runs, singe intialState = {}
     const businesses = useSelector(state => Object.values(state.businesses.allBus))
     const user = useSelector(state => state.session.user);
-
-    const { target }  = useContext(SearchContext);
-    console.log("target is ", target);
 
     const [sort, setSort] = useState("high");
 

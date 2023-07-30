@@ -65,13 +65,12 @@ export default function SearchResults()
 
     const dispatch = useDispatch();
     useEffect(() => {
-        console.log("search results useEffect");
+        // console.log("search results useEffect");
         async function fetchData()
         {
-            // const res = await dispatch(thunkLoadBusinessesQuery(`?target=${target.toLowerCase()}`));
             const res = await dispatch(thunkLoadBusinessesQuery(str));
         }
-        fetchData()
+        if(str) fetchData();
     }, [targetName, targetTags])
 
     if(!targetName && !targetTags) return (

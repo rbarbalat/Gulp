@@ -92,8 +92,12 @@ export default function BusCard({business, user})
                         }
                         </div>
                         :
-                        <i className={userFavorite ? "fa-solid fa-heart red" : "fa-solid fa-heart black"}
-                            onClick={modifyFavorite}></i>
+                        (   user ?
+                            <i className={userFavorite ? "fa-solid fa-heart red" : "fa-solid fa-heart black"}
+                                onClick={modifyFavorite}></i>
+                            :
+                            null
+                        )
                     }
                 </div>
                 {

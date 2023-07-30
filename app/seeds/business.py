@@ -16,7 +16,7 @@ def seed_businesses(users):
     ]
     tags = [
         ["Sandwiches", "Wraps", "Fast"],
-        ["Kurdish", "Mediterranean", "Authentic"],
+        ["Kurdish", "Kebab", "Authentic"],
         ["Steak", "Seafood", "Cocktails"],
         ["Italian", "Cocktails", "Desserts"],
         ["Asian", "Fusion", "Sushi"],
