@@ -17,15 +17,21 @@ def get_all_businesses():
     """
     This route returns an array of business dictionairies for all business in the db
     """
-    target = request.args.get("target")
-    print("the target is ", target)
 
-    if target:
+    tags = list(request.args.values())
+    print(tags)
+
+    if tags:
         all_bus = Business.query.filter( \
+            # or_(
+            #     func.lower(Business.tag_one) == target,
+            #     func.lower(Business.tag_two) == target,
+            #     func.lower(Business.tag_three) == target
+            # )
             or_(
-                func.lower(Business.tag_one) == target,
-                func.lower(Business.tag_two) == target,
-                func.lower(Business.tag_three) == target
+                func.lower(Business.tag_one).in_(tags),
+                func.lower(Business.tag_two).in_(tags),
+                func.lower(Business.tag_three).in_(tags)
             )
         )
     else:

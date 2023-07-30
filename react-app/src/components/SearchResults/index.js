@@ -13,8 +13,17 @@ export default function SearchResults()
     const user = useSelector(state => state.session.user);
 
     const { target } = useContext(SearchContext);
+    const tags = target?.split(" ");
+    let str = "?";
+    tags?.forEach((tag, i) => {
+        //add an ampersand to the front as if i != 0
+        if(i === 0) str = str + `tag${i}=${tag.toLowerCase()}`
+        else str = str + `&tag${i}=${tag.toLowerCase()}`;
+    });
+    console.log("str is ", str);
 
     const [sort, setSort] = useState("high");
+
 
     //businesses an empty array before the thunk is dispatched so can call sort on it
     //and it auto returns an empty array, won't get typerror from undef.getTime()
@@ -50,12 +59,10 @@ export default function SearchResults()
 
     const dispatch = useDispatch();
     useEffect(() => {
-        //if(Number(business_id) !== business.id)
         async function fetchData()
         {
-            const res = await dispatch(thunkLoadBusinessesQuery(`?target=${target.toLowerCase()}`));
-            // console.log("res in allBus useEffect");
-            // console.log(res);
+            // const res = await dispatch(thunkLoadBusinessesQuery(`?target=${target.toLowerCase()}`));
+            const res = await dispatch(thunkLoadBusinessesQuery(str));
         }
         fetchData()
     }, [target])
