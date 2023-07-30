@@ -36,6 +36,8 @@
     flex-direction: column;
     justify-content: flex-start;
     gap: .5rem;
+    /* the tag and button div at the bottom has
+        some extra margin-top*/
 
     cursor:pointer;
 }
@@ -46,6 +48,10 @@
     justify-content:space-between;
     align-items: center;
 }
+
+/* .bus_card_tag{
+    have to do something about the length of the tags
+} */
 
 .business_name {
     color:black;
@@ -157,10 +163,13 @@
     justify-content:space-between;
     align-items:center;
     gap: .2rem;
+
+    margin-top:.5rem;
 }
 
 .bus_card_tag{
     font-size:14px;
+    font-weight:bold;
 }
 
 .bus_card_order_button{
