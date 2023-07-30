@@ -151,10 +151,17 @@
     font-size:14px;
 }
 
+.tags_and_order_button_wrapper{
+    display:flex;
+    flex-direction:row;
+    justify-content:space-between;
+    align-items:center;
+}
+
 .bus_card_order_button{
-    position: absolute;
+    /* position: absolute;
     bottom:1rem;
-    right:1rem;
+    right:1rem; */
     width: 100px;
     height: 40px;
 

@@ -15,12 +15,12 @@ def seed_businesses(users):
         "https://bucket-rb22.s3.us-east-2.amazonaws.com/frontera_2.jpeg"
     ]
     tags = [
-        ["Sandwich", "Wrap"],
-        ["Kurdish", "Mediterranean"],
-        ["Steak", "Seafood"],
-        ["Italian", "Cocktail"],
-        ["Asian", "Fusion"],
-        ["Mexican", "Dessert"]
+        ["Sandwiches", "Wraps", "Fast"],
+        ["Kurdish", "Mediterranean", "Authentic"],
+        ["Steak", "Seafood", "Cocktails"],
+        ["Italian", "Cocktails", "Desserts"],
+        ["Asian", "Fusion", "Sushi"],
+        ["Mexican", "Gourmet", "Desserts"]
     ]
     addresses = [
         "5000 Forbes ave",
@@ -83,6 +83,7 @@ def seed_businesses(users):
             description = descriptions[i],
             tag_one = tags[i][0],
             tag_two = tags[i][1],
+            tag_three = tags[i][2],
             prev_url = urls[i],
             address = addresses[i],
             city = cities[i],

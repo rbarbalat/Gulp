@@ -121,8 +121,13 @@ export default function BusCard({business, user})
                         : business.description.slice(0, 100) + "..."
                     }
                     {business.description.length >= 100 && <span className="bus_card_read_more">Read More</span>}
-                    </div>
-                <button className = "bus_card_order_button" onClick={startOrder}>Start Order</button>
+                </div>
+                <div className = "tags_and_order_button_wrapper">
+                    <span className = "bus_card_tag">{business.tag_one}</span>
+                    <span className = "bus_card_tag">{business.tag_two}</span>
+                    <span className = "bus_card_tag">{business.tag_three}</span>
+                    <button className = "bus_card_order_button" onClick={startOrder}>Start Order</button>
+                </div>
             </div>
 
         </div>

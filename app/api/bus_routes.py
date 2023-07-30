@@ -6,6 +6,8 @@ from app.forms.bus_form import BusForm
 from app.forms.edit_bus_form import EditBusForm
 from app.forms.review_form import ReviewForm
 
+from datetime import datetime
+
 bus_routes = Blueprint("businesses", __name__)
 
 #GET ALL BUSINESSES
@@ -270,6 +272,7 @@ def edit_business(id):
 
         bus.tag_one = form.data["tag_one"]
         bus.tag_two = form.data["tag_two"]
+        bus.updated_at = datetime.now()
 
         # if the user did not change the picture, the frontend sends back nothing
         if form.data["prev_url"]:
