@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { useSelector, useDispatch } from "react-redux";
-// import { useHistory } from "react-router-dom";
+import { SearchContext } from '../../context/Search';
 import { thunkLoadBusinesses } from "../../store/business";
 import BusCard from "../BusCard";
 
@@ -14,6 +14,8 @@ export default function AllBusinesses()
     const businesses = useSelector(state => Object.values(state.businesses.allBus))
     const user = useSelector(state => state.session.user);
 
+    const { target, setTarget}  = useContext(SearchContext);
+    console.log("target is ", target);
     const [sort, setSort] = useState("high");
 
     //businesses an empty array before the thunk is dispatched so can call sort on it

@@ -1,12 +1,17 @@
 import React from 'react';
+import { useState, useContext } from "react";
 import { NavLink, useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import ProfileButton from './ProfileButton';
+import { SearchContext } from '../../context/Search';
 import './Navigation.css';
 
 function Navigation({ isLoaded }){
 	const sessionUser = useSelector(state => state.session.user);
 	const history = useHistory();
+
+	const { setTarget } = useContext(SearchContext);
+	const [query, setQuery ] = useState("");
 
 	function login()
 	{
@@ -28,6 +33,12 @@ function Navigation({ isLoaded }){
 	{
 		alert("feature coming soon");
 	}
+	function search()
+	{
+		setTarget(query);
+		setQuery("");
+		history.push("/businesses");
+	}
 	return (
 		<div className="header">
 			<div className = "header_gulp_and_logo">
@@ -36,8 +47,8 @@ function Navigation({ isLoaded }){
 				<div><i className="fa-brands fa-yelp"></i></div>
 			</div>
 			<div className = "header_input_and_glass">
-				<input onChange={soon} value={``} type="text" placeholder="search"/>
-				<div className="glassWrapper" onClick={soon}><i className="fa-solid fa-magnifying-glass"></i></div>
+				<input onChange={e => setQuery(e.target.value)} value={query} type="text" placeholder="search"/>
+				<div className="glassWrapper" onClick={search}><i className="fa-solid fa-magnifying-glass"></i></div>
 			</div>
 			{
 				isLoaded && !sessionUser &&
