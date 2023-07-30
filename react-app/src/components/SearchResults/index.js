@@ -12,19 +12,25 @@ export default function SearchResults()
     const businesses = useSelector(state => Object.values(state.businesses.allBus))
     const user = useSelector(state => state.session.user);
 
-    const { target } = useContext(SearchContext);
-    const tags = target?.split(" ");
+    // one of the targets will be empty and one will be non-empty (initialized to zero in case of a refresh)
+    const { targetName, targetTags } = useContext(SearchContext);
+
+    // if targetTags is empty, tags is an array holding 1 element, the empty string, shouldn't matter
+    const tags = targetTags.split(" ");
     let str = "?";
-    tags?.forEach((tag, i) => {
-        //add an ampersand to the front as if i != 0
-        if(i === 0) str = str + `tag${i}=${tag.toLowerCase()}`
-        else str = str + `&tag${i}=${tag.toLowerCase()}`;
-    });
-    console.log("str is ", str);
+    if(targetName)
+    {
+        str = str + `name=${targetName}`;
+    }else{
+        tags?.forEach((tag, i) => {
+            //add an ampersand to the front as if i != 0
+            if(i === 0) str = str + `tag${i}=${tag.toLowerCase()}`
+            else str = str + `&tag${i}=${tag.toLowerCase()}`;
+        });
+    }
+    str = str.toLowerCase();
 
     const [sort, setSort] = useState("high");
-
-
     //businesses an empty array before the thunk is dispatched so can call sort on it
     //and it auto returns an empty array, won't get typerror from undef.getTime()
     //b/c no elements to run the operation on
@@ -59,24 +65,31 @@ export default function SearchResults()
 
     const dispatch = useDispatch();
     useEffect(() => {
+        console.log("search results useEffect");
         async function fetchData()
         {
             // const res = await dispatch(thunkLoadBusinessesQuery(`?target=${target.toLowerCase()}`));
             const res = await dispatch(thunkLoadBusinessesQuery(str));
         }
         fetchData()
-    }, [target])
+    }, [targetName, targetTags])
 
     //this is also the loading screen
     if(businesses.length === 0) return (
         <div className = "all_bus_wrapper">
-            <div className = "all_bus_caption_search">No Results For <span>{target}</span> </div>
+            <div className = "all_bus_caption_search">
+                No Results For
+                <span>{targetName ? targetName : targetTags}</span>
+            </div>
         </div>
     )
     return (
         <div className = "all_bus_wrapper">
 
-            <div className = "all_bus_caption_search">Search Results For {target} </div>
+            <div className = "all_bus_caption_search">
+                Search Results For
+                <span>{targetName ? targetName : targetTags}</span>
+            </div>
         {
             businesses.length > 0 &&
             <div className = "all_bus_sort_wrapper">

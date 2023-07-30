@@ -10,7 +10,7 @@ function Navigation({ isLoaded }){
 	const sessionUser = useSelector(state => state.session.user);
 	const history = useHistory();
 
-	const { setTarget } = useContext(SearchContext);
+	const { setTargetName, setTargetTags } = useContext(SearchContext);
 
 	const [searchName, setSearchName] = useState(true);
 	const [query, setQuery ] = useState("");
@@ -37,11 +37,17 @@ function Navigation({ isLoaded }){
 	}
 	function search(event)
 	{
-		//if(event.target.className === "fa-solid fa-tag") return;
 		if(event.target.className.includes("fa-tag")) return;
-
-		setTarget(query);
-		setQuery("");
+		if(query.trim().length === 0) return setQuery("");
+		if(searchName)
+		{
+			setTargetName(query);
+			setTargetTags("");
+		}else{
+			setTargetTags(query)
+			setTargetName("");
+		}
+		setQuery("")
 		history.push("/search");
 	}
 	return (

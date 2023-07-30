@@ -17,17 +17,17 @@ def get_all_businesses():
     """
     This route returns an array of business dictionairies for all business in the db
     """
+    # gets the val of the name key in the dict if it exists, otherwise sets key equal to "tags"
+    name = request.args.get("name")
+    if not name:
+        tags = list(request.args.values())
 
-    tags = list(request.args.values())
-    print(tags)
-
-    if tags:
+    if name:
         all_bus = Business.query.filter( \
-            # or_(
-            #     func.lower(Business.tag_one) == target,
-            #     func.lower(Business.tag_two) == target,
-            #     func.lower(Business.tag_three) == target
-            # )
+            func.lower(Business.name) == name
+        )
+    elif tags:
+        all_bus = Business.query.filter( \
             or_(
                 func.lower(Business.tag_one).in_(tags),
                 func.lower(Business.tag_two).in_(tags),

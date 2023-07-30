@@ -86,6 +86,7 @@
   /* width: 15%; */
   width:55px;
   background-color: red;
+  cursor:pointer;
 
   position:relative;
 }

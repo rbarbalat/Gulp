@@ -16,7 +16,7 @@ export default function LandingPage()
     const dispatch = useDispatch();
     const history = useHistory();
 
-    const { setTarget }  = useContext(SearchContext);
+    const { setTargetName, setTargetTags }  = useContext(SearchContext);
 
     const [loaded, setLoaded] = useState(false);
 
@@ -53,7 +53,8 @@ export default function LandingPage()
 
     function search(event)
     {
-        setTarget(event.target.innerText);
+        setTargetTags(event.target.innerText);
+        setTargetName("");
         history.push("/search");
     }
 
