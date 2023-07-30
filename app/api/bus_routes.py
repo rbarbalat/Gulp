@@ -206,6 +206,7 @@ def create_business():
 
         bus.tag_one = form.data["tag_one"]
         bus.tag_two = form.data["tag_two"]
+        bus.tag_three = form.data["tag_three"]
 
         db.session.add(bus)
         db.session.commit()
@@ -272,6 +273,7 @@ def edit_business(id):
 
         bus.tag_one = form.data["tag_one"]
         bus.tag_two = form.data["tag_two"]
+        bus.tag_three = form.data["tag_three"]
         bus.updated_at = datetime.now()
 
         # if the user did not change the picture, the frontend sends back nothing
