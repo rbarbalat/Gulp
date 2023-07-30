@@ -11,6 +11,8 @@ function Navigation({ isLoaded }){
 	const history = useHistory();
 
 	const { setTarget } = useContext(SearchContext);
+
+	const [searchName, setSearchName] = useState(true);
 	const [query, setQuery ] = useState("");
 
 	function login()
@@ -33,8 +35,11 @@ function Navigation({ isLoaded }){
 	{
 		alert("feature coming soon");
 	}
-	function search()
+	function search(event)
 	{
+		//if(event.target.className === "fa-solid fa-tag") return;
+		if(event.target.className.includes("fa-tag")) return;
+
 		setTarget(query);
 		setQuery("");
 		history.push("/search");
@@ -47,8 +52,15 @@ function Navigation({ isLoaded }){
 				<div><i className="fa-brands fa-yelp"></i></div>
 			</div>
 			<div className = "header_input_and_glass">
-				<input onChange={e => setQuery(e.target.value)} value={query} type="text" placeholder="search"/>
-				<div className="glassWrapper" onClick={search}><i className="fa-solid fa-magnifying-glass"></i></div>
+				<input
+					className = "search_bar"
+					onChange={e => setQuery(e.target.value)}
+					value={query} type="text" placeholder={searchName ? "search by name" : "search by tag(s)"}
+				/>
+				<div className="glassWrapper" onClick={search}>
+					<i className="fa-solid fa-magnifying-glass"></i>
+					<i className={`fa-solid fa-tag${searchName ? "" : " red_tag" }`} onClick={() => setSearchName(prev => !prev)}></i>
+				</div>
 			</div>
 			{
 				isLoaded && !sessionUser &&

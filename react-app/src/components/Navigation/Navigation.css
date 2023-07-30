@@ -83,11 +83,23 @@
   justify-content: center;
   align-items: center;
   /* border: 1px solid black; */
-  width: 15%;
+  /* width: 15%; */
+  width:55px;
   background-color: red;
+
+  position:relative;
 }
 .fa-magnifying-glass {
   color: white;
+}
+.fa-tag{
+  position: absolute;
+  right:65px;
+  cursor:pointer;
+  color:black;
+}
+.fa-tag.red_tag{
+  color:red;
 }
 
 .nav_logged_in_right {
