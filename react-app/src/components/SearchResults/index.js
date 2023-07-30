@@ -74,6 +74,14 @@ export default function SearchResults()
         fetchData()
     }, [targetName, targetTags])
 
+    if(!targetName && !targetTags) return (
+        <div className = "all_bus_wrapper">
+            <div className = "all_bus_caption_search">
+                Search Results Lost on Refresh
+            </div>
+        </div>
+    )
+
     //this is also the loading screen
     if(businesses.length === 0) return (
         <div className = "all_bus_wrapper">
