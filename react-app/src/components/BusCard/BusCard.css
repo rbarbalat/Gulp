@@ -156,6 +156,11 @@
     flex-direction:row;
     justify-content:space-between;
     align-items:center;
+    gap: .2rem;
+}
+
+.bus_card_tag{
+    font-size:14px;
 }
 
 .bus_card_order_button{
@@ -181,10 +186,6 @@
 .fa-heart.black{
     color:black;
     cursor:pointer;
-}
-
-.favorite_icon_wrapper{
-
 }
 
 .fa-heart.red:hover{
