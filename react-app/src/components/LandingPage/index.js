@@ -1,10 +1,11 @@
 import {useHistory} from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { useEffect, useState} from "react";
+import { useEffect, useState, useContext} from "react";
 // import {thunkLoadReviews} from "../../store/review";
 import { thunkLoadBusinesses } from "../../store/business";
 // import ReviewCard from "../ReviewCard";
 import MiniBusCard from "../MiniBusCard";
+import { SearchContext } from '../../context/Search';
 
 import "./LandingPage.css";
 
@@ -14,6 +15,8 @@ export default function LandingPage()
 
     const dispatch = useDispatch();
     const history = useHistory();
+
+    const { setTarget }  = useContext(SearchContext);
 
     const [loaded, setLoaded] = useState(false);
 
@@ -40,12 +43,18 @@ export default function LandingPage()
 
     function seeAll()
     {
-        history.push("/businesses")
+        history.push("/businesses");
     }
 
     function soon()
     {
         alert("Feature Coming Soon");
+    }
+
+    function search(event)
+    {
+        setTarget(event.target.innerText);
+        history.push("/search");
     }
 
     useEffect( async () => {
@@ -98,16 +107,16 @@ export default function LandingPage()
             <div className = "categories_wrapper">
                 <div className="category_caption">Categories</div>
                 <div className="categories">
-                    <div onClick={soon} className="category">Steak</div>
-                    <div onClick={soon} className="category">Italian</div>
-                    <div onClick={soon} className="category">Asian</div>
-                    <div onClick={soon} className="category">Barbecue</div>
+                    <div onClick={search} className="category">Steak</div>
+                    <div onClick={search} className="category">Italian</div>
+                    <div onClick={search} className="category">Asian</div>
+                    <div onClick={search} className="category">Desserts</div>
                 </div>
                 <div className="categories">
-                    <div onClick={soon} className="category">French</div>
-                    <div onClick={soon} className="category">Pizza</div>
-                    <div onClick={soon} className="category">Mexican</div>
-                    <div onClick={soon} className="category">Seafood</div>
+                    <div onClick={search} className="category">Cocktails</div>
+                    <div onClick={search} className="category">Mediterranean</div>
+                    <div onClick={search} className="category">Mexican</div>
+                    <div onClick={search} className="category">Seafood</div>
                 </div>
             </div>
 

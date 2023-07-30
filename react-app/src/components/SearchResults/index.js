@@ -12,8 +12,7 @@ export default function SearchResults()
     const businesses = useSelector(state => Object.values(state.businesses.allBus))
     const user = useSelector(state => state.session.user);
 
-    const { target }  = useContext(SearchContext);
-    console.log("target is ", target);
+    const { target } = useContext(SearchContext);
 
     const [sort, setSort] = useState("high");
 
@@ -61,8 +60,12 @@ export default function SearchResults()
         fetchData()
     }, [target])
 
-    //if you delete all businesses, would show loading, need to change
-    if(businesses.length === 0) return <div>loading</div>
+    //this is also the loading screen
+    if(businesses.length === 0) return (
+        <div className = "all_bus_wrapper">
+            <div className = "all_bus_caption">No Results for {target} </div>
+        </div>
+    )
     return (
         <div className = "all_bus_wrapper">
 
