@@ -5,6 +5,7 @@ from app.models import db, User, Business, Review, BusImage, RevImage, Favorite
 from app.forms.bus_form import BusForm
 from app.forms.edit_bus_form import EditBusForm
 from app.forms.review_form import ReviewForm
+from sqlalchemy import or_, func
 
 from datetime import datetime
 
@@ -16,7 +17,20 @@ def get_all_businesses():
     """
     This route returns an array of business dictionairies for all business in the db
     """
-    all_bus = Business.query.all()
+    target = request.args.get("target")
+    print("the target is ", target)
+
+    if target:
+        all_bus = Business.query.filter( \
+            or_(
+                func.lower(Business.tag_one) == target,
+                func.lower(Business.tag_two) == target,
+                func.lower(Business.tag_three) == target
+            )
+        )
+    else:
+        all_bus = Business.query.all()
+
     if not all_bus:
         return [], 200
 

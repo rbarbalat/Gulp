@@ -12,6 +12,7 @@ import BusForm from "./components/BusForm";
 import RevForm from "./components/RevForm";
 import UserProfile from "./components/UserProfile";
 import LandingPage from "./components/LandingPage";
+import SearchResults from "./components/SearchResults";
 
 import ProtectedRoute from "./components/auth/ProtectedRoute";
 
@@ -38,6 +39,9 @@ function App() {
           </Route>
           <Route exact path = "/businesses">
             <AllBusinesses />
+          </Route>
+          <Route exact path = "/search">
+            <SearchResults />
           </Route>
           <ProtectedRoute exact path = "/businesses/new">
             <BusForm edit={false} />

@@ -1,12 +1,12 @@
 import { useEffect, useState, useContext } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { SearchContext } from '../../context/Search';
-import { thunkLoadBusinesses } from "../../store/business";
+import { thunkLoadBusinessesQuery } from "../../store/business";
 import BusCard from "../BusCard";
 
-import "./AllBusinesses.css";
+// import "./AllBusinesses.css";
 
-export default function AllBusinesses()
+export default function SearchResults()
 {
     //initialized to an empty array before the useEffect runs, singe intialState = {}
     const businesses = useSelector(state => Object.values(state.businesses.allBus))
@@ -54,19 +54,19 @@ export default function AllBusinesses()
         //if(Number(business_id) !== business.id)
         async function fetchData()
         {
-            const res = await dispatch(thunkLoadBusinesses());
+            const res = await dispatch(thunkLoadBusinessesQuery(`?target=${target.toLowerCase()}`));
             // console.log("res in allBus useEffect");
             // console.log(res);
         }
         fetchData()
-    }, [dispatch])
+    }, [target])
 
     //if you delete all businesses, would show loading, need to change
     if(businesses.length === 0) return <div>loading</div>
     return (
         <div className = "all_bus_wrapper">
 
-            <div className = "all_bus_caption">All Businesses</div>
+            <div className = "all_bus_caption">Search Results for {target} </div>
         {
             businesses.length > 0 &&
             <div className = "all_bus_sort_wrapper">

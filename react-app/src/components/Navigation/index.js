@@ -37,7 +37,7 @@ function Navigation({ isLoaded }){
 	{
 		setTarget(query);
 		setQuery("");
-		history.push("/businesses");
+		history.push("/search");
 	}
 	return (
 		<div className="header">
