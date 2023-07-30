@@ -18,6 +18,27 @@
     align-items:center;
     font-size:25px;
     font-weight:bold;
+
+    word-wrap:break-word;
+}
+.all_bus_caption_search{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+
+    font-size:25px;
+    font-weight:bold;
+
+    gap:.5rem;
+
+    word-wrap:break-word;
+}
+.all_bus_caption_search > span{
+    font-size:18px;
+    color:red;
+    font-weight:bold;
+    word-wrap:break-word;
+    width:100%
 }
 
 .all_bus_sort_wrapper{

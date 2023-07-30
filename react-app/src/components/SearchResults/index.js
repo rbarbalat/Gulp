@@ -70,13 +70,13 @@ export default function SearchResults()
     //this is also the loading screen
     if(businesses.length === 0) return (
         <div className = "all_bus_wrapper">
-            <div className = "all_bus_caption">No Results for {target} </div>
+            <div className = "all_bus_caption_search">No Results For <span>{target}</span> </div>
         </div>
     )
     return (
         <div className = "all_bus_wrapper">
 
-            <div className = "all_bus_caption">Search Results for {target} </div>
+            <div className = "all_bus_caption_search">Search Results For {target} </div>
         {
             businesses.length > 0 &&
             <div className = "all_bus_sort_wrapper">
