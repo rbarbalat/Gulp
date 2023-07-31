@@ -24,7 +24,8 @@ def get_all_businesses():
 
     if name:
         all_bus = Business.query.filter( \
-            func.lower(Business.name) == name
+            # func.lower(Business.name) == name
+            func.lower(Business.name).contains(name)
         )
     elif tags:
         all_bus = Business.query.filter( \
