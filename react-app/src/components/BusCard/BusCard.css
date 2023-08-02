@@ -6,6 +6,8 @@
     flex-direction: row;
     gap: 1.5rem;
     height: 250px;
+    max-width: 700px;
+    /* height: 225px; */
     /* margin-bottom: 2rem; */
 
     padding-left:1rem;
@@ -123,6 +125,7 @@
 .fa-arrow-left.bus_card {
     position: absolute;
     top: 60px;
+    /* top: 50px; */
     left: -15px;
     color:black;
     font-weight:bold;
@@ -133,6 +136,7 @@
 .fa-arrow-right.bus_card {
     position: absolute;
     top: 60px;
+    /* top: 50px; */
     right: -15px;
     color:black;
     font-weight:bold;
@@ -162,7 +166,8 @@
     flex-direction:row;
     justify-content:space-between;
     align-items:center;
-    gap: .2rem;
+    /* gap: .2rem; */
+    flex-wrap:wrap;
 
     margin-top:.5rem;
 }

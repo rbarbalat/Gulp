@@ -25,9 +25,9 @@ class BusForm(FlaskForm):
     city = StringField("state", validators=[DataRequired(), Length(min=2, max=15)] )
     state = StringField("state", validators=[DataRequired(), Length(min=2, max=15)] )
 
-    tag_one = StringField("tag_one", validators=[DataRequired(), Length(min=3, max=15)] )
-    tag_two = StringField("tag_two", validators=[DataRequired(), Length(min=3, max=15)] )
-    tag_three = StringField("tag_three", validators=[DataRequired(), Length(min=3, max=15)] )
+    tag_one = StringField("tag_one", validators=[DataRequired(), Length(min=3, max=13)] )
+    tag_two = StringField("tag_two", validators=[DataRequired(), Length(min=3, max=13)] )
+    tag_three = StringField("tag_three", validators=[DataRequired(), Length(min=3, max=13)] )
 
     # prev_url = StringField("preview image", validators=[DataRequired(), URL()])
     prev_url = FileField("preview image", validators=[FileRequired(), FileAllowed(list(ALLOWED_EXTENSIONS))])

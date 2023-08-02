@@ -44,11 +44,11 @@ export default function BusCard({business, user})
     {
         setIndex(index === 0 ? urls.length - 1 : index - 1 )
     }
-    function startOrder()
-    {
-        alert("Feature Coming Soon");
-        return null;
-    }
+    // function startOrder()
+    // {
+    //     alert("Feature Coming Soon");
+    //     return null;
+    // }
     async function modifyFavorite()
     {
         //this card appears on multiple components, the pathname determines which thunk is
@@ -130,7 +130,7 @@ export default function BusCard({business, user})
                     <span className = "bus_card_tag">{business.tag_one}</span>
                     <span className = "bus_card_tag">{business.tag_two}</span>
                     <span className = "bus_card_tag">{business.tag_three}</span>
-                    <button className = "bus_card_order_button" onClick={startOrder}>Start Order</button>
+                    {/* <button className = "bus_card_order_button" onClick={startOrder}>Start Order</button> */}
                 </div>
             </div>
 
