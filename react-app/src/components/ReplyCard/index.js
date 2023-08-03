@@ -37,6 +37,16 @@ export default function ReplyCard({reply, owner, user, business_id})
        date = date.slice(0,4) + date.slice(5);
     }
 
+    let updated_date = reply?.updated_at ?
+                       new Date(reply?.updated_at)?.toDateString()?.slice(4)
+                       :
+                       null;
+    if(updated_date)
+    {
+       if(updated_date[4] === "0")
+       updated_date = updated_date.slice(0,4) + updated_date.slice(5);
+    }
+
     function closeForm()
     {
         setContent(reply?.reply);
@@ -77,8 +87,12 @@ export default function ReplyCard({reply, owner, user, business_id})
                 { isOwner && confirm && confirmAndCancel}
                 { isOwner && !confirm && editAndDelete}
             </div>
-
+        {
+            updated_date ?
+            <div className = "single_reply_date">{updated_date} (Updated)</div>
+            :
             <div className = "single_reply_date">{date}</div>
+        }
             <div className = "single_reply_text">{reply.reply}</div>
         {
                 //the classNames are being reused from the create reply form

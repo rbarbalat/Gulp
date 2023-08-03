@@ -5,26 +5,9 @@ from app.models import db, Review, RevImage, Reply
 from app.forms.review_form import ReviewForm
 from app.forms.reply_form import ReplyForm
 
+from datetime import datetime
+
 rev_routes = Blueprint("reviews", __name__)
-
-# #GET 6 RECENT Reviews
-# @rev_routes.route("/")
-# def get_recent_reviews():
-#     all_rev = Review.query.all()
-#     if not all_rev:
-#         return [], 404
-
-#     if len(all_rev) <= 6:
-#         reviews = all_rev
-#     else:
-#         reviews = all_rev[len(all_rev) - 6:]
-#     return [{
-#                 **review.to_dict(),
-#                 "business": review.business.to_dict(),
-#                 "images": [ image.to_dict() for image in review.images ],
-#                 "reviewer": review.reviewer.to_dict()
-#             }
-#             for review in reviews]
 
 #GET ALL REVIEWS BY CURRENT USER
 @rev_routes.route("/current")
@@ -123,6 +106,7 @@ def edit_review_by_id(id):
 
         review.rating = form.data["rating"]
         review.review = form.data["review"]
+        review.updated_at = datetime.now()
         db.session.commit()
 
         return {

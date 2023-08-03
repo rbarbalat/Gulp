@@ -32,6 +32,16 @@ export default function ReviewCard({review, user, business_id, user_profile, own
        date = date.slice(0,4) + date.slice(5);
     }
 
+    let updated_date = review?.updated_at ?
+                       new Date(review?.updated_at)?.toDateString()?.slice(4)
+                       :
+                       null;
+    if(updated_date)
+    {
+       if(updated_date[4] === "0")
+       updated_date = updated_date.slice(0,4) + updated_date.slice(5);
+    }
+
     function linkBusiness()
     {
         history.push(`/businesses/${review.business_id}`)
@@ -128,11 +138,14 @@ export default function ReviewCard({review, user, business_id, user_profile, own
 
             <div className = "reviewer_rating">
                 <StarRatingInput rating={review.rating} form={false}/>
-                {/* <div>{review.created_at.split(",")[1].split(":")[0].slice(0,-3)}</div> */}
-                <div>{date}</div>
+                {/* <div className = "review_created_at">{date}</div> */}
+            {
+                updated_date ?
+                <div className = "review_updated_at">{updated_date} (Updated)</div>
+                :
+                <div className = "review_created_at">{date}</div>
+            }
             </div>
-
-            {/* {review.updated_at ? review.updated_at : review.created_at} */}
 
             <div className = "review_text">
                 {review.review}

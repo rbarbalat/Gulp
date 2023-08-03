@@ -3,6 +3,8 @@ from flask_login import current_user
 from app.models import db, Reply, Business, Review
 from app.forms.reply_form import ReplyForm
 
+from datetime import datetime
+
 reply_routes = Blueprint("replies", __name__)
 
 @reply_routes.route("/")
@@ -32,6 +34,7 @@ def edit_reply_by_id(id):
 
     if form.validate_on_submit():
         reply.reply = form.data["reply"]
+        reply.updated_at = datetime.now()
 
         db.session.commit()
         return reply.to_dict()
