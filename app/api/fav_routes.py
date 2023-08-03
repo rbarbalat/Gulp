@@ -19,7 +19,7 @@ def delete_fav_by_id(id):
         return {"error": "Favorite not found"}, 404
 
     if current_user.id != fav.user_id:
-        return {"error": "Not authorized"}
+        return {"error": "Not authorized"}, 403
 
     db.session.delete(fav)
     db.session.commit()

@@ -102,8 +102,8 @@ export async function deleteReply(reply_id, dispatch, business_id)
     const res = await dispatch(thunkDeleteReply(reply_id));
     if(res.error)
     {
-        console.log("bad response from inside deleteReply");
-        console.log(res);
+        // console.log("bad response from inside deleteReply");
+        // console.log(res);
         // alert("something went wrong with the deletion");
     }else {
         // console.log("good response from inside deleteReply");
@@ -134,13 +134,13 @@ export async function createFavorite(business_id, user_id, pathname, dispatch)
         if(res.ok)
         {
             const data = await res.json();
-            console.log(data);
+            // console.log(data);
             await dispatch(authenticate());
             if(pathname === "/businesses") await dispatch(thunkLoadBusinesses());
             if(pathname === `/users/${user_id}`) await dispatch(thunkLoadFavBusinessesOfUser())
         }else{
             const error_data = await res.json();
-            console.log(error_data);
+            // console.log(error_data);
         }
     }catch(error){
         console.log(error);
@@ -153,16 +153,16 @@ export async function deleteFavorite(favorite_id, user_id, pathname, dispatch)
         const res = await fetch(`/api/favorites/${favorite_id}`, options);
         if(res.ok)
         {
-            const data = await res.json();
-            console.log(data);
+            // const data = await res.json();
+            // console.log(data);
             await dispatch(authenticate());
             if(pathname === "/businesses") await dispatch(thunkLoadBusinesses());
             if(pathname === `/users/${user_id}`) await dispatch(thunkLoadFavBusinessesOfUser())
         }else{
-            const error_data = await res.json();
-            console.log(error_data);
+            // const error_data = await res.json();
+            // console.log(error_data);
         }
     }catch(error){
-        console.log(error);
+        // console.log(error);
     }
 }

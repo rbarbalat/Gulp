@@ -474,6 +474,9 @@ def create_favorite(id):
     if not bus:
         return {"error": "Business does not exist"}, 404
 
+    if bus.id in [favorite.business_id for favorite in current_user.favorites]:
+        return {"error": "User has already favorited this business"}, 400
+
     fav = Favorite(business_id = id, user_id = current_user.id, super = False)
 
     db.session.add(fav)
