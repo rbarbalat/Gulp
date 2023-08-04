@@ -194,6 +194,7 @@ def create_reply(id):
 
         reply.review_id = id
         reply.reply = form.data["reply"]
+        reply.created_at = datetime.now()
 
         db.session.add(reply)
         db.session.commit()

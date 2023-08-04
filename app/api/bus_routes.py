@@ -229,6 +229,8 @@ def create_business():
         bus.tag_two = form.data["tag_two"]
         bus.tag_three = form.data["tag_three"]
 
+        bus.created_at = datetime.now()
+
         db.session.add(bus)
         db.session.commit()
 
@@ -377,6 +379,7 @@ def create_review(id):
         review.business_id = id
         review.review = form.data["review"]
         review.rating = form.data["rating"]
+        review.created_at = datetime.now()
 
         db.session.add(review)
         db.session.commit()

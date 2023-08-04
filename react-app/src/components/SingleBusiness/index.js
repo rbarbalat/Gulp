@@ -30,6 +30,7 @@ export default function SingleBusiness()
     const reviews = business.reviews?.slice();
     // console.log("reviews is undefined ", reviews === undefined)
 
+    // reviews?.forEach(review => {console.log(review.id, review.created_at)})
 
     if(sort === "new") reviews?.sort((a,b) => {
         return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
