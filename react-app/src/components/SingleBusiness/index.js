@@ -100,8 +100,12 @@ export default function SingleBusiness()
             <div className="single_bus_middle_wrapper">
                 <div className="single_bus_about">
                     {business.name}&nbsp;&nbsp;
+                {
+                    user &&
                     <i className={userFavorite ? "fa-solid fa-heart red_single" : "fa-solid fa-heart black_single"}
-                                onClick={modifyFavorite}></i>
+                        onClick={modifyFavorite}>
+                    </i>
+                }
                 </div>
                 <div className="single_bus_description_not_card">{business.description}</div>
                 {

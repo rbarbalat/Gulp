@@ -115,7 +115,7 @@ export default function LandingPage()
                 </div>
                 <div className="categories">
                     <div onClick={search} className="category">Cocktails</div>
-                    <div onClick={search} className="category">Mediterranean</div>
+                    <div onClick={search} className="category">Wraps</div>
                     <div onClick={search} className="category">Mexican</div>
                     <div onClick={search} className="category">Seafood</div>
                 </div>
