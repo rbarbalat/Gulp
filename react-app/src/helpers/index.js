@@ -137,6 +137,7 @@ export async function createFavorite(business_id, user_id, pathname, dispatch)
             // console.log(data);
             await dispatch(authenticate());
             if(pathname === "/businesses") await dispatch(thunkLoadBusinesses());
+            if(pathname === `businesses/${business_id}`) await dispatch(thunkLoadSingleBusiness(business_id));
             if(pathname === `/users/${user_id}`) await dispatch(thunkLoadFavBusinessesOfUser())
         }else{
             const error_data = await res.json();
@@ -146,7 +147,7 @@ export async function createFavorite(business_id, user_id, pathname, dispatch)
         console.log(error);
     }
 }
-export async function deleteFavorite(favorite_id, user_id, pathname, dispatch)
+export async function deleteFavorite(favorite_id, user_id, pathname, dispatch, business_id)
 {
     const options = { method: "Delete"};
     try{
@@ -157,7 +158,8 @@ export async function deleteFavorite(favorite_id, user_id, pathname, dispatch)
             // console.log(data);
             await dispatch(authenticate());
             if(pathname === "/businesses") await dispatch(thunkLoadBusinesses());
-            if(pathname === `/users/${user_id}`) await dispatch(thunkLoadFavBusinessesOfUser())
+            if(pathname === `businesses/${business_id}`) await dispatch(thunkLoadSingleBusiness(business_id));
+            if(pathname === `/users/${user_id}`) await dispatch(thunkLoadFavBusinessesOfUser());
         }else{
             // const error_data = await res.json();
             // console.log(error_data);

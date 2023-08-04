@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useParams, useHistory } from "react-router-dom";
+import { useParams, useHistory, useLocation } from "react-router-dom";
 import { thunkLoadSingleBusiness } from "../../store/business";
 import TopCard from "../TopCard";
 import ReviewCard from "../ReviewCard";
-import {deleteBusiness} from "../../helpers";
+import {deleteBusiness, createFavorite, deleteFavorite} from "../../helpers";
 
 import "./SingleBusiness.css";
 
@@ -15,6 +15,9 @@ export default function SingleBusiness()
     const busIsEmpty = Object.keys(business).length === 0;
 
     const user = useSelector(state => state.session.user);
+    const favorite = user?.favorites.find(favorite => favorite.business_id === business.id);
+    const userFavorite = favorite !== undefined;
+
     const [confirm, setConfirm] = useState(false);
 
     const [sort, setSort] = useState("new");
@@ -43,6 +46,7 @@ export default function SingleBusiness()
     const { business_id } = useParams();
     const dispatch = useDispatch();
     const history = useHistory();
+    const { pathname } = useLocation();
 
     const confirmAndCancel = (
         <div className = "bus_card_buttons_confirm_single">
@@ -80,13 +84,25 @@ export default function SingleBusiness()
     {
         history.push(`/businesses/${business_id}/reviews`);
     }
+    async function modifyFavorite()
+    {
+        //this card appears on multiple components, the pathname determines which thunk is
+        //invoked after the (favorite) fetch to rerender the correct parent component
+        if(userFavorite) await deleteFavorite(favorite.id, user.id, pathname, dispatch, business.id);
+        else await createFavorite(business.id, user.id, pathname, dispatch);
+        return;
+    }
 
     if(busIsEmpty) return <div>loading</div>
     return(
         <>
             <TopCard business={business} />
             <div className="single_bus_middle_wrapper">
-                <div className="single_bus_about">{business.name}</div>
+                <div className="single_bus_about">
+                    {business.name}&nbsp;&nbsp;
+                    <i className={userFavorite ? "fa-solid fa-heart red_single" : "fa-solid fa-heart black_single"}
+                                onClick={modifyFavorite}></i>
+                </div>
                 <div className="single_bus_description_not_card">{business.description}</div>
                 {
                     business.images.length > 0 &&

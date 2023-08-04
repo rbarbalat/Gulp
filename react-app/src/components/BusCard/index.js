@@ -44,11 +44,6 @@ export default function BusCard({business, user})
     {
         setIndex(index === 0 ? urls.length - 1 : index - 1 )
     }
-    // function startOrder()
-    // {
-    //     alert("Feature Coming Soon");
-    //     return null;
-    // }
     async function modifyFavorite()
     {
         //this card appears on multiple components, the pathname determines which thunk is

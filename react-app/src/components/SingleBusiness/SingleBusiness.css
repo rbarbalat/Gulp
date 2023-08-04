@@ -114,3 +114,22 @@
 .single_bus_sort_option:hover{
     font-weight:bold;
 }
+
+.fa-heart.red_single{
+    color:red;
+    font-weight:bold;
+    cursor:pointer;
+}
+.fa-heart.black_single{
+    color:black;
+    cursor:pointer;
+}
+
+.fa-heart.red_single:hover{
+    color:black;
+    font-weight:bold;
+}
+.fa-heart.black_single:hover{
+    color:red;
+    font-weight:bold;
+}

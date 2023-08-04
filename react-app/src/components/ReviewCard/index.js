@@ -32,15 +32,16 @@ export default function ReviewCard({review, user, business_id, user_profile, own
        date = date.slice(0,4) + date.slice(5);
     }
 
-    let updated_date = review?.updated_at ?
-                       new Date(review?.updated_at)?.toDateString()?.slice(4)
-                       :
-                       null;
-    if(updated_date)
-    {
-       if(updated_date[4] === "0")
-       updated_date = updated_date.slice(0,4) + updated_date.slice(5);
-    }
+    let updated_date = null;
+    // let updated_date = review?.updated_at ?
+    //                    new Date(review?.updated_at)?.toDateString()?.slice(4)
+    //                    :
+    //                    null;
+    // if(updated_date)
+    // {
+    //    if(updated_date[4] === "0")
+    //    updated_date = updated_date.slice(0,4) + updated_date.slice(5);
+    // }
 
     function linkBusiness()
     {
