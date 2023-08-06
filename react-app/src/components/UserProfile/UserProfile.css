@@ -24,7 +24,7 @@
 
 .user_profile_image_wrapper{
     height: 35%;
-    width: 59%;
+    width: 45%;
     /* border: 1px solid gray; */
 }
 
@@ -63,14 +63,31 @@
     display:flex;
     flex-direction:column;
     align-items:center;
-    gap: 1rem;
+    gap: 1.5rem;
+}
+.user_image_form_wrapper > form {
+    display:contents;
+}
+.user_image_input{
+    /* border: 1px dashed red; */
+    width: 180px;
+
 }
 .user_image_button{
     cursor:pointer;
+    background-color:red;
+    color:white;
+    width: 150px;
+    height: 40px;
+    box-shadow: 3px 3px 3px black;
 }
-.user_image_cancel{
+.user_image_cancel_button{
     cursor:pointer;
-    color:teal;
+    background-color:darkblue;
+    color:white;
+    width:150px;
+    height:40px;
+    box-shadow: 3px 3px 3px black;
 }
 
 

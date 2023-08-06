@@ -79,6 +79,9 @@ export default function UserProfile()
                     <img className="user_profile_image" alt="default avatar" src={user.url}></img>
                 </div>
                 <div className = "user_profile_username">{user.username}</div>
+            {
+                !show_form &&
+                <>
                 <div>
                     {
                         user.numBusinesses === 1 ?
@@ -96,8 +99,6 @@ export default function UserProfile()
                     }
                 </div>
                 <div>{date}</div>
-            {
-                !show_form &&
                 <div className = "user_profile_options">
                     <div className = "user_profile_single_option" onClick={comingSoon}>
                         <i className="fa-solid fa-pen-to-square"></i>
@@ -112,20 +113,18 @@ export default function UserProfile()
                         <div className="single_option_text">Add friends</div>
                     </div>
                 </div>
+                </>
             }
             {
                 show_form &&
-                <form onSubmit={onSubmit} encType="multipart/form-data">
-                    <div className = "user_image_form_wrapper">
+                <div className = "user_image_form_wrapper">
+                    <form onSubmit={onSubmit} encType="multipart/form-data">
                         <input className="user_image_input" type="file" accept="image/*"
                             onChange={e => setImage(e.target.files[0])} required/>
-                        <span className = "user_image_button_cancel_span">
-                            <button className = "user_image_button">Submit</button>
-                            &nbsp;&nbsp;
-                            <span className = "user_image_cancel" onClick={() => setShowForm(false)}>Cancel</span>
-                        </span>
-                    </div>
-                </form>
+                        <button className = "user_image_button">Submit</button>
+                    </form>
+                    <button className = "user_image_cancel_button" onClick={() => setShowForm(false)}>Cancel</button>
+                </div>
             }
             </div>
 
