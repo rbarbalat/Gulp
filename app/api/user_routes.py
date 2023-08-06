@@ -1,6 +1,8 @@
-from flask import Blueprint, jsonify
-from flask_login import login_required
-from app.models import User
+from flask import Blueprint, jsonify, request
+from flask_login import login_required, current_user
+from app.models import User, db
+from app.api.aws import get_unique_filename, upload_file_to_s3, remove_file_from_s3
+from app.forms.user_image_form import UserImageForm
 
 user_routes = Blueprint('users', __name__)
 
@@ -13,6 +15,32 @@ def users():
     """
     users = User.query.all()
     return {'users': [user.to_dict() for user in users]}
+
+@user_routes.route("/image", methods = ["PATCH"])
+def add_image():
+    if not current_user.is_authenticated:
+        return {"error": "Unauthorized"}, 403
+
+    form = UserImageForm()
+    # form["csrf_token"].data = request.cookies["csrf_token"]
+    if "csrf_token" in request.cookies:
+        form["csrf_token"].data = request.cookies["csrf_token"]
+    else:
+        return {"error": "No csrf token "}, 400
+
+    if form.validate_on_submit():
+        image = form.data["image"]
+        image.filename = get_unique_filename(image.filename)
+        #upload is a dicitonary with a key of url or a key of errors
+        upload = upload_file_to_s3(image)
+        if "url" not in upload:
+            return {"error": "failed b/c of problem with the image file"}, 400
+
+        current_user.url = upload["url"]
+        db.session.commit()
+        return current_user.to_dict()
+
+    return {"errors": form.errors}, 400
 
 
 @user_routes.route('/<int:id>')
