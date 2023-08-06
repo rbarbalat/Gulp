@@ -12,6 +12,9 @@ export default function UserProfile()
     const user = useSelector((state) => state.session.user);
     const { user_id } = useParams();
 
+    const [image, setImage] = useState(undefined);
+    const [errors, setErrors] = useState({});
+
     //reviews are the default selection
     const [show, setShow] = useState(1);
 
@@ -37,6 +40,30 @@ export default function UserProfile()
     function comingSoon()
     {
         return alert("Feature Coming Soon");
+    }
+    async function changeImage(e)
+    {
+        e.preventDefault();
+        const form_data = new FormData();
+        form_data.append("image", image);
+        const options = {
+            method: "PATCH",
+            body: form_data
+        }
+        const res = await fetch("/api/users/image", options);
+        if(res.ok)
+        {
+            const data = await res.json();
+            await dispatch(authenticate());
+            setImage(undefined);
+        }else{
+            const error_data = await res.json();
+            const valErrors = {
+                "image": error_data.errors.image[0]
+            }
+            setErrors(valErrors);
+        }
+
     }
     if(user.id !== Number(user_id)) return <div>unauthorized</div>
     return (
@@ -70,7 +97,7 @@ export default function UserProfile()
                     </div>
                     <div className = "user_profile_single_option" onClick={comingSoon}>
                         <i className="fa-solid fa-image"></i>
-                        <div className="single_option_text">Add photo</div>
+                        <div className="single_option_text">Edit photo</div>
                     </div>
                     <div className = "user_profile_single_option" onClick={comingSoon}>
                         <i className="fa-solid fa-user-group"></i>
