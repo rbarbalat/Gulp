@@ -33,6 +33,7 @@
 .single_reply_owner_pic{
     height: 100%;
     width: 100%;
+    border-radius:5px;
 }
 .single_reply_owner{
     font-weight:bold;

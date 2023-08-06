@@ -13,7 +13,11 @@ export default function UserProfile()
     const { user_id } = useParams();
 
     const [image, setImage] = useState(undefined);
+    const [show_form, setShowForm] = useState(false);
+
     const [errors, setErrors] = useState({});
+
+    console.log(show_form);
 
     //reviews are the default selection
     const [show, setShow] = useState(1);
@@ -41,7 +45,7 @@ export default function UserProfile()
     {
         return alert("Feature Coming Soon");
     }
-    async function changeImage(e)
+    async function onSubmit(e)
     {
         e.preventDefault();
         const form_data = new FormData();
@@ -56,6 +60,7 @@ export default function UserProfile()
             const data = await res.json();
             await dispatch(authenticate());
             setImage(undefined);
+            setShowForm(false);
         }else{
             const error_data = await res.json();
             const valErrors = {
@@ -70,7 +75,8 @@ export default function UserProfile()
         <div className="user_profile_wrapper">
             <div className = "user_profile_left_wrapper">
                 <div className = "user_profile_image_wrapper">
-                    <img className="user_profile_image" alt="default avatar" src="https://s3-media0.fl.yelpcdn.com/assets/public/default_user_avatar_120x120_v2.yji-1fea61f9163feb39bc9a115a97bd99eb.png"></img>
+                    {/* <img className="user_profile_image" alt="default avatar" src="https://s3-media0.fl.yelpcdn.com/assets/public/default_user_avatar_120x120_v2.yji-1fea61f9163feb39bc9a115a97bd99eb.png"></img> */}
+                    <img className="user_profile_image" alt="default avatar" src={user.url}></img>
                 </div>
                 <div className = "user_profile_username">{user.username}</div>
                 <div>
@@ -90,12 +96,14 @@ export default function UserProfile()
                     }
                 </div>
                 <div>{date}</div>
+            {
+                !show_form &&
                 <div className = "user_profile_options">
                     <div className = "user_profile_single_option" onClick={comingSoon}>
                         <i className="fa-solid fa-pen-to-square"></i>
                         <div className="single_option_text">Edit profile</div>
                     </div>
-                    <div className = "user_profile_single_option" onClick={comingSoon}>
+                    <div className = "user_profile_single_option" onClick={() => setShowForm(true)}>
                         <i className="fa-solid fa-image"></i>
                         <div className="single_option_text">Edit photo</div>
                     </div>
@@ -104,6 +112,21 @@ export default function UserProfile()
                         <div className="single_option_text">Add friends</div>
                     </div>
                 </div>
+            }
+            {
+                show_form &&
+                <form onSubmit={onSubmit} encType="multipart/form-data">
+                    <div className = "user_image_form_wrapper">
+                        <input className="user_image_input" type="file" accept="image/*"
+                            onChange={e => setImage(e.target.files[0])} required/>
+                        <span className = "user_image_button_cancel_span">
+                            <button className = "user_image_button">Submit</button>
+                            &nbsp;&nbsp;
+                            <span className = "user_image_cancel" onClick={() => setShowForm(false)}>Cancel</span>
+                        </span>
+                    </div>
+                </form>
+            }
             </div>
 
             <div className = "user_profile_middle_wrapper">
