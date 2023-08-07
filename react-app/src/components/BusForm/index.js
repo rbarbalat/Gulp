@@ -242,37 +242,51 @@ export default function BusForm({edit})
                         </p>
                     }
                     {
-                        // first_url && !first &&
                         first_url &&
                         <p className="image_and_delete_button">
                             <i className={first ? "fa-solid fa-pen-to-square" : "fa-solid fa-upload"} onClick = {() => first_file.current.click()}></i>
                             <i className={first ? "fa-solid fa-trash hidden" : "fa-solid fa-trash"} onClick={() => deleteBusImage(1)}></i>
                             <img alt="optional one" className={ first ? "form_images hidden" : "form_images"} src={first_url}></img>
-                            {/* <div onClick={() => deleteBusImage(1)} className="bus_form_delete_image_div">Delete Image</div> */}
                         </p>
                     }
                 </p>
                 {valErrors.first && <p className="bus_form_errors">{valErrors.first}</p>}
 
                 <p>
-                    <input id="file_input_2" className="file_input" type="file" accept="image/*" name="second" onChange={e => handleImage(e, 2)}/>
+                    <input id="file_input_2" className="file_input" type="file" accept="image/*" name="second"
+                    ref = {second_file} style = {{display: "none"}} onChange={e => handleImage(e, 2)}/>
                     {
-                        second_url && !second &&
+                        !second_url &&
+                        <p className = "bus_form_upload_icon_wrapper">
+                            <i className={second ? "fa-solid fa-pen-to-square" : "fa-solid fa-upload"} onClick = {() => second_file.current.click()}></i>
+                        </p>
+                    }
+                    {
+                        second_url &&
                         <p className="image_and_delete_button">
-                            <img alt="optional two" className="form_images" src={second_url}></img>
-                            <div onClick={() => deleteBusImage(2)} className="bus_form_delete_image_div">Delete Image</div>
+                            <i className={second ? "fa-solid fa-pen-to-square" : "fa-solid fa-upload"} onClick = {() => second_file.current.click()}></i>
+                            <i className={second ? "fa-solid fa-trash hidden" : "fa-solid fa-trash"} onClick={() => deleteBusImage(2)}></i>
+                            <img alt="optional two" className={ second ? "form_images hidden" : "form_images"} src={second_url}></img>
                         </p>
                     }
                 </p>
                 {valErrors.second && <p className="bus_form_errors">{valErrors.second}</p>}
 
                 <p>
-                    <input id="file_input_3" className="file_input" type="file" accept="image/*" name="third" onChange={e => handleImage(e, 3)}/>
+                    <input id="file_input_3" className="file_input" type="file" accept="image/*" name="third"
+                        ref = {third_file} style = {{display: "none"}} onChange={e => handleImage(e, 3)}/>
                     {
-                        third_url && !third &&
+                        !third_url &&
+                        <p className = "bus_form_upload_icon_wrapper">
+                            <i className={third ? "fa-solid fa-pen-to-square" : "fa-solid fa-upload"} onClick = {() => third_file.current.click()}></i>
+                        </p>
+                    }
+                    {
+                        third_url &&
                         <p className="image_and_delete_button">
-                            <img alt="optional three" className="form_images" src={third_url}></img>
-                            <div onClick={() => deleteBusImage(3)} className="bus_form_delete_image_div">Delete Image</div>
+                            <i className={third ? "fa-solid fa-pen-to-square" : "fa-solid fa-upload"} onClick = {() => third_file.current.click()}></i>
+                            <i className={third ? "fa-solid fa-trash hidden" : "fa-solid fa-trash"} onClick={() => deleteBusImage(3)}></i>
+                            <img alt="optional three" className={ third ? "form_images hidden" : "form_images"} src={third_url}></img>
                         </p>
                     }
                 </p>

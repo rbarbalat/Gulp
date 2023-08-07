@@ -96,6 +96,8 @@
     flex-direction: row;
     justify-content:flex-start;
     gap:.5rem;
+
+    justify-content:center;
 }
 
 .bus_form_delete_image_div{
