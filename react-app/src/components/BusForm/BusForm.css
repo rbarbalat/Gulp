@@ -82,6 +82,7 @@
 .form_images {
     height: 30px;
     width: 50px;
+    border-radius:4px;
 }
 
 .bus_form_bottom_images {
@@ -109,4 +110,23 @@
     flex-direction:row;
     justify-content:center;
     align-items:center;
+}
+
+.mandatory_prev_image, .bus_form_optional_images{
+    display:flex;
+    flex-direction:row;
+    justify-content:center;
+    font-weight:bold;
+}
+.bus_form_upload_icon_wrapper{
+    display:flex;
+    flex-direction:row;
+    justify-content:center;
+    align-items:center;
+    font-size:25px;
+    color:teal;
+}
+.fa-upload,
+.fa-pen-to-square {
+    cursor:pointer;
 }
