@@ -127,12 +127,14 @@ export default function UserProfile()
                             ref = {fileInput} style = {{display: "none"}}/>
                     {
                         image ?
-                        <span className = "user_file_span" onClick = {() => fileInput.current.click()}>
-                            Change File
+                        <span className = "user_file_span">
+                            <i className="fa-solid fa-check"></i>
+                                &nbsp;&nbsp;
+                            <i className="fa-solid fa-pen-to-square" onClick = {() => fileInput.current.click()}></i>
                         </span>
                         :
-                        <span className = "user_file_span" onClick = {() => fileInput.current.click()}>
-                            Upload File
+                        <span className = "user_file_span">
+                            <i className="fa-solid fa-upload" onClick = {() => fileInput.current.click()}></i>
                         </span>
                     }
                         <button className = "user_image_button">Submit</button>

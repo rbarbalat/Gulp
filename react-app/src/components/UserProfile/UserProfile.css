@@ -76,8 +76,13 @@
 .user_file_span{
     font-size:18px;
     color:teal;
-    cursor:pointer;
     font-weight:bold;
+}
+.user_file_span > .fa-pen-to-square{
+    cursor:pointer;
+}
+.user_file_span > .fa-upload{
+    cursor:pointer;
 }
 .user_image_button{
     cursor:pointer;
@@ -98,8 +103,6 @@
 .user_image_error{
     color:red;
 }
-
-
 
 .user_profile_middle_wrapper {
     width:59%;
