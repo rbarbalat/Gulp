@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import AllBusOfUser from "../AllBusOfUser";
 import AllRevOfUser from "../AllRevOfUser";
 import AllFavOfUser from "../AllFavOfUser";
@@ -14,6 +14,8 @@ export default function UserProfile()
 
     const [image, setImage] = useState(undefined);
     const [show_form, setShowForm] = useState(false);
+
+    const fileInput = useRef(null);
 
     const [errors, setErrors] = useState({});
 
@@ -48,6 +50,8 @@ export default function UserProfile()
     async function onSubmit(e)
     {
         e.preventDefault();
+        if(!image) return setErrors({"image": "File Required"});
+
         const form_data = new FormData();
         form_data.append("image", image);
         const options = {
@@ -120,10 +124,27 @@ export default function UserProfile()
                 <div className = "user_image_form_wrapper">
                     <form onSubmit={onSubmit} encType="multipart/form-data">
                         <input className="user_image_input" type="file" accept="image/*"
-                            onChange={e => setImage(e.target.files[0])} required/>
+                            onChange={e => setImage(e.target.files[0])}
+                            ref = {fileInput} style = {{display: "none"}}/>
+                    {
+                        image ?
+                        <span className = "user_file_span" onClick = {() => fileInput.current.click()}>
+                            Change File
+                        </span>
+                        :
+                        <span className = "user_file_span" onClick = {() => fileInput.current.click()}>
+                            Upload File
+                        </span>
+                    }
                         <button className = "user_image_button">Submit</button>
                     </form>
-                    <button className = "user_image_cancel_button" onClick={() => setShowForm(false)}>Cancel</button>
+                    <button className = "user_image_cancel_button"
+                        onClick={ () => { setShowForm(false); setImage(undefined); setErrors({}); } }>
+                        Cancel
+                    </button>
+                    {
+                        errors.image && !image && <span className = "user_image_error">{errors.image}</span>
+                    }
                 </div>
             }
             </div>
