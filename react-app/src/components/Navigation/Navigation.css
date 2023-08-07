@@ -103,6 +103,12 @@
   color:red;
 }
 
+.addBus{
+  font-weight:bold;
+  color:teal;
+  font-size:20px;
+}
+
 .nav_logged_in_right {
   display: flex;
   flex-direction: row;
@@ -114,8 +120,11 @@
   gap: .7rem;
   align-items: center;
 }
+.fa-message, .fa-bell, .fa-user-circle {
+  font-size:20px;
+}
 
-.fa-message, .fa-bell, .fa-magnifying-glass,  .addBus,
+.fa-message, .fa-bell, .fa-user-circle, .fa-magnifying-glass,  .addBus,
 .nav_login_button, .nav_signup_button,
 .drop_down_profile_link, .drop_down_profile_logout {
   cursor: pointer;
