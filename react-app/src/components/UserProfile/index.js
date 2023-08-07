@@ -67,6 +67,7 @@ export default function UserProfile()
             setShowForm(false);
         }else{
             const error_data = await res.json();
+            //double check the formatting of .errors.image[0]
             if(error_data.errors) setErrors({"image": error_data.errors.image[0]});
             if(error_data.error) setErrors({"image": error_data.error});
         }
