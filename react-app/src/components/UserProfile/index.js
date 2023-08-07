@@ -15,11 +15,14 @@ export default function UserProfile()
     const [image, setImage] = useState(undefined);
     const [show_form, setShowForm] = useState(false);
 
+    const [show_delete, setShowDelete] = useState(false);
+
+    const default_url = "https://bucket-rb22.s3.us-east-2.amazonaws.com/stock_user.png"
+    if(user && !show_delete && user.url !== default_url) setShowDelete(true);
+
     const fileInput = useRef(null);
 
     const [errors, setErrors] = useState({});
-
-    console.log(show_form);
 
     //reviews are the default selection
     const [show, setShow] = useState(1);
@@ -46,6 +49,20 @@ export default function UserProfile()
     function comingSoon()
     {
         return alert("Feature Coming Soon");
+    }
+    async function deletePhoto()
+    {
+        const options = { method: "DELETE" };
+        const res = await fetch("/api/users/image", options);
+        if(res.ok)
+        {
+            await dispatch(authenticate());
+            setImage(undefined);
+            setShowForm(false);
+            setShowDelete(false);
+        }else{
+
+        }
     }
     async function onSubmit(e)
     {
@@ -109,7 +126,7 @@ export default function UserProfile()
                     </div>
                     <div className = "user_profile_single_option" onClick={() => setShowForm(true)}>
                         <i className="fa-solid fa-image"></i>
-                        <div className="single_option_text">Edit photo</div>
+                        <div className="single_option_text">Change photo</div>
                     </div>
                     <div className = "user_profile_single_option" onClick={comingSoon}>
                         <i className="fa-solid fa-user-group"></i>
@@ -129,12 +146,21 @@ export default function UserProfile()
                         image ?
                         <span className = "user_file_span">
                             <i className="fa-solid fa-check"></i>
-                                &nbsp;&nbsp;
+                                &nbsp;&nbsp;&nbsp;&nbsp;
                             <i className="fa-solid fa-pen-to-square" onClick = {() => fileInput.current.click()}></i>
                         </span>
                         :
                         <span className = "user_file_span">
+                        {
+                            show_delete ?
+                            <>
                             <i className="fa-solid fa-upload" onClick = {() => fileInput.current.click()}></i>
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                            <i className="fa-solid fa-trash" onClick = {deletePhoto}></i>
+                            </>
+                            :
+                            <i className="fa-solid fa-upload" onClick = {() => fileInput.current.click()}></i>
+                        }
                         </span>
                     }
                         <button className = "user_image_button">Submit</button>

@@ -16,6 +16,15 @@ def users():
     users = User.query.all()
     return {'users': [user.to_dict() for user in users]}
 
+@user_routes.route("/image", methods = ["DELETE"])
+def delete_image():
+    if not current_user.is_authenticated:
+        return {"error": "Unauthorized"}, 403
+
+    current_user.url = "https://bucket-rb22.s3.us-east-2.amazonaws.com/stock_user.png"
+    db.session.commit()
+    return current_user.to_dict()
+
 @user_routes.route("/image", methods = ["PATCH"])
 def add_image():
     if not current_user.is_authenticated:
