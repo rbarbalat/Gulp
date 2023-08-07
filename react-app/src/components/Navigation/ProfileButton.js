@@ -65,7 +65,7 @@ function ProfileButton({ user }) {
               <i className="fa-solid fa-user"></i>&nbsp;&nbsp;Profile
             </li>
             <li onClick={landing}>
-              <i class="fa-solid fa-house"></i>&nbsp;&nbsp;Home
+              <i className="fa-solid fa-house"></i>&nbsp;&nbsp;Home
             </li>
             <li onClick={allRes}>
                 <i className="fa-solid fa-list"></i>&nbsp;&nbsp;See All
