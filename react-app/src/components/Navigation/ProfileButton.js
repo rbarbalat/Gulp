@@ -39,12 +39,17 @@ function ProfileButton({ user }) {
   function profile()
   {
     setShowMenu(false);
-    history.push(`/users/${user.id}`)
+    history.push(`/users/${user.id}`);
+  }
+  function landing()
+  {
+    setShowMenu(false);
+    history.push("/");
   }
   function allRes()
   {
     setShowMenu(false);
-    history.push("/businesses")
+    history.push("/businesses");
   }
 
   const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
@@ -56,11 +61,18 @@ function ProfileButton({ user }) {
         <i className="fas fa-user-circle" />
       </button>
       <ul className={ulClassName} ref={ulRef}>
-            <li className= "drop_down_profile_username">{user.username}</li>
-            <li className= "drop_down_profile_email">{user.email}</li>
-            <li className = "drop_down_profile_all_link" onClick={allRes}>All Businesses</li>
-            <li className = "drop_down_profile_link" onClick={profile}>My Profile</li>
-            <li className = "drop_down_profile_logout" onClick={handleLogout}>Log Out</li>
+            <li onClick={profile}>
+              <i className="fa-solid fa-user"></i>&nbsp;&nbsp;Profile
+            </li>
+            <li onClick={landing}>
+              <i class="fa-solid fa-house"></i>&nbsp;&nbsp;Home
+            </li>
+            <li onClick={allRes}>
+                <i className="fa-solid fa-list"></i>&nbsp;&nbsp;See All
+              </li>
+            <li onClick={handleLogout}>
+              <i className="fa-solid fa-right-from-bracket"></i>&nbsp;&nbsp;Log Out
+            </li>
         </ul>
     </>
   );

@@ -4,10 +4,16 @@
   right: 35px;
   background-color:white;
   width: 200px;
-  border: 1px solid lightgray;
-  box-shadow: 0 0 2px gray;
+  height: 300px;
+  border-radius:5px;
+  box-shadow:0 0 7px black;
+  /* border: 2px dashed red; */
 
-  /* list-style-type: none; */
+  list-style-type: none;
+
+  display:flex;
+  flex-direction:column;
+  justify-content:space-evenly;
 
   /* clicking logout in the dropdown wasn't working when
   the dropdown was over the background image in the single bus page
@@ -15,26 +21,21 @@
   z-index: 1;
 }
 .profile-dropdown > li {
-  margin-bottom: .5rem;
-  font-size: 14px;
+  /* margin-bottom: .5rem; */
+  font-size: 20px;
+  cursor:pointer;
+}
+.profile-dropdown > li:hover{
+  color:teal;
+  font-weight:bold;
 }
 
-.drop_down_logout_button {
+/* .drop_down_logout_button {
   background-color:white;
   border:none;
   color:black;
   font-size:14px;
-}
-.drop_down_profile_all_link{
-  cursor:pointer;
-  word-wrap:break-word;
-}
-
-.drop_down_profile_username,
-.drop_down_profile_email{
-  word-break:break-all;
-  overflow:hidden;
-}
+} */
 
 .hidden {
   display: none;
@@ -104,9 +105,12 @@
 }
 
 .addBus{
-  font-weight:bold;
   color:teal;
   font-size:20px;
+  font-weight:bold;
+}
+.addBus:hover{
+  text-decoration:underline;
 }
 
 .nav_logged_in_right {
@@ -125,8 +129,7 @@
 }
 
 .fa-message, .fa-bell, .fa-user-circle, .fa-magnifying-glass,  .addBus,
-.nav_login_button, .nav_signup_button,
-.drop_down_profile_link, .drop_down_profile_logout {
+.nav_login_button, .nav_signup_button {
   cursor: pointer;
 }
 

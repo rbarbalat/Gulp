@@ -77,7 +77,7 @@ function Navigation({ isLoaded }){
 			}
 			{
 				isLoaded && sessionUser &&
-				<div className ="addBus" onClick={createBus}>Add a Business</div>
+				<div className ="addBus" onClick={createBus}>Add Business</div>
 			}
 			{
 				isLoaded && sessionUser &&
