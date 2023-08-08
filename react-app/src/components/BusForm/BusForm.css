@@ -94,10 +94,20 @@
 .image_and_delete_button {
     display:flex;
     flex-direction: row;
-    justify-content:flex-start;
-    gap:.5rem;
-
     justify-content:center;
+    gap: 1rem;
+
+    align-items:center;
+
+}
+.image_and_delete_button > .fa-trash {
+    color:red;
+    font-size:25px;
+}
+.image_and_delete_button > .fa-upload,
+.image_and_delete_button > .fa-pen-to-square {
+    color:teal;
+    font-size:25px;
 }
 
 .bus_form_delete_image_div{

@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { thunkLoadSingleBusiness, thunkReceiveBusiness } from "../../store/business"
 import { thunkUpdateBusiness } from "../../store/business";
 import FileInput from "../FileInput";
+import MandFileInput from "../MandFileInput";
 import "./BusForm.css";
 
 export default function BusForm({edit})
@@ -187,12 +188,17 @@ export default function BusForm({edit})
                 {valErrors.state && <p className="bus_form_errors">{valErrors.state}</p>}
 
                 <p className = "mandatory_prev_image">Mandatory Preview Image</p>
-                {
-                    edit &&
-                    <p>
-                        <input id="file_input_preview_edit" className="file_input" type="file" accept="image/*" name="prev_url"
+                <input id="file_input_preview_edit" className="file_input" type="file" accept="image/*" name="prev_url"
                             ref = {prev_file} style = {{display: "none"}} onChange={e => handleImage(e, 0)}/>
-                        {
+
+                <MandFileInput edit={edit} url={prev_url} image={prev}
+                    upload={() => prev_file.current.click()} />
+                {
+                    // edit &&
+                    // <p>
+                    //     <input id="file_input_preview_edit" className="file_input" type="file" accept="image/*" name="prev_url"
+                    //         ref = {prev_file} style = {{display: "none"}} onChange={e => handleImage(e, 0)}/>
+                        {/* {
                             prev_url && !prev &&
                             <p className="image_and_delete_button">
                                 <i className="fa-solid fa-upload" onClick = {() => prev_file.current.click()}></i>
@@ -206,32 +212,32 @@ export default function BusForm({edit})
                                     &nbsp;&nbsp;&nbsp;&nbsp;
                                 <i className="fa-solid fa-pen-to-square" onClick = {() => prev_file.current.click()}></i>
                             </p>
-                        }
-                    </p>
+                        } */}
+                    // </p>
                 }
-                {
+                {/* {
                     !edit &&
                     <p><input id="file_input_preview_add" className="file_input" type="file" accept="image/*" name="prev_url"
                         ref = {prev_file} style = {{display: "none"}} onChange={e => handleImage(e, 0)} required/></p>
                     // this one is required, the edit one is not required b/c if you don't change it, it uses the existing one
                 }
                 {
-                    !edit && !prev &&
+                    !edit &&
                     <p className = "bus_form_upload_icon_wrapper">
-                        <i className="fa-solid fa-upload" onClick = {() => prev_file.current.click()}></i>
+                        <i className={prev ? "fa-solid fa-pen-to-square" : "fa-solid fa-upload"} onClick = {() => prev_file.current.click()}></i>
                     </p>
-                }
-                {
+                } */}
+                {/* {
                     !edit && prev &&
                     <p className = "bus_form_upload_icon_wrapper">
                         <i className="fa-solid fa-check"></i>
                             &nbsp;&nbsp;&nbsp;&nbsp;
                         <i className="fa-solid fa-pen-to-square" onClick = {() => prev_file.current.click()}></i>
                     </p>
-                }
+                } */}
                 {valErrors.prev_url && <p className="bus_form_errors">{valErrors.prev_url}</p>}
 
-                <p className = "bus_form_optional_images">Optional Images</p>
+                <p className = "bus_form_optional_images">Optional Images (3)</p>
 
                 <input id="file_input_1" className="file_input" type="file" accept="image/*" name="first"
                     ref = {first_file} style = {{display: "none"}} onChange={e => handleImage(e, 1)}/>
