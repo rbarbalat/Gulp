@@ -187,7 +187,7 @@ export default function RevForm({edit})
             </form>
             <button className="rev_form_cancel_button" onClick={landingPage}>Cancel</button>
 
-            <div class="some_space"></div>
+            <div className="some_space"></div>
         </div>
     )
 }

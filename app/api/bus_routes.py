@@ -412,23 +412,19 @@ def delete_business_image_by_id(id):
     if current_user.id != image.business.owner_id:
         return {"error": "not authorized"}, 403
 
-    # errors = []
-    # if image.url: #should always be true but just in case
-    #     aws = remove_file_from_s3(image.url)
-    #     if isinstance(aws, dict):
-    #         errors.append(aws["errors"])
+    url = image.url
+    errors = []
+    # len 32 means it was made with get_unique_filename and user submitted (not seeded)
+    if len(url.split("/")[3].split(".")[0]) == 32:
+        aws = remove_file_from_s3(url)
+        if isinstance(aws, dict):
+            errors.append(aws["errors"])
+            # print errors
 
     db.session.delete(image)
     db.session.commit()
 
     return {"message": "Successfully deleted the business image"}
-
-    # if not errors:
-    #     return {"message": "Successfully deleted the business image"}
-    # else:
-    #     return {
-    #         "message": f"Successfully deleted the image but have the following error {errors[0]}"
-    #     }
 
 #GET ALL FAVORITE BUSINESSES BY CURRENT USER
 @bus_routes.route("/current/favorites")
