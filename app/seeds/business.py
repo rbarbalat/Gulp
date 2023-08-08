@@ -36,7 +36,7 @@ def seed_businesses(users):
     ]
     cities = [
         "Boston",
-        "New York City",
+        "Chicago",
         "Philadelphia",
         "Baltimore",
         "Pittsburgh",
@@ -48,7 +48,7 @@ def seed_businesses(users):
     ]
     states = [
         "Massachusetts",
-        "New York",
+        "Illinois",
         "Pennsylvania",
         "Maryland",
         "Pennsylvania",

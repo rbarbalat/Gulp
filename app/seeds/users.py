@@ -11,14 +11,17 @@ def seed_users():
 
     demo = User(
         username='Demo', email='demo@aa.io', password='password',
+        url = "https://bucket-rb22.s3.us-east-2.amazonaws.com/demo.jpeg",
         created_at = datetime(2022, 10, 1, 15)
     )
     marnie = User(
         username='Marnie', email='marnie@aa.io', password='password',
-        created_at = datetime(2022, 10, 2, 15)
+        url = "https://bucket-rb22.s3.us-east-2.amazonaws.com/marnie.jpeg",
+        created_at = datetime(2022, 10, 2, 15),
     )
     bobbie = User(
         username='Bobbie', email='bobbie@aa.io', password='password',
+        url = "https://bucket-rb22.s3.us-east-2.amazonaws.com/bobbie.jpeg",
         created_at = datetime(2022, 10, 3, 15)
     )
 
@@ -67,9 +70,6 @@ def seed_users():
         "heather@aa.io"
     ]
     urls = [
-        "https://bucket-rb22.s3.us-east-2.amazonaws.com/demo.jpeg",
-        "https://bucket-rb22.s3.us-east-2.amazonaws.com/marnie.jpeg",
-        "https://bucket-rb22.s3.us-east-2.amazonaws.com/bobbie.jpeg",
         "https://bucket-rb22.s3.us-east-2.amazonaws.com/anna.jpeg",
         "https://bucket-rb22.s3.us-east-2.amazonaws.com/arthur.jpeg",
         "https://bucket-rb22.s3.us-east-2.amazonaws.com/brian.jpeg",

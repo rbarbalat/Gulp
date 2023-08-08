@@ -66,3 +66,9 @@
 .single_reply_text{
     word-wrap:break-word;
 }
+
+.reply_form_text_area{
+    font-weight:bold;
+    border:2px solid teal;
+    border-radius:7px;
+}
