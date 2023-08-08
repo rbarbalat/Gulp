@@ -27,6 +27,9 @@
 .rev_text_area {
     width: 100%;
     height:300px;
+    border: 2px solid teal;
+    border-radius:7px;
+    font-weight:bold;
 }
 
 .rev_form_images{
@@ -46,6 +49,7 @@
 .rev_image_and_delete_button > .fa-trash {
     color:red;
     font-size:25px;
+    cursor:pointer;
 }
 .rev_image_and_delete_button > .fa-upload,
 .rev_image_and_delete_button > .fa-pen-to-square {

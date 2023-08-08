@@ -123,6 +123,11 @@
   flex-direction:row;
   gap: .7rem;
   align-items: center;
+  color:teal;
+}
+.nav_icon_wrapper > button {
+  color:teal;
+  border:none;
 }
 .fa-message, .fa-bell, .fa-user-circle {
   font-size:20px;
@@ -156,4 +161,10 @@
   background-color: red;
   color:white;
   border:1px solid red;
+}
+
+.search_bar{
+  border:2px solid teal;
+  font-weight:bold;
+  border-radius:5px;
 }
