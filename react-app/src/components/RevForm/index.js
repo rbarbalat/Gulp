@@ -20,9 +20,9 @@ export default function RevForm({edit})
     const [rating, setRating] = useState(edit ? edit_rev?.rating : "");
     const [review, setReview] = useState(edit ? edit_rev?.review : "");
 
-    const [first, setFirst] = useState(undefined);
-    const [second, setSecond] = useState(undefined);
-    const [third, setThird] = useState(undefined);
+    const [first, setFirst] = useState("");
+    const [second, setSecond] = useState("");
+    const [third, setThird] = useState("");
 
     const first_url = edit ? (edit_rev.images?.length >= 1 ? edit_rev.images[0].url : "") : "";
     const second_url = edit ? (edit_rev.images?.length >= 2 ? edit_rev.images[1].url : "") : "";
@@ -186,6 +186,8 @@ export default function RevForm({edit})
                 }
             </form>
             <button className="rev_form_cancel_button" onClick={landingPage}>Cancel</button>
+
+            <div class="some_space"></div>
         </div>
     )
 }
