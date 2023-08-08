@@ -15,6 +15,21 @@ def bus_name_exists(form, field):
     if bus:
         raise ValidationError('Business name is already in use.')
 
+def tag_two(form, field):
+    tag_one = form.tag_one.data
+    tag_two = field.data
+
+    if tag_two.lower() == tag_one.lower():
+        raise ValidationError("No repeat tags")
+
+def tag_three(form, field):
+    tag_one = form.tag_one.data
+    tag_two = form.tag_two.data
+    tag_three = field.data
+
+    if tag_three.lower() in [tag_one.lower(), tag_two.lower()]:
+        raise ValidationError("No repeat tags")
+
 class BusForm(FlaskForm):
     # the bus_name_exists was applied on edits as well...NEED TO CREATE A DIFFERENT
     # A SEPARATE EDIT FORM ON WHICH NAME IS NOT A FIELD
@@ -26,8 +41,8 @@ class BusForm(FlaskForm):
     state = StringField("state", validators=[DataRequired(), Length(min=2, max=15)] )
 
     tag_one = StringField("tag_one", validators=[DataRequired(), Length(min=3, max=13)] )
-    tag_two = StringField("tag_two", validators=[DataRequired(), Length(min=3, max=13)] )
-    tag_three = StringField("tag_three", validators=[DataRequired(), Length(min=3, max=13)] )
+    tag_two = StringField("tag_two", validators=[DataRequired(), tag_two, Length(min=3, max=13)] )
+    tag_three = StringField("tag_three", validators=[DataRequired(), tag_three, Length(min=3, max=13)] )
 
     # prev_url = StringField("preview image", validators=[DataRequired(), URL()])
     prev_url = FileField("preview image", validators=[FileRequired(), FileAllowed(list(ALLOWED_EXTENSIONS))])

@@ -4,6 +4,7 @@ from wtforms.validators import URL, DataRequired, ValidationError, Length, Optio
 from flask_wtf.file import FileField, FileAllowed, FileRequired
 from app.api.aws import ALLOWED_EXTENSIONS
 from app.models import Business
+from app.forms.bus_form import tag_two, tag_three
 
 def bus_name_exists(form, field):
     """
@@ -25,8 +26,8 @@ class EditBusForm(FlaskForm):
     state = StringField("state", validators=[DataRequired(), Length(min=2, max=15)] )
 
     tag_one = StringField("tag_one", validators=[DataRequired(), Length(min=3, max=13)] )
-    tag_two = StringField("tag_two", validators=[DataRequired(), Length(min=3, max=13)] )
-    tag_three = StringField("tag_three", validators=[DataRequired(), Length(min=3, max=13)] )
+    tag_two = StringField("tag_two", validators=[DataRequired(), tag_two, Length(min=3, max=13)] )
+    tag_three = StringField("tag_three", validators=[DataRequired(), tag_three, Length(min=3, max=13)] )
 
     #changed prev_url to optional in the edit form
     prev_url = FileField("preview image", validators=[Optional(), FileRequired(), FileAllowed(list(ALLOWED_EXTENSIONS))])
