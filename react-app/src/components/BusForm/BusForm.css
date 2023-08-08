@@ -111,7 +111,6 @@
     gap: 1rem;
 
     align-items:center;
-
 }
 .image_and_delete_button > .fa-trash {
     color:red;
