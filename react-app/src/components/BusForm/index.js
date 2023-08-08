@@ -102,6 +102,10 @@ export default function BusForm({edit})
         }
         return null;
     }
+    function landingPage()
+    {
+        history.push("/");
+    }
     const handleImage = (e, index) => {
         if(index === 0) setPrev(e.target.files[0])
         if(index === 1) setFirst(e.target.files[0])
@@ -230,6 +234,7 @@ export default function BusForm({edit})
                     <button className="bus_form_submit_button" type="submit">Submit Business</button>
                 }
             </form>
+            <button className="bus_form_cancel_button" onClick={landingPage}>Cancel</button>
         </div>
 
         <div className = "bus_form_right_image_wrapper">

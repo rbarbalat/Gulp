@@ -5,17 +5,23 @@
     flex-direction:column;
     gap: 1rem;
 }
+.rev_form_wrapper > form {
+    display:contents;
+}
 .add_your_review{
     font-size:20px;
     font-weight:bold;
+    align-self:center;
 }
 .form_stars{
     font-size:25px;
-    margin-bottom:1rem;
+    /* margin-bottom:1rem; */
+    align-self:center;
 }
 .add_pictures{
     font-size:18px;
     font-weight:bold;
+    align-self:center;
 }
 
 .rev_text_area {
@@ -28,13 +34,13 @@
     width: 50px;
 }
 
-.file_input_wrapper{
+/* .file_input_wrapper{
     margin-bottom:.7rem;
 }
 
 .file_input_rev{
     margin-bottom:.3rem;
-}
+} */
 
 /* input[type="file"] {
     display:none;
@@ -59,17 +65,25 @@
     align-items:center;
 }
 
-.rev_form_submit_button{
-    width: 100%;
+.rev_form_submit_button, .rev_form_cancel_button{
+    width: 50%;
     height: 40px;
     background-color: red;
     color:white;
     font-weight:bold;
     font-size:15px;
     cursor:pointer;
+    box-shadow:3px 3px 3px black;
+    align-self:center;
+}
+.rev_form_cancel_button{
+    background-color:darkblue;
 }
 
 .rev_form_errors{
     color: red;
     font-size:12px;
+    display:flex;
+    flex-direction:row;
+    justify-content:center;
 }

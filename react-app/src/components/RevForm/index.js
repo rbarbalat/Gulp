@@ -49,6 +49,10 @@ export default function RevForm({edit})
         }
     }, [render])
 
+    function landingPage()
+    {
+        history.push("/")
+    }
     async function deleteRevImage(index)
     {
         const image_id = edit_rev.images[index-1].id;
@@ -144,7 +148,7 @@ export default function RevForm({edit})
                 </div>
                 {valErrors.review && <p className="rev_form_errors">{valErrors.review}</p>}
 
-                <p className = "add_pictures">Add up to 3 pictures!</p>
+                <div className = "add_pictures">Add up to 3 pictures!</div>
 
                 <div className="file_input_wrapper">
                     <input className="file_input_rev" type="file" accept="image/*" name="first" onChange={e => handleImage(e, 1)}/>
@@ -184,8 +188,8 @@ export default function RevForm({edit})
                     :
                     <button className="rev_form_submit_button" type="submit">Submit Review</button>
                 }
-
             </form>
+            <button className="rev_form_cancel_button" onClick={landingPage}>Cancel</button>
         </div>
     )
 }
