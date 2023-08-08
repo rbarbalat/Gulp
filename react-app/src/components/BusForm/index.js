@@ -20,10 +20,11 @@ export default function BusForm({edit})
     const [tag_two, setTagTwo] = useState(edit ? business.tag_two : "");
     const [tag_three, setTagThree] = useState(edit ? business.tag_three : "");
 
-    const [prev, setPrev] = useState(undefined)
-    const [first, setFirst] = useState(undefined);
-    const [second, setSecond] = useState(undefined);
-    const [third, setThird] = useState(undefined);
+    //these originally set to undefined, uncontrolled input => controlled?
+    const [prev, setPrev] = useState("")
+    const [first, setFirst] = useState("");
+    const [second, setSecond] = useState("");
+    const [third, setThird] = useState("");
 
     const [prev_url, setPrevUrl] = useState(edit ? business.preview_image : "");
 
@@ -68,9 +69,10 @@ export default function BusForm({edit})
             setTagThree("");
 
             setPrevUrl("");
-            setFirst(undefined);
-            setSecond(undefined);
-            setThird(undefined);
+
+            setFirst("");
+            setSecond("");
+            setThird("");
 
             //the file inputs aren't set to have a value equal to a state variable
             //so they need to be reset separately
