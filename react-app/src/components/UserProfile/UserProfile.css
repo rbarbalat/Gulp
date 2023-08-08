@@ -84,6 +84,9 @@
 .user_file_span > .fa-check{
     font-size:25px;
 }
+.user_file_span > .fa-trash{
+    color:red;
+}
 .user_file_span > .fa-upload, .user_file_span > .fa-trash{
     cursor:pointer;
     font-size:25px;

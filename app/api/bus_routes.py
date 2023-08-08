@@ -171,6 +171,15 @@ def delete_business_by_id(id):
             if isinstance(aws, dict):
                 errors.append(aws["errors"])
 
+    # deleting a business will cascade to delete all of its reviews so need to remove those images as well
+    for review in bus.bus_reviews:
+        urls = [image.url for image in review.images]
+        for url in urls:
+            if len(url.split("/")[3].split(".")[0]) == 32:
+                aws = remove_file_from_s3(url)
+                if isinstance(aws, dict):
+                    errors.append(aws["errors"])
+
     db.session.delete(bus)
     db.session.commit()
     return {"message": "Successfully deleted the business"}
