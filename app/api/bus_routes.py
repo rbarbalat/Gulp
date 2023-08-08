@@ -160,27 +160,20 @@ def delete_business_by_id(id):
     if current_user.id != bus.owner_id:
         return {"error": "not authorized"}, 403
 
-    #remove prev.url any images bus.images from aws
-    # errors = []
-    # optional_urls = [image.url for image in bus.images]
-    # urls = [bus.prev_url, *optional_urls]
-    # for url in urls:
-    #     if url: #should always be true but just in case
-    #         aws = remove_file_from_s3(url)
-    #         if isinstance(aws, dict):
-    #             errors.append(aws["errors"])
+    #remove the preview image and any optional images from aws
+    errors = []
+    urls = [image.url for image in bus.images]
+    urls.append(bus.prev_url)   # prev_url always exists (nullable = False)
+    # len 32 comes from get_unique_file_name, don't want to delete the seed images which are also on aws
+    for url in urls:
+        if len(url.split("/")[3].split(".")[0]) == 32:
+            aws = remove_file_from_s3(url)
+            if isinstance(aws, dict):
+                errors.append(aws["errors"])
 
     db.session.delete(bus)
     db.session.commit()
     return {"message": "Successfully deleted the business"}
-
-    # if not errors:
-    #     return {"message": "Successfully deleted the business"}
-    # else:
-    #     return {
-    #         "message": "Successfully deleted but have AWS errors",
-    #         "errors": errors
-    #     }
 
 
 #CREATE A BUSINESS

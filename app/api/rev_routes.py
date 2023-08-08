@@ -38,14 +38,15 @@ def delete_review_by_id(id):
     if current_user.id != review.reviewer_id:
         return {"error": "Not authorized"}
 
-    #remove prev.url any images review.images from aws
-    # errors = []
-    # urls = [image.url for image in review.images]
-    # for url in urls:
-    #     if url: #should always be true but just in case
-    #         aws = remove_file_from_s3(url)
-    #         if isinstance(aws, dict):
-    #             errors.append(aws["errors"])
+    # remove any existing rev images from aws
+    errors = []
+    urls = [image.url for image in review.images]
+    # len 32 comes from get_unique_file_name, don't want to delete the seed images which are also on aws
+    for url in urls:
+        if len(url.split("/")[3].split(".")[0]) == 32:
+            aws = remove_file_from_s3(url)
+            if isinstance(aws, dict):
+                errors.append(aws["errors"])
 
     db.session.delete(review)
     db.session.commit()
