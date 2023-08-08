@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify, request
 from flask_login import current_user
-from app.api.aws import get_unique_filename, upload_file_to_s3, remove_file_from_s3
+from app.api.aws import get_unique_filename, upload_file_to_s3, remove_file_from_s3, remove_if_not_seeded_file_from_s3
 from app.models import db, User, Business, Review, BusImage, RevImage, Favorite
 from app.forms.bus_form import BusForm
 from app.forms.edit_bus_form import EditBusForm
@@ -164,21 +164,14 @@ def delete_business_by_id(id):
     errors = []
     urls = [image.url for image in bus.images]
     urls.append(bus.prev_url)   # prev_url always exists (nullable = False)
-    # len 32 comes from get_unique_file_name, don't want to delete the seed images which are also on aws
     for url in urls:
-        if len(url.split("/")[3].split(".")[0]) == 32:
-            aws = remove_file_from_s3(url)
-            if isinstance(aws, dict):
-                errors.append(aws["errors"])
+        remove_if_not_seeded_file_from_s3(url)
 
     # deleting a business will cascade to delete all of its reviews so need to remove those images as well
     for review in bus.bus_reviews:
         urls = [image.url for image in review.images]
         for url in urls:
-            if len(url.split("/")[3].split(".")[0]) == 32:
-                aws = remove_file_from_s3(url)
-                if isinstance(aws, dict):
-                    errors.append(aws["errors"])
+            remove_if_not_seeded_file_from_s3(url)
 
     db.session.delete(bus)
     db.session.commit()
@@ -301,27 +294,28 @@ def edit_business(id):
         bus.tag_three = form.data["tag_three"]
         bus.updated_at = datetime.now()
 
+        errors = []
         # if the user did not change the picture, the frontend sends back nothing
         if form.data["prev_url"]:
             prev_url = form.data["prev_url"]
             prev_url.filename = get_unique_filename(prev_url.filename)
             upload = upload_file_to_s3(prev_url)
             if "url" in upload:
+                remove_if_not_seeded_file_from_s3(bus.prev_url)
                 bus.prev_url = upload["url"]
 
         keys = ["first", "second", "third"]
         existing_images = bus.images
-        new_urls = []
         for i in range(3):
             if form.data[keys[i]]:
                 if len(existing_images) >= i + 1:
-                    # url_to_remove = existing_images[i].url
+                    url_to_remove = existing_images[i].url
                     val = form.data[keys[i]]
                     val.filename = get_unique_filename(val.filename)
                     optional_upload = upload_file_to_s3(val)
                     if "url" in optional_upload:
                         existing_images[i].url = optional_upload["url"]
-                        # aws = remove_file_from_s3(url_to_remove)
+                        remove_if_not_seeded_file_from_s3(url_to_remove)
                 else:
                     val = form.data[keys[i]]
                     val.filename = get_unique_filename(val.filename)
@@ -414,14 +408,8 @@ def delete_business_image_by_id(id):
     if current_user.id != image.business.owner_id:
         return {"error": "not authorized"}, 403
 
-    url = image.url
-    errors = []
-    # len 32 means it was made with get_unique_filename and user submitted (not seeded)
-    if len(url.split("/")[3].split(".")[0]) == 32:
-        aws = remove_file_from_s3(url)
-        if isinstance(aws, dict):
-            errors.append(aws["errors"])
-            # print errors
+    remove_if_not_seeded_file_from_s3(image.url)
+    # url = image.url
 
     db.session.delete(image)
     db.session.commit()

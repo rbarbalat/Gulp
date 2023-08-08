@@ -51,3 +51,11 @@ def remove_file_from_s3(image_url):
         print(str(e))
         return { "errors": str(e) }
     return True
+
+def remove_if_not_seeded_file_from_s3(url):
+    errors = []
+    if len(url.split("/")[3].split(".")[0]) == 32:
+        aws = remove_file_from_s3(url)
+        if isinstance(aws, dict):
+            errors.append(aws["errors"])
+            # print errors
