@@ -2,6 +2,12 @@
 
 <p>Gulp is a soft clone of Yelp.  Gulp allows users to create businesses, review the businesses of other users, reply as a business owner to user reviews of your business and favorite individual businesses.</p>
 
+<p>
+Check out <a href="https://gulp-app.onrender.com">Gulp</a>
+<br>
+Contact me on <a href="https://www.linkedin.com/in/roman-barbalat-00140a63/">LinkedIn</a>
+</p>
+
 ## Technologies Used
 
 ![Visual Studio Code](https://img.shields.io/badge/Visual%20Studio%20Code-0078d7.svg?style=for-the-badge&logo=visual-studio-code&logoColor=white)
@@ -316,6 +322,143 @@
     ]
       ```
 
+* `GET /api/reviews/:reviewId`
+
+  * Returns a dictionary of the specified review.
+
+    ```
+    {
+      id: integer,
+      review: string,
+      rating: integer,
+      reviewer_id: integer,
+      business_id: string
+      created_at: string,
+      updated_at: string,
+      business: {},
+      images: [],
+      reviewer: {}
+    }
+      ```
+
+* `POST /api/businesses/:businessId/reviews`
+
+  * Creates a new review for the specified business and returns a dictionary of the new review.
+
+    ```
+    {
+      id: integer,
+      review: string,
+      rating: integer,
+      reviewer_id: integer,
+      business_id: string
+      created_at: string,
+      updated_at: string,
+      images: [],
+      reviewer: {}
+    }
+    ```
+
+* `PUT /api/reviews/:reviewId`
+
+  * Edits a specified review and returns a dictionary of the review.
+
+    ```
+    {
+      id: integer,
+      review: string,
+      rating: integer,
+      reviewer_id: integer,
+      business_id: string
+      created_at: string,
+      updated_at: string,
+      images: []
+    }
+    ```
+
+* `DELETE /api/reviews/:id`
+
+  * Deletes the review with the specified id if it exists and returns a dictionary confirming the deletion.
+
+    ```
+    {
+      message: "Successfully deleted the review"
+    }
+    ```
+
+* `DELETE /api/reviews/images/:id`
+
+  * Deletes the optional review image with the specified id if it exists and returns a dictionary confirming the deletion.
+
+    ```
+    {
+      message: "Successfully deleted the review image"
+    }
+    ```
+
 ### Replies
 
+* `POST /api/reviews/:reviewId/replies`
+
+  * Creates a new reply for the specified business and returns a dictionary of the new reply.
+
+    ```
+    {
+      id: integer,
+      reply: string
+      review_id: intger,
+      created_at: string,
+      updated_at: string
+    }
+    ```
+
+* `PUT /api/replies/:replyId`
+
+  * Edits a specified reply and returns a dictionary of the reply.
+
+    ```
+    {
+      id: integer,
+      reply: string,
+      review_id: integer,
+      created_at: string,
+      updated_at: string
+    }
+    ```
+
+* `DELETE /api/replies/:id`
+
+  * Deletes the reply with the specified id if it exists and returns a dictionary confirming the deletion.
+
+    ```
+    {
+      message: "Successfully deleted the reply"
+    }
+    ```
+
 ### Favorites
+
+* `POST /api/businesses/:businessId/favorites`
+
+  * Creates a new favorite between the specified business and the logged in user and returns a dictionary of the new favorite.
+
+    ```
+    {
+      id: integer,
+      user_id: integer,
+      business_id: string,
+      super: boolean
+      created_at: string,
+      updated_at: string
+    }
+    ```
+
+* `DELETE /api/favorites/:favoriteId`
+
+  * Deletes the favorite with the specified id if it exists and returns a dictionary confirming the deletion.
+
+    ```
+    {
+      message: "Successfully deleted the reply"
+    }
+    ```
