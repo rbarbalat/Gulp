@@ -5,7 +5,7 @@ from app.models import db, User, Business, Review, BusImage, RevImage, Favorite
 from app.forms.bus_form import BusForm
 from app.forms.edit_bus_form import EditBusForm
 from app.forms.review_form import ReviewForm
-from sqlalchemy import or_, func
+from sqlalchemy import or_, func, desc
 
 from datetime import datetime
 
@@ -121,6 +121,34 @@ def get_all_businesses_by_current_user():
 
     #this is not an error, legit response
     all_bus = current_user.businesses
+    if not all_bus:
+        return [], 200
+
+    lst = []
+    for bus in all_bus:
+        images = [image.to_dict() for image in bus.images]
+        # reviews = [review.to_dict() for review in bus.bus_reviews]
+        average = [review.rating for review in bus.bus_reviews]
+        numReviews = len(average)
+        if len(average) == 0:
+            average = None
+        else:
+            average = sum(average)/len(average)
+        lst.append({
+            **bus.to_dict(),
+            "owner": bus.owner.to_dict(),
+            "average": average,
+            "numReviews": numReviews,
+            "images": images
+            # "reviews": reviews
+        })
+    return lst, 200
+
+#GET ALL RECENT BUSINESSES
+@bus_routes.route("/recent/<int:limit>")
+def get_all_recent_businesses(limit):
+    all_bus = Business.query.order_by(desc(Business.created_at)).limit(limit).all()
+
     if not all_bus:
         return [], 200
 
