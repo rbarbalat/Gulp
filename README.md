@@ -459,6 +459,6 @@ Contact me on <a href="https://www.linkedin.com/in/roman-barbalat-00140a63/">Lin
 
     ```
     {
-      message: "Successfully deleted the reply"
+      message: "Successfully deleted the favorite"
     }
     ```
