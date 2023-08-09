@@ -105,24 +105,25 @@ export default function ReviewCard({review, user, business_id, user_profile, own
             </div>
             :
             <div className = "reviewer_section">
-            <div className = "reviewer_section_left">
-                <div className = "reviewer_image_wrapper">
-                    <img className = "reviewer_image" alt="default avatar" src={review.reviewer.url}></img>
-                </div>
-                <div className = "reviewer_info_wrapper">
-                    <div className = "reviwer_username">
-                        {review.reviewer.username}
+                <div className = "reviewer_section_left">
+                    <div className = "reviewer_image_wrapper">
+                        <img className = "reviewer_image" alt="default avatar" src={review.reviewer.url}></img>
                     </div>
-                    <div className = "reviewer_numReviews">
-                    {
-                        review.reviewer.numReviews === 1 ?
-                        `${review.reviewer.numReviews} review`
-                        :
-                        `${review.reviewer.numReviews} reviews`
-                    }
+                    <div className = "reviewer_info_wrapper">
+                        <div className = "reviwer_username">
+                            {review.reviewer.username}
+                        </div>
+                        <div className = "reviewer_numReviews">
+                        {
+                            review.reviewer.numReviews === 1 ?
+                            `${review.reviewer.numReviews} review`
+                            :
+                            `${review.reviewer.numReviews} reviews`
+                        }
+                        </div>
                     </div>
                 </div>
-            </div>
+
                 { isReviewer && confirm && confirmAndCancel}
                 { isReviewer && !confirm && editAndDelete}
 
