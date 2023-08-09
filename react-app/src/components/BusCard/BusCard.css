@@ -92,6 +92,7 @@
     height: 90%;
     width: 100%;
     border-radius:5px;
+    object-fit:cover;
 }
 
 .average_and_stars{
