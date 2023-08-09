@@ -271,34 +271,6 @@ Contact me on <a href="https://www.linkedin.com/in/roman-barbalat-00140a63/">Lin
     }
     ```
 
-* `GET /api/businesses/current/favorites`
-
-  * Returns a list of individual business dictionaries which are favorites of the logged in the user.
-
-    ```
-    [
-      {
-        id: integer,
-        name: string,
-        description: string,
-        tag_one: string,
-        tag_two: string,
-        tag_three: string,
-        address: string,
-        city: string,
-        state, string
-        owner_id: integer,
-        preview_image: string,
-        created_at: string,
-        updated_at: string,
-        images: [ {} ],
-        owner: {},
-        average: integer,
-        numReviews: integer
-      }
-    ]
-      ```
-
 ### Reviews
 
 * `GET /api/reviews/current`
@@ -437,6 +409,34 @@ Contact me on <a href="https://www.linkedin.com/in/roman-barbalat-00140a63/">Lin
     ```
 
 ### Favorites
+
+* `GET /api/businesses/current/favorites`
+
+  * Returns a list of individual business dictionaries which are favorites of the logged in the user.
+
+    ```
+    [
+      {
+        id: integer,
+        name: string,
+        description: string,
+        tag_one: string,
+        tag_two: string,
+        tag_three: string,
+        address: string,
+        city: string,
+        state, string
+        owner_id: integer,
+        preview_image: string,
+        created_at: string,
+        updated_at: string,
+        images: [ {} ],
+        owner: {},
+        average: integer,
+        numReviews: integer
+      }
+    ]
+      ```
 
 * `POST /api/businesses/:businessId/favorites`
 
