@@ -42,6 +42,9 @@
 .login_input {
     width: 100%;
     height: 27px;
+    border:2px solid teal;
+    border-radius:5px;
+    font-weight:bold;
 }
 .login_button {
     width: 100%;
@@ -51,6 +54,7 @@
     font-weight:bold;
     font-size:15px;
     cursor:pointer;
+    box-shadow:3px 3px 3px black;
 }
 
 .login_to_gulp {

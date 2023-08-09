@@ -228,7 +228,8 @@ export default function BusForm({edit})
                     deleteImage={deleteBusImage} num={3} />
 
                 {valErrors.third && <p className="bus_form_errors">{valErrors.third}</p>}
-                {   edit ?
+                {
+                    edit ?
                     <button className="bus_form_submit_button" type="submit">Edit Business</button>
                     :
                     <button className="bus_form_submit_button" type="submit">Submit Business</button>

@@ -97,7 +97,6 @@ export default function BusCard({business, user})
                 {
                     business.average ?
                     <div className="average_and_stars">
-                        {/* change to a half star eventually */}
                         <StarRatingInput rating={business.average} form={false}/>
                         <div>
                             {
@@ -114,17 +113,18 @@ export default function BusCard({business, user})
                 <div className = "bus_card_address">{business.address}</div>
                 <div className= "bus_card_city_state">{business.city}, {business.state}</div>
                 <div className = "bus_card_description">
-                    {
-                        business.description.length < 100 ? business.description
-                        : business.description.slice(0, 100) + "..."
-                    }
+                {
+                    business.description.length < 100 ?
+                    business.description
+                    :
+                    business.description.slice(0, 100) + "..."
+                }
                     {business.description.length >= 100 && <span className="bus_card_read_more">Read More</span>}
                 </div>
                 <div className = "tags_and_order_button_wrapper">
                     <span className = "bus_card_tag">{business.tag_one}</span>
                     <span className = "bus_card_tag">{business.tag_two}</span>
                     <span className = "bus_card_tag">{business.tag_three}</span>
-                    {/* <button className = "bus_card_order_button" onClick={startOrder}>Start Order</button> */}
                 </div>
             </div>
 

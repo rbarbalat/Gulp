@@ -1,10 +1,3 @@
-/* .bus_form_h1 {
-    margin-left: 15%;
-    margin-right: 15%;
-    display:flex;
-    flex-direction:row;
-    justify-content:flex-end;
-} */
 
 .add_your_business {
     font-weight:bold;
@@ -45,7 +38,7 @@
     width: 35%;
 
     display:flex;
-    flex-direction: column;
+    flex-direction:column;
     justify-content:center;
     gap: 5%;
 }
@@ -79,6 +72,7 @@
     font-size:15px;
     cursor:pointer;
     box-shadow:3px 3px 3px black;
+
 }
 .bus_form_cancel_button{
     width: 100%;
