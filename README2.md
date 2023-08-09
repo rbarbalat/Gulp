@@ -194,3 +194,128 @@
       reviews: [ {} ]
     }
     ```
+
+* `DELETE /api/businesses/:id`
+
+  * Deletes the business with the specified id if it exists and returns a dictionary confirming the deletion.
+
+    ```
+    {
+      message: "Successfully deleted the business"
+    }
+    ```
+
+* `POST /api/businesses/`
+
+  * Creates a new business and returns a dictionary of the new business.
+
+    ```
+    {
+      id: integer,
+      name: string,
+      description: string,
+      address: string,
+      city: string,
+      state: string,
+      owner_id: integer,
+      preview_image: string,
+      average: integer,
+      numReviews: integer,
+      tag_one: string,
+      tag_two: string,
+      tag_three: string,
+      created_at: string,
+      updated_at: string,
+      owner: {},
+      images: [ {} ],
+      reviews: []
+    }
+    ```
+
+* `PUT /api/businesses/:id`
+
+  * Edits an existing business and returns a dictionary of the updated business.
+
+    ```
+    {
+      id: integer,
+      name: string,
+      description: string,
+      address: string,
+      city: string,
+      state: string,
+      preview_image: string,
+      tag_one: string,
+      tag_two: string,
+      tag_three: string,
+      created_at: string,
+      updated_at: string,
+      owner: {},
+      images: [ {} ],
+    }
+    ```
+
+* `DELETE /api/businesses/images/:id`
+
+  * Deletes the optional business image with the specified id if it exists and returns a dictionary confirming the deletion.
+
+    ```
+    {
+      message: "Successfully deleted the business image"
+    }
+    ```
+
+* `GET /api/businesses/current/favorites`
+
+  * Returns a list of individual business dictionaries which are favorites of the logged in the user.
+
+    ```
+    [
+      {
+        id: integer,
+        name: string,
+        description: string,
+        tag_one: string,
+        tag_two: string,
+        tag_three: string,
+        address: string,
+        city: string,
+        state, string
+        owner_id: integer,
+        preview_image: string,
+        created_at: string,
+        updated_at: string,
+        images: [ {} ],
+        owner: {},
+        average: integer,
+        numReviews: integer
+      }
+    ]
+      ```
+
+### Reviews
+
+* `GET /api/reviews/current`
+
+  * Returns a list of individual review dictionaries associated with the logged in user.
+
+    ```
+    [
+      {
+        id: integer,
+        review: string,
+        rating: integer,
+        reviewer_id: integer,
+        business_id: string
+        created_at: string,
+        updated_at: string,
+        business: {},
+        images: [],
+        reviewer: {}
+      }
+    ]
+      ```
+
+### Replies
+
+### Favorites
