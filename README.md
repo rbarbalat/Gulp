@@ -1,148 +1,464 @@
-# Flask React Project
+# Gulp
 
-This is the starter for the Flask React project.
+<p>Gulp is a soft clone of Yelp.  Gulp allows users to create businesses, review the businesses of other users, reply as a business owner to user reviews of your business and favorite individual businesses.</p>
 
-## Getting started
-1. Clone this repository (only this branch)
+<p>
+Check out <a href="https://gulp-app.onrender.com">Gulp</a>
+<br>
+Contact me on <a href="https://www.linkedin.com/in/roman-barbalat-00140a63/">LinkedIn</a>
+</p>
 
-2. Install dependencies
+## Technologies Used
 
-      ```bash
-      pipenv install -r requirements.txt
+![Visual Studio Code](https://img.shields.io/badge/Visual%20Studio%20Code-0078d7.svg?style=for-the-badge&logo=visual-studio-code&logoColor=white)
+![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E)
+![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)
+![Flask](https://img.shields.io/badge/flask-%23000.svg?style=for-the-badge&logo=flask&logoColor=white)
+![HTML5](https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white)
+![CSS3](https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white)
+![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
+![React Router](https://img.shields.io/badge/React_Router-CA4245?style=for-the-badge&logo=react-router&logoColor=white)
+![Redux](https://img.shields.io/badge/redux-%23593d88.svg?style=for-the-badge&logo=redux&logoColor=white)
+[![Render](https://img.shields.io/badge/render-%23430098.svg?style=for-the-badge&logo=render&logoColor=white)](https://render.com)
+![Git](https://img.shields.io/badge/git-%23F05033.svg?style=for-the-badge&logo=git&logoColor=white)
+![GitHub](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)
+![Node.js](https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white)
+![npm](https://img.shields.io/badge/npm-CB3837?style=for-the-badge&logo=npm&logoColor=white)
+![Amazon AWS](https://img.shields.io/badge/Amazon_AWS-232F3E?style=for-the-badge&logo=amazon-aws&logoColor=white)
+![SQLAlchemy](https://img.shields.io/badge/SQLAlchemy-%23FFCA28.svg?style=for-the-badge&logo=SQLAlchemy&logoColor=white)
+![WTForms](https://img.shields.io/badge/WTForms-%23F7981D.svg?style=for-the-badge&logo=WTForms&logoColor=white)
+![Werkzeug](https://img.shields.io/badge/Werkzeug-%23000000.svg?style=for-the-badge&logo=Werkzeug&logoColor=white)
+
+
+## Landing Page
+
+![Screenshot of the top of Gulp's Landing Page](https://bucket-rb22.s3.us-east-2.amazonaws.com/gulp_landing_top_adj.png)
+![Screenshot of the bottom of Gulp's Landing Page](https://bucket-rb22.s3.us-east-2.amazonaws.com/gulp_landing_bottom.png)
+
+## List of Businesses (portion)
+![Screenshot of the bottom of Gulp's Landing Page](https://bucket-rb22.s3.us-east-2.amazonaws.com/gulp_all.png)
+
+## Individual Business Page (top)
+![Screenshot of the bottom of Gulp's Landing Page](https://bucket-rb22.s3.us-east-2.amazonaws.com/gulp_bus_top.png)
+
+## Individual Business Page (reviews and replies)
+![Screenshot of the bottom of Gulp's Landing Page](https://bucket-rb22.s3.us-east-2.amazonaws.com/gulp_review_reply.png)
+
+## User Profile
+![Screenshot of the bottom of Gulp's Landing Page](https://bucket-rb22.s3.us-east-2.amazonaws.com/gulp_user_profile.png)
+
+## Features
+
+### Businesses
+
+* Users can create businesses.
+* Users can view all of the businesses on the site with multiple sort options.
+* Users can update their business.
+* Users can delete their business.
+
+### Reviews
+
+* Users can review businesses.
+* Users can view all of the reviews of a business with multiple sort options.
+* Users can update their reviews.
+* Users can delete their reviews.
+
+### Replies
+
+* Business owners can reply to individual reviews.
+* Users can view the replies of business owners.
+* Business owners can update their replies.
+* Business owners an delete their replies.
+
+### Favorites
+
+* Users can favorite individual businesses.
+* Users can their favorites on their user profiles and on the individual pages of favorites.
+* Users can unfavorite businesses that they have favorited.
+
+### AWS
+
+* All images are submitted as files and those files are stored in an S3 bucket.
+
+### Search and Filter
+
+* Users can search for businesses by name.
+* Users can filter businesses by tag(s) by searching for particular tags(s).
+
+## API
+
+### Businesses
+
+* `GET /api/businesses/` (optional query)
+
+  * Returns a list of all the individual business dictionaries on the site.
+
+    ```
+    [
+      {
+        id: integer,
+        name: string,
+        description: string,
+        tag_one: string,
+        tag_two: string,
+        tag_three: string,
+        address: string,
+        city: string,
+        state, string
+        owner_id: integer,
+        preview_image: string,
+        created_at: string,
+        updated_at: string,
+        images: [ {} ],
+        owner: {},
+        average: integer,
+        numReviews: integer
+      }
+    ]
+    ```
+
+* `GET /api/businesses/recent/:count`
+
+  * Returns a list of the most recently added individual business dictionaries to the site with the route parameter specifying the count.
+
+    ```
+    [
+      {
+        id: integer,
+        name: string,
+        description: string,
+        tag_one: string,
+        tag_two: string,
+        tag_three: string,
+        address: string,
+        city: string,
+        state, string
+        owner_id: integer,
+        preview_image: string,
+        created_at: string,
+        updated_at: string,
+        images: [ {} ],
+        owner: {},
+        average: integer,
+        numReviews: integer
+      }
+    ]
       ```
 
-3. Create a **.env** file based on the example with proper settings for your
-   development environment
+* `GET /api/businesses/current`
 
-4. Make sure the SQLite3 database connection URL is in the **.env** file
+  * Returns a list of individual business dictionaries which are owned by the logged in user.
 
-5. This starter organizes all tables inside the `flask_schema` schema, defined
-   by the `SCHEMA` environment variable.  Replace the value for
-   `SCHEMA` with a unique name, **making sure you use the snake_case
-   convention**.
+    ```
+    [
+      {
+        id: integer,
+        name: string,
+        description: string,
+        tag_one: string,
+        tag_two: string,
+        tag_three: string,
+        address: string,
+        city: string,
+        state, string
+        owner_id: integer,
+        preview_image: string,
+        created_at: string,
+        updated_at: string,
+        images: [ {} ],
+        owner: {},
+        average: integer,
+        numReviews: integer
+      }
+    ]
+      ```
 
-6. Get into your pipenv, migrate your database, seed your database, and run your Flask app
+* `GET /api/businesses/:id`
 
-   ```bash
-   pipenv shell
-   ```
+  * Returns a dictionary of the businesses with the specified id.
 
-   ```bash
-   flask db upgrade
-   ```
+    ```
+    {
+      id: integer,
+      name: string,
+      description: string,
+      address: string,
+      city: string,
+      state: string,
+      owner_id: integer,
+      preview_image: string,
+      average: integer,
+      numReviews: integer,
+      tag_one: string,
+      tag_two: string,
+      tag_three: string,
+      created_at: string,
+      updated_at: string,
+      owner: {},
+      images: [ {} ],
+      reviewers: [],
+      reviews: [ {} ]
+    }
+    ```
 
-   ```bash
-   flask seed all
-   ```
+* `DELETE /api/businesses/:id`
 
-   ```bash
-   flask run
-   ```
+  * Deletes the business with the specified id if it exists and returns a dictionary confirming the deletion.
 
-7. To run the React App in development, checkout the [README](./react-app/README.md) inside the `react-app` directory.
+    ```
+    {
+      message: "Successfully deleted the business"
+    }
+    ```
 
+* `POST /api/businesses/`
 
-## Deployment through Render.com
+  * Creates a new business and returns a dictionary of the new business.
 
-First, refer to your Render.com deployment articles for more detailed
-instructions about getting started with [Render.com], creating a production
-database, and deployment debugging tips.
+    ```
+    {
+      id: integer,
+      name: string,
+      description: string,
+      address: string,
+      city: string,
+      state: string,
+      owner_id: integer,
+      preview_image: string,
+      average: integer,
+      numReviews: integer,
+      tag_one: string,
+      tag_two: string,
+      tag_three: string,
+      created_at: string,
+      updated_at: string,
+      owner: {},
+      images: [ {} ],
+      reviews: []
+    }
+    ```
 
-From the [Dashboard], click on the "New +" button in the navigation bar, and
-click on "Web Service" to create the application that will be deployed.
+* `PUT /api/businesses/:id`
 
-Look for the name of the application you want to deploy, and click the "Connect"
-button to the right of the name.
+  * Edits an existing business and returns a dictionary of the updated business.
 
-Now, fill out the form to configure the build and start commands, as well as add
-the environment variables to properly deploy the application.
+    ```
+    {
+      id: integer,
+      name: string,
+      description: string,
+      address: string,
+      city: string,
+      state: string,
+      preview_image: string,
+      tag_one: string,
+      tag_two: string,
+      tag_three: string,
+      created_at: string,
+      updated_at: string,
+      owner: {},
+      images: [ {} ],
+    }
+    ```
 
-### Part A: Configure the Start and Build Commands
+* `DELETE /api/businesses/images/:id`
 
-Start by giving your application a name.
+  * Deletes the optional business image with the specified id if it exists and returns a dictionary confirming the deletion.
 
-Leave the root directory field blank. By default, Render will run commands from
-the root directory.
+    ```
+    {
+      message: "Successfully deleted the business image"
+    }
+    ```
 
-Make sure the Environment field is set set to "Python 3", the Region is set to
-the location closest to you, and the Branch is set to "main".
+* `GET /api/businesses/current/favorites`
 
-Next, add your Build command. This is a script that should include everything
-that needs to happen _before_ starting the server.
+  * Returns a list of individual business dictionaries which are favorites of the logged in the user.
 
-For your Flask project, enter the following command into the Build field, all in
-one line:
+    ```
+    [
+      {
+        id: integer,
+        name: string,
+        description: string,
+        tag_one: string,
+        tag_two: string,
+        tag_three: string,
+        address: string,
+        city: string,
+        state, string
+        owner_id: integer,
+        preview_image: string,
+        created_at: string,
+        updated_at: string,
+        images: [ {} ],
+        owner: {},
+        average: integer,
+        numReviews: integer
+      }
+    ]
+      ```
 
-```shell
-# build command - enter all in one line
-npm install --prefix react-app &&
-npm run build --prefix react-app &&
-pip install -r requirements.txt &&
-pip install psycopg2 &&
-flask db upgrade &&
-flask seed all
-```
+### Reviews
 
-This script will install dependencies for the frontend, and run the build
-command in the __package.json__ file for the frontend, which builds the React
-application. Then, it will install the dependencies needed for the Python
-backend, and run the migration and seed files.
+* `GET /api/reviews/current`
 
-Now, add your start command in the Start field:
+  * Returns a list of individual review dictionaries associated with the logged in user.
 
-```shell
-# start script
-gunicorn app:app
-```
+    ```
+    [
+      {
+        id: integer,
+        review: string,
+        rating: integer,
+        reviewer_id: integer,
+        business_id: string
+        created_at: string,
+        updated_at: string,
+        business: {},
+        images: [],
+        reviewer: {}
+      }
+    ]
+      ```
 
-_If you are using websockets, use the following start command instead for increased performance:_
+* `GET /api/reviews/:reviewId`
 
-`gunicorn --worker-class eventlet -w 1 app:app`
+  * Returns a dictionary of the specified review.
 
-### Part B: Add the Environment Variables
+    ```
+    {
+      id: integer,
+      review: string,
+      rating: integer,
+      reviewer_id: integer,
+      business_id: string
+      created_at: string,
+      updated_at: string,
+      business: {},
+      images: [],
+      reviewer: {}
+    }
+      ```
 
-Click on the "Advanced" button at the bottom of the form to configure the
-environment variables your application needs to access to run properly. In the
-development environment, you have been securing these variables in the __.env__
-file, which has been removed from source control. In this step, you will need to
-input the keys and values for the environment variables you need for production
-into the Render GUI.
+* `POST /api/businesses/:businessId/reviews`
 
-Click on "Add Environment Variable" to start adding all of the variables you
-need for the production environment.
+  * Creates a new review for the specified business and returns a dictionary of the new review.
 
-Add the following keys and values in the Render GUI form:
+    ```
+    {
+      id: integer,
+      review: string,
+      rating: integer,
+      reviewer_id: integer,
+      business_id: string
+      created_at: string,
+      updated_at: string,
+      images: [],
+      reviewer: {}
+    }
+    ```
 
-- SECRET_KEY (click "Generate" to generate a secure secret for production)
-- FLASK_ENV production
-- FLASK_APP app
-- SCHEMA (your unique schema name, in snake_case)
-- REACT_APP_BASE_URL (use render.com url, located at top of page, similar to
-  https://this-application-name.onrender.com)
+* `PUT /api/reviews/:reviewId`
 
-In a new tab, navigate to your dashboard and click on your Postgres database
-instance.
+  * Edits a specified review and returns a dictionary of the review.
 
-Add the following keys and values:
+    ```
+    {
+      id: integer,
+      review: string,
+      rating: integer,
+      reviewer_id: integer,
+      business_id: string
+      created_at: string,
+      updated_at: string,
+      images: []
+    }
+    ```
 
-- DATABASE_URL (copy value from Internal Database URL field)
+* `DELETE /api/reviews/:id`
 
-_Note: Add any other keys and values that may be present in your local __.env__
-file. As you work to further develop your project, you may need to add more
-environment variables to your local __.env__ file. Make sure you add these
-environment variables to the Render GUI as well for the next deployment._
+  * Deletes the review with the specified id if it exists and returns a dictionary confirming the deletion.
 
-Next, choose "Yes" for the Auto-Deploy field. This will re-deploy your
-application every time you push to main.
+    ```
+    {
+      message: "Successfully deleted the review"
+    }
+    ```
 
-Now, you are finally ready to deploy! Click "Create Web Service" to deploy your
-project. The deployment process will likely take about 10-15 minutes if
-everything works as expected. You can monitor the logs to see your build and
-start commands being executed, and see any errors in the build process.
+* `DELETE /api/reviews/images/:id`
 
-When deployment is complete, open your deployed site and check to see if you
-successfully deployed your Flask application to Render! You can find the URL for
-your site just below the name of the Web Service at the top of the page.
+  * Deletes the optional review image with the specified id if it exists and returns a dictionary confirming the deletion.
 
-[Render.com]: https://render.com/
-[Dashboard]: https://dashboard.render.com/
+    ```
+    {
+      message: "Successfully deleted the review image"
+    }
+    ```
+
+### Replies
+
+* `POST /api/reviews/:reviewId/replies`
+
+  * Creates a new reply for the specified business and returns a dictionary of the new reply.
+
+    ```
+    {
+      id: integer,
+      reply: string
+      review_id: intger,
+      created_at: string,
+      updated_at: string
+    }
+    ```
+
+* `PUT /api/replies/:replyId`
+
+  * Edits a specified reply and returns a dictionary of the reply.
+
+    ```
+    {
+      id: integer,
+      reply: string,
+      review_id: integer,
+      created_at: string,
+      updated_at: string
+    }
+    ```
+
+* `DELETE /api/replies/:id`
+
+  * Deletes the reply with the specified id if it exists and returns a dictionary confirming the deletion.
+
+    ```
+    {
+      message: "Successfully deleted the reply"
+    }
+    ```
+
+### Favorites
+
+* `POST /api/businesses/:businessId/favorites`
+
+  * Creates a new favorite between the specified business and the logged in user and returns a dictionary of the new favorite.
+
+    ```
+    {
+      id: integer,
+      user_id: integer,
+      business_id: string,
+      super: boolean
+      created_at: string,
+      updated_at: string
+    }
+    ```
+
+* `DELETE /api/favorites/:favoriteId`
+
+  * Deletes the favorite with the specified id if it exists and returns a dictionary confirming the deletion.
+
+    ```
+    {
+      message: "Successfully deleted the reply"
+    }
+    ```
