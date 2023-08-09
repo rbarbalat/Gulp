@@ -22,7 +22,7 @@ def seed_reviews(users, businesses):
     rat2 = [5, 4, 4]
 
     rev3 = [
-        "Mastro's is a pretty standard high-end steakhouse.  There is not a single thing I can complain about but I'm not giving it 5 stars because it doesn't stand out from the pack."
+        "Mastro's is a pretty standard high-end steakhouse.  There is not a single thing I can complain about but I'm not giving it 5 stars because it doesn't stand out from the pack.",
         "I'm slightly unhappy with my experience here because they didn't prepare my steak exactly like I told them.  I wanted it between rare and medium rare but it wasn't cooked down the middle, it was closer to rare than medium rare and I noticed!",
         "I'm not big into steak but when its this good I can appreciate it.  The seafood didn't dissapoint either, especially the Chilean sea bass!"
     ]
@@ -36,18 +36,18 @@ def seed_reviews(users, businesses):
     rat4 = [5, 5, 3]
 
     rev5 = [
-        "HIdddsfadfajd;fakjd;fajd;fkjad;fjad;fkjddfadfadfdfd",
-        "byedafdfkajfa;dkjfa;djf;adkjfa;dkfja;dfja;dfjad;jkf",
-        "lalaladfadfka;jdf;adkjf;akdjfa;kdjfa;djf;adjfa;djfa;djfa;djf"
+        "This was my first time trying Southeast Asian food and it was so good.  Especially the lamb lollipops, black cod and pork belly.  Can't wait to come back!!!",
+        "The food, the atmosphere and the service were all fantastic!  Highly recommended!",
+        "It took them forever to take my order and they messed it up anyway.  I'll admit the food tasted great but the service definitely didn't match it."
     ]
     rat5 = [4, 4, 2]
 
     rev6 = [
-        "adkjfa;dfkja;dfja;dfjdaffkadjfakdfjadfafkjadfj",
-        "adk;fjadkfja;dfa;djfaddkfja;dfja;dfjad;fja;djf;adj",
-        "dkafjeifjeiajfiefjaefijaefja;eifja;eijf;iejfa;ejf"
+        "The crispy duck carnitas were really great , everything else was so so and the beer was terrible",
+        "I decided to try this place because I love Tortas Frontera.  It was worth trying but I'll definitely stick to Tortas Frontera going forward",
+        "This was the tastiest mexican food I have ever had and I've had a lot.  I also couldn't believe how authentic it was.  FIVE STARS!!"
     ]
-    rat6 = [3,3,3]
+    rat6 = [3,3,5]
 
     reviews = [rev1, rev2, rev3, rev4, rev5, rev6]
     ratings = [rat1, rat2, rat3, rat4, rat5, rat6]
