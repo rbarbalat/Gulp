@@ -55,6 +55,22 @@ export const thunkLoadBusinessesQuery = (query) => async (dispatch) => {
     }
 }
 
+export const thunkLoadRecentBusinesses = (limit) => async (dispatch) => {
+    try {
+        const res = await fetch(`/api/businesses/recent/${limit}`);
+        if(res.ok)
+        {
+            const serverData = await res.json();
+            dispatch(actionLoadBusinesses(serverData));
+            return serverData;
+        } else {
+            const errorData = await res.json();
+            return errorData;
+        }
+    } catch (error){
+    }
+}
+
 export const thunkLoadBusinessesOfUser = () => async (dispatch) => {
     try {
         const res = await fetch("/api/businesses/current");

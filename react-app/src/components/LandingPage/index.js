@@ -1,9 +1,7 @@
 import {useHistory} from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState, useContext} from "react";
-// import {thunkLoadReviews} from "../../store/review";
-import { thunkLoadBusinesses } from "../../store/business";
-// import ReviewCard from "../ReviewCard";
+import { thunkLoadBusinesses, thunkLoadRecentBusinesses } from "../../store/business";
 import MiniBusCard from "../MiniBusCard";
 import { SearchContext } from '../../context/Search';
 
@@ -12,6 +10,8 @@ import "./LandingPage.css";
 export default function LandingPage()
 {
     const businesses = useSelector(state => Object.values(state.businesses.allBus));
+
+    const numRecentBusinesses = 6;
 
     const dispatch = useDispatch();
     const history = useHistory();
@@ -59,10 +59,8 @@ export default function LandingPage()
     }
 
     useEffect( async () => {
-        // dispatch(thunkLoadReviews())
-        const res = await dispatch(thunkLoadBusinesses());
-        // console.log("res for thunkLoadBusinesses in landing page useEffect ");
-        // console.log(res);
+        // const res = await dispatch(thunkLoadBusinesses());
+        const res = await dispatch(thunkLoadRecentBusinesses(numRecentBusinesses));
         if(!res.error) setLoaded(true);
     },[])
 
