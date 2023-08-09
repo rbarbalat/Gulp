@@ -59,11 +59,10 @@ export default function BusCard({business, user})
             <div className = "preview_image_wrapper">
             {
                 business.images?.length > 0 &&
-                <i className="fa-sharp fa-solid fa-arrow-left bus_card" onClick={prevImage}></i>
-            }
-            {
-                business.images?.length > 0 &&
-                <i className="fa-sharp fa-solid fa-arrow-right bus_card" onClick={nextImage}></i>
+                <>
+                    <i className="fa-sharp fa-solid fa-arrow-left bus_card" onClick={prevImage}></i>
+                    <i className="fa-sharp fa-solid fa-arrow-right bus_card" onClick={nextImage}></i>
+                </>
             }
                 <img alt="bus_preview_image" className ="bus_preview" src={urls[index]}></img>
             </div>
