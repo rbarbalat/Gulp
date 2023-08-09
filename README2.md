@@ -26,99 +26,171 @@
 
 ## Landing Page
 
-![Screenshot of the top of Gulp's Landing Page](https://bucket-rb22.s3.us-east-2.amazonaws.com/gulp_landing_1.png)
-![Screenshot of the bottom of Gulp's Landing Page](https://bucket-rb22.s3.us-east-2.amazonaws.com/gulp_landing_2.png)
+![Screenshot of the top of Gulp's Landing Page](https://bucket-rb22.s3.us-east-2.amazonaws.com/gulp_landing_top_adj.png)
+![Screenshot of the bottom of Gulp's Landing Page](https://bucket-rb22.s3.us-east-2.amazonaws.com/gulp_landing_bottom.png)
+
+## List of Businesses (portion)
 ![Screenshot of the bottom of Gulp's Landing Page](https://bucket-rb22.s3.us-east-2.amazonaws.com/gulp_all.png)
+
+## Individual Business Page (top)
 ![Screenshot of the bottom of Gulp's Landing Page](https://bucket-rb22.s3.us-east-2.amazonaws.com/gulp_bus_top.png)
+
+## Individual Business Page (reviews and replies)
 ![Screenshot of the bottom of Gulp's Landing Page](https://bucket-rb22.s3.us-east-2.amazonaws.com/gulp_review_reply.png)
+
+## User Profile
 ![Screenshot of the bottom of Gulp's Landing Page](https://bucket-rb22.s3.us-east-2.amazonaws.com/gulp_user_profile.png)
 
-### Part A: Configure the Start and Build Commands
+## Features
 
-Start by giving your application a name.
+### Businesses
 
-Leave the root directory field blank. By default, Render will run commands from
-the root directory.
+* Users can create businesses.
+* Users can view all of the businesses on the site with multiple sort options.
+* Users can update their business.
+* Users can delete their business.
 
-Make sure the Environment field is set set to "Python 3", the Region is set to
-the location closest to you, and the Branch is set to "main".
+### Reviews
 
-Next, add your Build command. This is a script that should include everything
-that needs to happen _before_ starting the server.
+* Users can review businesses.
+* Users can view all of the reviews of a business with multiple sort options.
+* Users can update their reviews.
+* Users can delete their reviews.
 
-For your Flask project, enter the following command into the Build field, all in
-one line:
+### Replies
 
-```shell
-# build command - enter all in one line
-npm install --prefix react-app &&
-npm run build --prefix react-app &&
-pip install -r requirements.txt &&
-pip install psycopg2 &&
-flask db upgrade &&
-flask seed all
-```
+* Business owners can reply to individual reviews.
+* Users can view the replies of business owners.
+* Business owners can update their replies.
+* Business owners an delete their replies.
 
-This script will install dependencies for the frontend, and run the build
-command in the __package.json__ file for the frontend, which builds the React
-application. Then, it will install the dependencies needed for the Python
-backend, and run the migration and seed files.
+### Favorites
 
-Now, add your start command in the Start field:
+* Users can favorite individual businesses.
+* Users can their favorites on their user profiles and on the individual pages of favorites.
+* Users can unfavorite businesses that they have favorited.
 
-```shell
-# start script
-gunicorn app:app
-```
+### AWS
 
-_If you are using websockets, use the following start command instead for increased performance:_
+* All images are submitted as files and those files are stored in an S3 bucket.
 
-`gunicorn --worker-class eventlet -w 1 app:app`
+### Search and Filter
 
-### Part B: Add the Environment Variables
+* Users can search for businesses by name.
+* Users can filter businesses by tag(s) by searching for particular tags(s).
 
-Click on the "Advanced" button at the bottom of the form to configure the
-environment variables your application needs to access to run properly. In the
-development environment, you have been securing these variables in the __.env__
-file, which has been removed from source control. In this step, you will need to
-input the keys and values for the environment variables you need for production
-into the Render GUI.
+## API
 
-Click on "Add Environment Variable" to start adding all of the variables you
-need for the production environment.
+### Businesses
 
-Add the following keys and values in the Render GUI form:
+* `GET /api/businesses/` (optional query)
 
-- SECRET_KEY (click "Generate" to generate a secure secret for production)
-- FLASK_ENV production
-- FLASK_APP app
-- SCHEMA (your unique schema name, in snake_case)
-- REACT_APP_BASE_URL (use render.com url, located at top of page, similar to
-  https://this-application-name.onrender.com)
+  * Returns a list of all the individual business dictionaries on the site.
 
-In a new tab, navigate to your dashboard and click on your Postgres database
-instance.
+    ```
+    [
+      {
+        id: integer,
+        name: string,
+        description: string,
+        tag_one: string,
+        tag_two: string,
+        tag_three: string,
+        address: string,
+        city: string,
+        state, string
+        owner_id: integer,
+        preview_image: string,
+        created_at: string,
+        updated_at: string,
+        images: [ {} ],
+        owner: {},
+        average: integer,
+        numReviews: integer
+      }
+    ]
+    ```
 
-Add the following keys and values:
+* `GET /api/businesses/recent/:count`
 
-- DATABASE_URL (copy value from Internal Database URL field)
+  * Returns a list of the most recently added individual business dictionaries to the site with the route parameter specifying the count.
 
-_Note: Add any other keys and values that may be present in your local __.env__
-file. As you work to further develop your project, you may need to add more
-environment variables to your local __.env__ file. Make sure you add these
-environment variables to the Render GUI as well for the next deployment._
+    ```
+    [
+      {
+        id: integer,
+        name: string,
+        description: string,
+        tag_one: string,
+        tag_two: string,
+        tag_three: string,
+        address: string,
+        city: string,
+        state, string
+        owner_id: integer,
+        preview_image: string,
+        created_at: string,
+        updated_at: string,
+        images: [ {} ],
+        owner: {},
+        average: integer,
+        numReviews: integer
+      }
+    ]
+      ```
 
-Next, choose "Yes" for the Auto-Deploy field. This will re-deploy your
-application every time you push to main.
+* `GET /api/businesses/current`
 
-Now, you are finally ready to deploy! Click "Create Web Service" to deploy your
-project. The deployment process will likely take about 10-15 minutes if
-everything works as expected. You can monitor the logs to see your build and
-start commands being executed, and see any errors in the build process.
+  * Returns a list of individual business dictionaries which are owned by the logged in user.
 
-When deployment is complete, open your deployed site and check to see if you
-successfully deployed your Flask application to Render! You can find the URL for
-your site just below the name of the Web Service at the top of the page.
+    ```
+    [
+      {
+        id: integer,
+        name: string,
+        description: string,
+        tag_one: string,
+        tag_two: string,
+        tag_three: string,
+        address: string,
+        city: string,
+        state, string
+        owner_id: integer,
+        preview_image: string,
+        created_at: string,
+        updated_at: string,
+        images: [ {} ],
+        owner: {},
+        average: integer,
+        numReviews: integer
+      }
+    ]
+      ```
 
-[Render.com]: https://render.com/
-[Dashboard]: https://dashboard.render.com/
+* `GET /api/businesses/:id`
+
+  * Returns a dictionary of the businesses with the specified id.
+
+    ```
+    {
+      id: integer,
+      name: string,
+      description: string,
+      address: string,
+      city: string,
+      state: string,
+      owner_id: integer,
+      preview_image: string,
+      average: integer,
+      numReviews: integer,
+      tag_one: string,
+      tag_two: string,
+      tag_three: string,
+      created_at: string,
+      updated_at: string,
+      owner: {},
+      images: [ {} ],
+      reviewers: [],
+      reviews: [ {} ]
+    }
+    ```
