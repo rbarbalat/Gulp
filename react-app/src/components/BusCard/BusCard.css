@@ -94,6 +94,11 @@
     border-radius:5px;
     object-fit:cover;
 }
+@media screen and (max-width:950px){
+    .bus_preview{
+        height: 85%;
+    }
+}
 
 .average_and_stars{
     display:flex;

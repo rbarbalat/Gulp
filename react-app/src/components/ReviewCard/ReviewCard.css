@@ -142,6 +142,11 @@
     border-radius:5px;
     object-fit:cover;
 }
+@media screen and (max-width:900px){
+    .submitted_image{
+        height:90%;
+    }
+}
 
 .all_replies_wrapper{
     margin-top: 1rem;
