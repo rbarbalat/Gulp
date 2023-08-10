@@ -32,7 +32,6 @@ export default function LandingPage()
     const second_index = businesses.length <= 6 ? 3 : businesses.length - 3;
 
     const [index, setIndex] = useState(0);
-    // console.log("index ------- ", index);
 
     const styles = {
         backgroundImage: `linear-gradient(rgba(0,0,0,.2), rgba(0,0,0,.2)), url(${businesses[index]?.preview_image})`,
@@ -59,7 +58,6 @@ export default function LandingPage()
     }
 
     useEffect( async () => {
-        // const res = await dispatch(thunkLoadBusinesses());
         const res = await dispatch(thunkLoadRecentBusinesses(numRecentBusinesses));
         if(!res.error) setLoaded(true);
     },[])
@@ -67,9 +65,7 @@ export default function LandingPage()
     useEffect(() => {
         if(length > 0)
         {
-            // console.log("hello from the interval useEffect")
             const my_interval = setInterval(() => {
-                // console.log("length --- ", length);
                 setIndex(prev => prev === length - 1 ? 0 : prev + 1 )
             }, 4000)
             return () => clearInterval(my_interval)

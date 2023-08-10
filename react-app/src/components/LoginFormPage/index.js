@@ -25,7 +25,6 @@ function LoginFormPage() {
     setErrors({});
     const data = await dispatch(login(email, password));
     if (data) {
-      // setErrors(data);
       // the format in the starter was to return an array in this format
       // ['email : Email provided not found.', 'password : No such user exists.']
       const val_errors = {}
@@ -36,7 +35,6 @@ function LoginFormPage() {
       setErrors(val_errors);
     }
   };
-  // console.log(errors);
   return (
     <div className = "login_page_wrapper">
 

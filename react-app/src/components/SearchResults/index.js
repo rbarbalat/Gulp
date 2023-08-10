@@ -65,7 +65,6 @@ export default function SearchResults()
 
     const dispatch = useDispatch();
     useEffect(() => {
-        // console.log("search results useEffect");
         async function fetchData()
         {
             const res = await dispatch(thunkLoadBusinessesQuery(str));

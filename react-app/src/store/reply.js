@@ -18,19 +18,13 @@ export const thunkLoadRepliesOfUser = () => async (dispatch) => {
         if(res.ok)
         {
             const serverData = await res.json();
-            // console.log("good response from thunkLoadRepliesOfUser")
-            // console.log(serverData)
             dispatch(actionLoadReplies(serverData));
             return serverData;
         } else {
             const errorData = await res.json();
-            // console.log("error response for thunkLoadRepliesOfUser");
-            // console.log(errorData);
             return errorData;
         }
     } catch (error){
-        // console.log("CAUGHT error response for thunkLoadRepliesOfUser")
-        // console.log(error);
     }
 }
 
@@ -53,18 +47,12 @@ export const thunkReceiveReply = (review_id, reply) => async (dispatch) => {
         {
             const serverData = await res.json();
             dispatch(actionReceiveReply(serverData));
-            // console.log("good response for thunkReceiveReply");
-            // console.log(serverData);
             return serverData;
         }else {
             const errorData = await res.json();
-            console.log("error response for thunkReceiveReply");
-            console.log(errorData);
             return errorData;
         }
     } catch (error){
-        // console.log("CAUGHT error response for thunkReceiveReply");
-        // console.log(error);
     }
 }
 
@@ -86,18 +74,12 @@ export const thunkUpdateReply = (reply_id, reply) => async (dispatch) => {
         {
             const serverData = await res.json();
             dispatch(actionUpdateReply(serverData));
-            // console.log("good response for thunkUpdateReply");
-            // console.log(serverData);
             return serverData;
         }else {
             const errorData = await res.json()
-            console.log("error response for thunkUpdateReply");
-            console.log(errorData);
             return errorData;
         }
     } catch (error){
-        // console.log("CAUGHT error response for thunkUpdateReply");
-        // console.log(error);
     }
 }
 
@@ -118,19 +100,12 @@ export const thunkDeleteReply = (id) => async (dispatch) => {
         {
             const serverData = await res.json();
             dispatch(actionDeleteReply(id));
-            // console.log("good response from thunkDeleteReply")
-            // console.log(serverData)
             return serverData;
         } else {
             const errorData = await res.json();
-            console.log("error response for thunkDeleteReply");
-            console.log(errorData);
             return errorData;
         }
-    } catch(error)
-    {
-        // console.log("CAUGHT error response for thunkDeleteReply");
-        // console.log(error);
+    } catch(error){
     }
 }
 

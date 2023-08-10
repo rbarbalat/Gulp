@@ -49,7 +49,6 @@ export default function RevForm({edit})
     useEffect(async () => {
         if(edit)
         {
-            // console.log("USE EFFECT");
             const res = await dispatch(thunkLoadSingleReview(review_id));
         }
     }, [render])
@@ -64,13 +63,9 @@ export default function RevForm({edit})
         const res = await fetch(`/api/reviews/images/${image_id}`, {method: "Delete"});
         if(res.error)
         {
-            // console.log("bad response from delete rev image route");
-            // console.log(res);
-            alert("could not delete the image");
+
         }else
         {
-            // console.log("good response from delete rev image route");
-            // console.log(res);
             setRender(prev => !prev);
         }
         return null;
@@ -93,7 +88,7 @@ export default function RevForm({edit})
         event.preventDefault();
 
         const formData = new FormData();
-        // formData.append("rating", rating ? Number(rating) : 1);
+
         formData.append("rating", rating);
         formData.append("review", review);
 
@@ -107,8 +102,6 @@ export default function RevForm({edit})
                     : await dispatch(thunkReceiveReview(business_id, new_review));
         if(res.error)
         {
-            // console.log("printing error response from inside onSubmit create/edit review form");
-            // console.log(res);
             const errors = {};
             for(let key in res.error)
             {
@@ -117,8 +110,6 @@ export default function RevForm({edit})
             setValErrors(errors);
             return;
         }else {
-            // console.log("printing good response from onSubmit in create/edit review form");
-            // console.log(res);
             history.push(`/businesses/${res.business_id}`);
             return null;
         }

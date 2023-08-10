@@ -24,9 +24,8 @@ export default function AllFavOfUser()
         async function fetchData()
         {
             const res = await dispatch(thunkLoadFavBusinessesOfUser());
-            // console.log(res);
 
-            //come back to this line, prob need to rework it
+            //rework this
             if(!res.error) setLoaded(true);
         }
         fetchData();

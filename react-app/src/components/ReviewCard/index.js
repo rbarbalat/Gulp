@@ -76,14 +76,11 @@ export default function ReviewCard({review, user, business_id, user_profile, own
         }));
         if(res.error)
         {
-            console.log(res);
             const errors = {}
             errors.reply = res.error.reply;
             setValErrors(errors);
         }else{
-            // console.log(res)
             const res_two = await dispatch(thunkLoadSingleBusiness(business_id));
-            // console.log(res_two);
             setContent("");
             setShowForm(false);
             setValErrors({});
@@ -140,7 +137,6 @@ export default function ReviewCard({review, user, business_id, user_profile, own
 
             <div className = "reviewer_rating">
                 <StarRatingInput rating={review.rating} form={false}/>
-                {/* <div className = "review_created_at">{date}</div> */}
             {
                 updated_date ?
                 <div className = "review_updated_at">{updated_date} (Updated)</div>

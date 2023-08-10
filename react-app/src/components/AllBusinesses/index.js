@@ -51,8 +51,6 @@ export default function AllBusinesses()
         async function fetchData()
         {
             const res = await dispatch(thunkLoadBusinesses());
-            // console.log("res in allBus useEffect");
-            // console.log(res);
         }
         fetchData()
     }, [dispatch])

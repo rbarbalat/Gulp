@@ -23,10 +23,8 @@ export default function AllBusOfUser()
         async function fetchData()
         {
             const res = await dispatch(thunkLoadBusinessesOfUser());
-            // console.log("res in allBusOfUser useEffect");
-            // console.log(res);
 
-            //come back to this line, prob need to rework it
+            //REWORK THIS
             if(!res.error) setLoaded(true);
         }
         fetchData();

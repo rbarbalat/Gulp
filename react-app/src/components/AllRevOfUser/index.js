@@ -24,9 +24,8 @@ export default function AllRevOfUser()
         async function fetchData()
         {
             const res = await dispatch(thunkLoadReviewsOfUser());
-            // console.log("res in allBusOfUser useEffect");
-            // console.log(res);
 
+            //reworkt his
             if(!res.error) setLoaded(true);
         }
         fetchData();
@@ -35,7 +34,6 @@ export default function AllRevOfUser()
     //might be zero b/c it hasn't loaded or it might be zero b/c he has no businesses
     if(loaded)
     {
-        //REPLACE THE DIV WITH SOMETHING ELSE LATER
         if(reviews.length === 0) return <div className="start_rev" onClick={list_bus}>Find a business to review!</div>
     }
     if(!loaded) return <div>loading</div>

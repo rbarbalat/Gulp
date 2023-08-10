@@ -63,14 +63,11 @@ export default function ReplyCard({reply, owner, user, business_id})
         }));
         if(res.error)
         {
-            console.log(res);
             const errors = {}
             errors.reply = res.error.reply;
             setValErrors(errors);
         }else{
-            // console.log(res)
             const res_two = await dispatch(thunkLoadSingleBusiness(business_id));
-            // console.log(res_two);
             setShowForm(false);
             setValErrors({});
         }

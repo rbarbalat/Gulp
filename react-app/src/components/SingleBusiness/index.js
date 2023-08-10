@@ -28,9 +28,6 @@ export default function SingleBusiness()
 
     //initial state for singleBus is an empty object
     const reviews = business.reviews?.slice();
-    // console.log("reviews is undefined ", reviews === undefined)
-
-    // reviews?.forEach(review => {console.log(review.id, review.created_at)})
 
     if(sort === "new") reviews?.sort((a,b) => {
         return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
@@ -68,8 +65,6 @@ export default function SingleBusiness()
         async function fetchData()
         {
             const res = await dispatch(thunkLoadSingleBusiness(business_id));
-            // console.log("res in useEffect");
-            // console.log(res);
         }
         fetchData();
     }, [dispatch, business_id])

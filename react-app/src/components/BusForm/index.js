@@ -48,7 +48,6 @@ export default function BusForm({edit})
     useEffect(() => {
         if(edit)
         {
-            // console.log("USE EFFECT")
             dispatch(thunkLoadSingleBusiness(business_id));
         }
     }, [render])
@@ -91,13 +90,9 @@ export default function BusForm({edit})
         const res = await fetch(`/api/businesses/images/${image_id}`, {method: "Delete"});
         if(res.error)
         {
-            // console.log("bad response from delete bus image route");
-            // console.log(res);
-            // alert("could not delete the image");
+
         }else
         {
-            // console.log("good response from delete bus image route");
-            // console.log(res);
             setRender(prev => !prev);
         }
         return null;
@@ -138,8 +133,6 @@ export default function BusForm({edit})
                     : await dispatch(thunkReceiveBusiness(new_business));
         if(res.error)
         {
-            // console.log("printing error response from inside onSubmit creating/edit a business");
-            // console.log(res);
             const errors = {};
             for(let key in res.error)
             {
@@ -148,8 +141,6 @@ export default function BusForm({edit})
             setValErrors(errors);
             return;
         }else{
-            // console.log("printing good response from inside onSubmit creating/editing a business");
-            // console.log(res);
             history.push(`/businesses/${res.id}`);
             return;
         }
