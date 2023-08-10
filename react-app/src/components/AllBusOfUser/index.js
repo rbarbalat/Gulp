@@ -23,17 +23,14 @@ export default function AllBusOfUser()
         async function fetchData()
         {
             const res = await dispatch(thunkLoadBusinessesOfUser());
-
-            //REWORK THIS
             if(!res.error) setLoaded(true);
         }
         fetchData();
     }, [dispatch])
 
     //might be zero b/c it hasn't loaded or it might be zero b/c he has no businesses
-    if(loaded)
+    if(loaded && businesses.length === 0)
     {
-        if(businesses.length === 0)
         return <div className="start_business" onClick={start_bus}>Start you first business!</div>
     }
     if(!loaded) return <div>loading</div>

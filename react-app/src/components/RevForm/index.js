@@ -46,11 +46,8 @@ export default function RevForm({edit})
     //linkEditReview actually dispatches the same thunk and only links here if there is a good response
     //this useEffect added after the fact for the situation when an image is deleted before form submission
     //to rerender the page and also preserve changes to the star rating/text of the review from before image deletion
-    useEffect(async () => {
-        if(edit)
-        {
-            const res = await dispatch(thunkLoadSingleReview(review_id));
-        }
+    useEffect(() => {
+        if(edit) dispatch(thunkLoadSingleReview(review_id));
     }, [render])
 
     function landingPage()
@@ -61,14 +58,10 @@ export default function RevForm({edit})
     {
         const image_id = edit_rev.images[index-1].id;
         const res = await fetch(`/api/reviews/images/${image_id}`, {method: "Delete"});
-        if(res.error)
-        {
-
-        }else
+        if(!res.error)
         {
             setRender(prev => !prev);
         }
-        return null;
     }
 
     function handleImage(e, index)
@@ -108,10 +101,8 @@ export default function RevForm({edit})
                 errors[key] = res.error[key];
             }
             setValErrors(errors);
-            return;
         }else {
             history.push(`/businesses/${res.business_id}`);
-            return null;
         }
     }
 

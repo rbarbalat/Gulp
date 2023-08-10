@@ -20,7 +20,6 @@ export default function LandingPage()
 
     const [loaded, setLoaded] = useState(false);
 
-    // let length = businesses.length;
     let length = 0;
     if(loaded) length = businesses.length;
 

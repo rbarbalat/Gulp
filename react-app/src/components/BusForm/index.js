@@ -20,7 +20,7 @@ export default function BusForm({edit})
     const [tag_two, setTagTwo] = useState(edit ? business.tag_two : "");
     const [tag_three, setTagThree] = useState(edit ? business.tag_three : "");
 
-    //these originally set to undefined, uncontrolled input => controlled?
+    //these originally set to undefined, got uncontrolled input => controlled warning
     const [prev, setPrev] = useState("")
     const [first, setFirst] = useState("");
     const [second, setSecond] = useState("");
@@ -46,10 +46,7 @@ export default function BusForm({edit})
     const [render, setRender] = useState(false)
 
     useEffect(() => {
-        if(edit)
-        {
-            dispatch(thunkLoadSingleBusiness(business_id));
-        }
+        if(edit) dispatch(thunkLoadSingleBusiness(business_id));
     }, [render])
 
     //handle the case where you are on the edit form with pre-loaded data
@@ -85,16 +82,10 @@ export default function BusForm({edit})
     async function deleteBusImage(index)
     {
         const image_id = business.images[index-1].id;
-        //no thunk b/c not store for bus+images,
+        //no thunk b/c no store for bus images,
         //the setRender will trigger a useEffect to call a thunk to get updated Business
         const res = await fetch(`/api/businesses/images/${image_id}`, {method: "Delete"});
-        if(res.error)
-        {
-
-        }else
-        {
-            setRender(prev => !prev);
-        }
+        if(!res.error) setRender(prev => !prev);
         return null;
     }
     function landingPage()
@@ -139,10 +130,8 @@ export default function BusForm({edit})
                 errors[key] = res.error[key];
             }
             setValErrors(errors);
-            return;
         }else{
             history.push(`/businesses/${res.id}`);
-            return;
         }
     }
 

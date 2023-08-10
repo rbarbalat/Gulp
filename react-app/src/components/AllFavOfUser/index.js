@@ -24,27 +24,24 @@ export default function AllFavOfUser()
         async function fetchData()
         {
             const res = await dispatch(thunkLoadFavBusinessesOfUser());
-
-            //rework this
             if(!res.error) setLoaded(true);
         }
         fetchData();
     }, [dispatch])
 
     //might be zero b/c it hasn't loaded or it might be zero b/c he has no businesses
-    if(loaded)
+    if(loaded && businesses.length === 0)
     {
-        if(businesses.length === 0)
         return <div className="start_business" onClick={find_bus}>Find a business to favorite!</div>
     }
     if(!loaded) return <div>loading</div>
     return (
         <div className ="all_bus_of_user_wrapper">
-            {
-                businesses.map(business => (
-                    <BusCard key = {business.id} business={business} user={user} />
-                ))
-            }
+        {
+            businesses.map(business => (
+                <BusCard key = {business.id} business={business} user={user} />
+            ))
+        }
         </div>
     )
 }
