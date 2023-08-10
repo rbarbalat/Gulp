@@ -11,7 +11,7 @@ const actionLoadReplies = (replies) => {
         replies
     }
 }
-//maybe also loadRepliesofBusiness or Review?
+
 export const thunkLoadRepliesOfUser = () => async (dispatch) => {
     try {
         const res = await fetch("/api/replies/current");

@@ -10,7 +10,6 @@ import { authenticate } from "../store/session";
 export async function linkEditReview(review_id, dispatch, history)
 {
     const res = await dispatch(thunkLoadSingleReview(review_id));
-    // const res = await dispatch(thunkLoadSingleReview(review.id));
 
     // singleRev will be in the store so the useSelectors on the
     // edit form will be able to get the existing values right away
