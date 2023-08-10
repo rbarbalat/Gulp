@@ -96,7 +96,7 @@ def seed_businesses(users):
         lst.append(bus)
 
     db.session.commit()
-    print("seeded businesses")
+    # print("seeded businesses")
     return lst
 
 

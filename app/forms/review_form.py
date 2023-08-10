@@ -10,10 +10,7 @@ def integer_one_through_five(form, field):
     Returns a validation error if a user's submission is not in [0,1,2,3,4,5]
     """
     rating = field.data
-    print("printing rating")
-    print(rating)
     if rating not in [1, 2, 3, 4, 5]:
-        print("i'm here")
         raise ValidationError('Star rating must be an integer between 1 and five')
 
 class ReviewForm(FlaskForm):

@@ -44,7 +44,7 @@ def seed_replies(reviews):
         db.session.add(reply)
 
     db.session.commit()
-    print("seeded replies")
+    # print("seeded replies")
 
 
 def undo_replies():

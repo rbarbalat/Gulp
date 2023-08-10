@@ -43,7 +43,7 @@ def seed_bus_images(businesses):
             db.session.add(bus_image)
 
     db.session.commit()
-    print("seeded business images")
+    # print("seeded business images")
 
 
 def undo_bus_images():

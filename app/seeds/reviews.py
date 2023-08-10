@@ -60,8 +60,6 @@ def seed_reviews(users, businesses):
                 reviewer = users[6:][j + 2*i],
                 business = businesses[i],
                 rating = ratings[i][j],
-                # rating = randint(1, 5),
-                # review = fake.text(max_nb_chars=randint(100, 950)),
                 review = reviews[i][j],
                 created_at = datetime(2023, randint(1,6), randint(1,25), 15)
             )
@@ -69,7 +67,7 @@ def seed_reviews(users, businesses):
             lst.append(review)
 
     db.session.commit()
-    print("seeded reviews")
+    # print("seeded reviews")
     return lst
 
 

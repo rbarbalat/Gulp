@@ -99,7 +99,7 @@ def seed_users():
         lst.append(user)
 
     db.session.commit()
-    print("seeded users")
+    # print("seeded users")
     return lst
 
 

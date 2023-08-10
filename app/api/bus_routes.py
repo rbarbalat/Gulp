@@ -274,8 +274,6 @@ def create_business():
             #if owner is necessary
         }, 201
 
-    print("printing form.errors")
-    print(form.errors)
     return {"error": form.errors}, 400
 
 #EDIT A BUSINESS
