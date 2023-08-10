@@ -13,9 +13,7 @@ export default function AllBusinesses()
 
     const [sort, setSort] = useState("high");
 
-    //businesses an empty array before the thunk is dispatched so can call sort on it
-    //and it auto returns an empty array, won't get typerror from undef.getTime()
-    //b/c no elements to run the operation on
+    //businesses an empty array before the thunk is dispatched so sorting has no effect
     if(sort === "new") businesses.sort((a,b) => {
         return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
     });
@@ -47,15 +45,10 @@ export default function AllBusinesses()
 
     const dispatch = useDispatch();
     useEffect(() => {
-        //if(Number(business_id) !== business.id)
-        async function fetchData()
-        {
-            const res = await dispatch(thunkLoadBusinesses());
-        }
-        fetchData()
+        dispatch(thunkLoadBusinesses());
     }, [dispatch])
 
-    //if you delete all businesses, would show loading, need to change
+    //will also show a loading div if all businesses have been deleted
     if(businesses.length === 0) return <div>loading</div>
     return (
         <div className = "all_bus_wrapper">

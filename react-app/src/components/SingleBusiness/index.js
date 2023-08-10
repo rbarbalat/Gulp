@@ -61,12 +61,7 @@ export default function SingleBusiness()
     );
 
     useEffect(() => {
-        //if(Number(business_id) !== business.id)
-        async function fetchData()
-        {
-            const res = await dispatch(thunkLoadSingleBusiness(business_id));
-        }
-        fetchData();
+        dispatch(thunkLoadSingleBusiness(business_id));
     }, [dispatch, business_id])
 
     function linkEdit()
