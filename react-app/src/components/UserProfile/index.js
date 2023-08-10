@@ -60,8 +60,6 @@ export default function UserProfile()
             setImage(undefined);
             setShowForm(false);
             setShowDelete(false);
-        }else{
-
         }
     }
     async function onSubmit(e)
@@ -78,7 +76,6 @@ export default function UserProfile()
         const res = await fetch("/api/users/image", options);
         if(res.ok)
         {
-            const data = await res.json();
             await dispatch(authenticate());
             setImage(undefined);
             setShowForm(false);
@@ -103,20 +100,20 @@ export default function UserProfile()
                 !show_form &&
                 <>
                 <div>
-                    {
-                        user.numBusinesses === 1 ?
-                        `${user.numBusinesses} business`
-                        :
-                        `${user.numBusinesses} businesses`
-                    }
+                {
+                    user.numBusinesses === 1 ?
+                    `${user.numBusinesses} business`
+                    :
+                    `${user.numBusinesses} businesses`
+                }
                 </div>
                 <div>
-                    {
-                        user.numReviews === 1 ?
-                        `${user.numReviews} review`
-                        :
-                        `${user.numReviews} reviews`
-                    }
+                {
+                    user.numReviews === 1 ?
+                    `${user.numReviews} review`
+                    :
+                    `${user.numReviews} reviews`
+                }
                 </div>
                 <div>{date}</div>
                 <div className = "user_profile_options">

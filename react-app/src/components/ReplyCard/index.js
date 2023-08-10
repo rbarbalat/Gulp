@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { useHistory } from "react-router-dom";
 import { deleteReply } from "../../helpers";
 import { thunkUpdateReply } from "../../store/reply";
 import { thunkLoadSingleBusiness } from "../../store/business";
@@ -14,7 +13,6 @@ export default function ReplyCard({reply, owner, user, business_id})
 
     const isOwner = user?.id === owner?.id;
 
-    const history = useHistory();
     const dispatch = useDispatch();
 
     const editAndDelete = (
@@ -67,7 +65,7 @@ export default function ReplyCard({reply, owner, user, business_id})
             errors.reply = res.error.reply;
             setValErrors(errors);
         }else{
-            const res_two = await dispatch(thunkLoadSingleBusiness(business_id));
+            await dispatch(thunkLoadSingleBusiness(business_id));
             setShowForm(false);
             setValErrors({});
         }

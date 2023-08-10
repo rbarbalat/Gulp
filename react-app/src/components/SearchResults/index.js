@@ -17,6 +17,7 @@ export default function SearchResults()
 
     // if targetTags is empty, tags is an array holding 1 element, the empty string, shouldn't matter
     const tags = targetTags.split(" ");
+
     let str = "?";
     if(targetName)
     {
@@ -65,11 +66,9 @@ export default function SearchResults()
 
     const dispatch = useDispatch();
     useEffect(() => {
-        async function fetchData()
-        {
-            const res = await dispatch(thunkLoadBusinessesQuery(str));
-        }
-        if(str) fetchData();
+        //1 of targetName or targetTags will always exist but just in case add conditional
+        //str initialized to "?"
+        if(str !== "?") dispatch(thunkLoadBusinessesQuery(str));
     }, [targetName, targetTags])
 
     if(!targetName && !targetTags) return (

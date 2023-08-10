@@ -1,6 +1,6 @@
 import React from 'react';
 import { useState, useContext } from "react";
-import { NavLink, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import ProfileButton from './ProfileButton';
 import { SearchContext } from '../../context/Search';

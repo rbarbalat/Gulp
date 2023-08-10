@@ -1,7 +1,7 @@
 import {useHistory} from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState, useContext} from "react";
-import { thunkLoadBusinesses, thunkLoadRecentBusinesses } from "../../store/business";
+import { thunkLoadRecentBusinesses } from "../../store/business";
 import MiniBusCard from "../MiniBusCard";
 import { SearchContext } from '../../context/Search';
 

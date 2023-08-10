@@ -16,7 +16,7 @@ function LoginFormPage() {
 
   async function loginDemo()
   {
-    const data = await dispatch(login("demo@aa.io", "password"));
+    await dispatch(login("demo@aa.io", "password"));
   }
 
   const handleSubmit = async (e) => {

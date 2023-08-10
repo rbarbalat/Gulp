@@ -6,7 +6,6 @@ import { linkEditReview, deleteReview } from "../../helpers";
 import { thunkReceiveReply } from "../../store/reply";
 import { thunkLoadSingleBusiness } from "../../store/business";
 import ReplyCard from "../ReplyCard";
-import ReplyForm from "../ReplyForm";
 import "./ReviewCard.css";
 
 export default function ReviewCard({review, user, business_id, user_profile, owner})
@@ -80,7 +79,7 @@ export default function ReviewCard({review, user, business_id, user_profile, own
             errors.reply = res.error.reply;
             setValErrors(errors);
         }else{
-            const res_two = await dispatch(thunkLoadSingleBusiness(business_id));
+            await dispatch(thunkLoadSingleBusiness(business_id));
             setContent("");
             setShowForm(false);
             setValErrors({});
