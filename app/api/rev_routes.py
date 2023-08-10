@@ -1,4 +1,4 @@
-from flask import Blueprint, jsonify, request
+from flask import Blueprint, request
 from flask_login import current_user
 from app.api.aws import get_unique_filename, upload_file_to_s3, remove_if_not_seeded_file_from_s3
 from app.models import db, Review, RevImage, Reply
@@ -33,8 +33,8 @@ def get_all_reviews_by_current_user():
 @rev_routes.route("/<int:id>", methods = ["DELETE"])
 def delete_review_by_id(id):
     """
-    This route deletes the specified review and on success returns a dictionary with
-    a message key indicating success.
+    This route deletes the specified review and removes any associated review images from AWS and
+    on success returns a dictionary with a message key indicating success.
     """
     if not current_user.is_authenticated:
         return {"error": "not authenticated"}, 401
@@ -139,6 +139,10 @@ def get_review_by_id(id):
 #DELETE Review Image by Id
 @rev_routes.route("/images/<int:id>", methods = ["DELETE"])
 def delete_review_image_by_id(id):
+    """
+    This route deletes the specified review image and removes it from AWS.  Upon success it returns a
+    dictionary with a message key.
+    """
     if not current_user.is_authenticated:
         return {"error": "not authenticated"}, 401
 
@@ -158,6 +162,9 @@ def delete_review_image_by_id(id):
 #CREATE A REPLY
 @rev_routes.route("/<int:id>/replies", methods = ["POST"])
 def create_reply(id):
+    """
+    This route creates a reply for the specified review and upon success returns the reply as a dictionary.
+    """
     if not current_user.is_authenticated:
         return {"error": "not authenticated"}, 401
 

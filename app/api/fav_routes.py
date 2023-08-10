@@ -1,16 +1,15 @@
-from flask import Blueprint, jsonify, request
+from flask import Blueprint
 from flask_login import current_user
-from app.models import db, Favorite, Business, User
+from app.models import db, Favorite
 
 fav_routes = Blueprint("favorites", __name__)
-
-@fav_routes.route("/")
-def get_all_favorites_by_user():
-    pass
 
 #DELETE favorite by Id
 @fav_routes.route("/<int:id>", methods = ["DELETE"])
 def delete_fav_by_id(id):
+    """
+    This route deletes a favorite and on success returns a dictionary with a message key.
+    """
     if not current_user.is_authenticated:
         return {"error": "not authenticated"}, 401
 

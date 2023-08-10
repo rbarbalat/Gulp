@@ -1,4 +1,4 @@
-from flask import Blueprint, jsonify, request
+from flask import Blueprint, request
 from flask_login import login_required, current_user
 from app.models import User, db
 from app.api.aws import get_unique_filename, upload_file_to_s3, remove_if_not_seeded_file_from_s3
@@ -34,7 +34,6 @@ def add_image():
         return {"error": "Unauthorized"}, 403
 
     form = UserImageForm()
-    # form["csrf_token"].data = request.cookies["csrf_token"]
     if "csrf_token" in request.cookies:
         form["csrf_token"].data = request.cookies["csrf_token"]
     else:

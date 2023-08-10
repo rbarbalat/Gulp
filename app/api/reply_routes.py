@@ -1,19 +1,18 @@
-from flask import Blueprint, jsonify, request
+from flask import Blueprint, request
 from flask_login import current_user
-from app.models import db, Reply, Business, Review
+from app.models import db, Reply
 from app.forms.reply_form import ReplyForm
 
 from datetime import datetime
 
 reply_routes = Blueprint("replies", __name__)
 
-@reply_routes.route("/")
-def get_all_replies():
-    pass
-
 #EDIT A REPLY
 @reply_routes.route("/<int:id>", methods = ["PUT"])
 def edit_reply_by_id(id):
+    """
+    This route edits the specified reply and on success returns a reply dictionary.
+    """
     if not current_user.is_authenticated:
         return {"error": "not authenticated"}, 401
 
@@ -25,12 +24,10 @@ def edit_reply_by_id(id):
         return {"error": "not authorized"}, 403
 
     form = ReplyForm()
-    #form["csrf_token"].data = request.cookies.get("csrf_token")
     if "csrf_token" in request.cookies:
         form["csrf_token"].data = request.cookies["csrf_token"]
     else:
-        return {"error": "Missing csrf_token"}, 404
-        # check this error code
+        return {"error": "Missing csrf_token"}, 403
 
     if form.validate_on_submit():
         reply.reply = form.data["reply"]
@@ -44,6 +41,9 @@ def edit_reply_by_id(id):
 #DELETE Reply by Id
 @reply_routes.route("/<int:id>", methods = ["DELETE"])
 def delete_reply_by_id(id):
+    """
+    This route deletes the specified reply and on success returns a dictionary with a message key.
+    """
     if not current_user.is_authenticated:
         return {"error": "not authenticated"}, 401
 
