@@ -12,6 +12,10 @@ rev_routes = Blueprint("reviews", __name__)
 #GET ALL REVIEWS BY CURRENT USER
 @rev_routes.route("/current")
 def get_all_reviews_by_current_user():
+    """
+    This route returns a list of review dictionaries associated with the logged in user
+    that have extra business, images and review keys.
+    """
     if not current_user.is_authenticated:
         return {"error": "not authenticated"}, 401
 
@@ -28,6 +32,10 @@ def get_all_reviews_by_current_user():
 #DELETE Review by Id
 @rev_routes.route("/<int:id>", methods = ["DELETE"])
 def delete_review_by_id(id):
+    """
+    This route deletes the specified review and on success returns a dictionary with
+    a message key indicating success.
+    """
     if not current_user.is_authenticated:
         return {"error": "not authenticated"}, 401
 
@@ -36,7 +44,7 @@ def delete_review_by_id(id):
         return {"error": "Review not found"}, 404
 
     if current_user.id != review.reviewer_id:
-        return {"error": "Not authorized"}
+        return {"error": "Not authorized"}, 403
 
     # remove any existing rev images from aws
     urls = [image.url for image in review.images]
@@ -50,6 +58,10 @@ def delete_review_by_id(id):
 #Edit Review by Id
 @rev_routes.route("/<int:id>", methods = ["PUT"])
 def edit_review_by_id(id):
+    """
+    This route edits the specified review and associated review images and on success
+    returns a review dictionary with an extra images key.
+    """
     if not current_user.is_authenticated:
         return {"error": "not authenticated"}, 401
 
@@ -64,11 +76,9 @@ def edit_review_by_id(id):
     if "csrf_token" in request.cookies:
         form["csrf_token"].data = request.cookies["csrf_token"]
     else:
-        return {"error": "Missing csrf_token"}, 404
-        # check this error code
+        return {"error": "Missing csrf_token"}, 403
 
     if form.validate_on_submit():
-
         existing_images = review.images
         keys = ["first", "second", "third"]
         for i in range(3):
@@ -106,6 +116,9 @@ def edit_review_by_id(id):
 #GET review by id
 @rev_routes.route("/<int:id>")
 def get_review_by_id(id):
+    """
+    This route returns the specified review as a dictionary with extra business, images, and review keys.
+    """
     if not current_user.is_authenticated:
         return {"error": "not authenticated"}, 401
 
@@ -136,7 +149,6 @@ def delete_review_image_by_id(id):
     if current_user.id != image.review.reviewer_id:
         return {"error": "not authorized"}, 403
 
-    # url = image.url
     remove_if_not_seeded_file_from_s3(image.url)
 
     db.session.delete(image)

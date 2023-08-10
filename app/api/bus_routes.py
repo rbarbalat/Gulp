@@ -353,6 +353,10 @@ def edit_business(id):
 #CREATE A REVIEW
 @bus_routes.route("/<int:id>/reviews", methods = ["POST"])
 def create_review(id):
+    """
+    This route created a review for the specified business and upon success returns
+    a review dictionary with extra images and reviewer keys.
+    """
     if not current_user.is_authenticated:
         return {"error": "not authenticated"}, 401
 
