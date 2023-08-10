@@ -15,18 +15,18 @@ bus_routes = Blueprint("businesses", __name__)
 @bus_routes.route("/")
 def get_all_businesses():
     """
-    This route returns an array of business dictionairies for all business in the db
+    This route returns an array of business dictionairies for all business in the db if there is no query.
+    If there is a query by name, will return an array of businesses whose name contains the query's value.
+    If there is a query by tag(s), will return an array of businesses that match at least 1 tag.
     """
-    # gets the val of the name key in the dict if it exists, otherwise sets key equal to "tags"
     name = request.args.get("name")
     if not name:
         tags = list(request.args.values())
 
     if name:
         all_bus = Business.query.filter( \
-            # func.lower(Business.name) == name
             func.lower(Business.name).contains(name)
-        )
+        ).all()
     elif tags:
         all_bus = Business.query.filter( \
             or_(
@@ -38,13 +38,9 @@ def get_all_businesses():
     else:
         all_bus = Business.query.all()
 
-    if not all_bus:
-        return [], 200
-
     lst = []
     for bus in all_bus:
         images = [image.to_dict() for image in bus.images]
-        # reviews = [review.to_dict() for review in bus.bus_reviews]
         average = [review.rating for review in bus.bus_reviews]
         numReviews = len(average)
         if len(average) == 0:
@@ -57,7 +53,6 @@ def get_all_businesses():
             "average": average,
             "numReviews": numReviews,
             "images": images
-            # "reviews": reviews
         })
     return lst, 200
 
@@ -75,8 +70,6 @@ def get_business_by_id(id):
         return {"error": "Business not found"}, 404
 
     images = [image.to_dict() for image in bus.images]
-    # reviews = [review.to_dict() for review in bus.bus_reviews]
-    # need to add image info and reviewer info to the reviews key!
 
     reviews = []
     reviewers = []
@@ -114,20 +107,16 @@ def get_business_by_id(id):
 def get_all_businesses_by_current_user():
     """
     This route returns an array of dictionaries of all the businesses
-    owned by the current user
+    owned by the current user.
     """
     if not current_user.is_authenticated:
         return {"error": "not authenticated"}, 401
 
-    #this is not an error, legit response
     all_bus = current_user.businesses
-    if not all_bus:
-        return [], 200
 
     lst = []
     for bus in all_bus:
         images = [image.to_dict() for image in bus.images]
-        # reviews = [review.to_dict() for review in bus.bus_reviews]
         average = [review.rating for review in bus.bus_reviews]
         numReviews = len(average)
         if len(average) == 0:
@@ -140,22 +129,22 @@ def get_all_businesses_by_current_user():
             "average": average,
             "numReviews": numReviews,
             "images": images
-            # "reviews": reviews
         })
     return lst, 200
 
 #GET ALL RECENT BUSINESSES
 @bus_routes.route("/recent/<int:limit>")
 def get_all_recent_businesses(limit):
-    all_bus = Business.query.order_by(desc(Business.created_at)).limit(limit).all()
+    """
+    This route returns a list of dictionaries with a max length specified by the route parameter
+    of the most recently created businesses.
+    """
 
-    if not all_bus:
-        return [], 200
+    all_bus = Business.query.order_by(desc(Business.created_at)).limit(limit).all()
 
     lst = []
     for bus in all_bus:
         images = [image.to_dict() for image in bus.images]
-        # reviews = [review.to_dict() for review in bus.bus_reviews]
         average = [review.rating for review in bus.bus_reviews]
         numReviews = len(average)
         if len(average) == 0:
@@ -168,7 +157,6 @@ def get_all_recent_businesses(limit):
             "average": average,
             "numReviews": numReviews,
             "images": images
-            # "reviews": reviews
         })
     return lst, 200
 
@@ -176,7 +164,8 @@ def get_all_recent_businesses(limit):
 @bus_routes.route("/<int:id>", methods = ["DELETE"])
 def delete_business_by_id(id):
     """
-    Delete a single business by id
+    Deletes a single business by id and also removes related business and review images from AWS.
+    Returns a dictionary with a message key specifying a succesful response.
     """
     if not current_user.is_authenticated:
         return {"error": "not authenticated"}, 401
@@ -188,8 +177,7 @@ def delete_business_by_id(id):
     if current_user.id != bus.owner_id:
         return {"error": "not authorized"}, 403
 
-    #remove the preview image and any optional images from aws
-    errors = []
+    #remove the preview image and any optional images from AWS
     urls = [image.url for image in bus.images]
     urls.append(bus.prev_url)   # prev_url always exists (nullable = False)
     for url in urls:
@@ -209,16 +197,18 @@ def delete_business_by_id(id):
 #CREATE A BUSINESS
 @bus_routes.route("/", methods = ["POST"])
 def create_business():
+    """
+    This route creates a business and upon successful creation returns the business as a dictionary along
+    with some extra keys.
+    """
     if not current_user.is_authenticated:
         return {"error": "not authenticated"}, 401
 
     form = BusForm()
-    #form["csrf_token"].data = request.cookies.get("csrf_token")
     if "csrf_token" in request.cookies:
         form["csrf_token"].data = request.cookies["csrf_token"]
     else:
-        return {"error": "Missing csrf_token"}, 404
-        # check this error code
+        return {"error": "Missing csrf_token"}, 403
 
     if form.validate_on_submit():
         prev_url = form.data["prev_url"]
@@ -271,7 +261,6 @@ def create_business():
             "reviews": [],
             "numReviews": 0,
             "average": None
-            #if owner is necessary
         }, 201
 
     return {"error": form.errors}, 400
@@ -279,6 +268,10 @@ def create_business():
 #EDIT A BUSINESS
 @bus_routes.route("/<int:id>", methods = ["PUT"])
 def edit_business(id):
+    """
+    This route edits a business and upon a successful edit returns the business as a dictionary along
+    with a key for the optional images.
+    """
     if not current_user.is_authenticated:
         return {"error": "Not authenticated"}, 401
 
@@ -291,12 +284,10 @@ def edit_business(id):
         return {"error": "Not authorized"}, 403
 
     form = EditBusForm()
-    #form["csrf_token"].data = request.cookies.get("csrf_token")
     if "csrf_token" in request.cookies:
         form["csrf_token"].data = request.cookies["csrf_token"]
     else:
-        return {"error": "Missing csrf_token"}, 404
-        # check this error code
+        return {"error": "Missing csrf_token"}, 403
 
     if form.validate_on_submit():
         # not using the name_exists validator in the edit_form so need this adjustment here
@@ -320,7 +311,6 @@ def edit_business(id):
         bus.tag_three = form.data["tag_three"]
         bus.updated_at = datetime.now()
 
-        errors = []
         # if the user did not change the picture, the frontend sends back nothing
         if form.data["prev_url"]:
             prev_url = form.data["prev_url"]
@@ -349,16 +339,12 @@ def edit_business(id):
                     if "url" in optional_upload:
                         new_image = BusImage(business_id = id, url = optional_upload["url"])
                         db.session.add(new_image)
-                        # db.session.add(new_image) updates bus.images but not existing_images....
-                        # so the length of existing_images is fixed to the original length of bus.images
-                        # meaning you don't need to db.session.commit() here
 
         db.session.commit()
         return {
             **bus.to_dict(),
             "images": [image.to_dict() for image in bus.images]
-            # "images": images,
-            # "images": retain_images
+            # review/reply/owner info already in the store and will be preserved
         }, 201
 
     return {"error": form.errors}, 400
@@ -375,12 +361,10 @@ def create_review(id):
         return {"error": "Business does not exist"}, 404
 
     form = ReviewForm()
-    #form["csrf_token"].data = request.cookies.get("csrf_token")
     if "csrf_token" in request.cookies:
         form["csrf_token"].data = request.cookies["csrf_token"]
     else:
-        return {"error": "Missing csrf_token"}, 404
-        # check this error code
+        return {"error": "Missing csrf_token"}, 403
 
     if form.validate_on_submit():
         # these keys come from the field names in the form
@@ -424,6 +408,10 @@ def create_review(id):
 #DELETE Business Image by Id
 @bus_routes.route("/images/<int:id>", methods = ["DELETE"])
 def delete_business_image_by_id(id):
+    """
+    This route deletes the specified optional business image and removes it from AWS.
+    Returns a dictionary with a message key indicating success.
+    """
     if not current_user.is_authenticated:
         return {"error": "not authenticated"}, 401
 
@@ -435,7 +423,6 @@ def delete_business_image_by_id(id):
         return {"error": "not authorized"}, 403
 
     remove_if_not_seeded_file_from_s3(image.url)
-    # url = image.url
 
     db.session.delete(image)
     db.session.commit()
@@ -447,22 +434,16 @@ def delete_business_image_by_id(id):
 def get_all_fav_businesses_by_current_user():
     """
     This route returns an array of dictionaries of all the businesses
-    owned by the current user
+    favorited by the current user.
     """
     if not current_user.is_authenticated:
         return {"error": "not authenticated"}, 401
 
-    #this is not an error, legit response
     all_bus = [favorite.business for favorite in current_user.favorites]
-    if not all_bus:
-        return [], 200
-
-    #maybe need to add a status key recheck
 
     lst = []
     for bus in all_bus:
         images = [image.to_dict() for image in bus.images]
-        # reviews = [review.to_dict() for review in bus.bus_reviews]
         average = [review.rating for review in bus.bus_reviews]
         numReviews = len(average)
         if len(average) == 0:
@@ -475,13 +456,16 @@ def get_all_fav_businesses_by_current_user():
             "average": average,
             "numReviews": numReviews,
             "images": images
-            # "reviews": reviews
         })
     return lst, 200
 
 #CREATE A FAVORITE
 @bus_routes.route("/<int:id>/favorites", methods = ["POST"])
 def create_favorite(id):
+    """
+    This route creates a favorite between the logged in and the specified business.  Returns a favorite
+    dictionary upon success.
+    """
     if not current_user.is_authenticated:
         return {"error": "not authenticated"}, 401
 
