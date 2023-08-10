@@ -89,11 +89,152 @@ Contact me on <a href="https://www.linkedin.com/in/roman-barbalat-00140a63/">Lin
 
 ## API
 
+### Users
+
+* `GET /api/users/`
+
+  * Returns a list of individual users as dictionaries.
+
+    ```
+    [
+      {
+        id: integer,
+        username: string,
+        email: string,
+        hashed_password: string,
+        url: string,
+        created_at: string
+      }
+    ]
+    ```
+
+* `GET /api/users/:userId`
+
+  * Returns the specified user as a dictionary.
+
+    ```
+    {
+      id: integer,
+      username: string,
+      email: string,
+      hashed_password: string,
+      url: string,
+      created_at: string
+    }
+    ```
+
+* `PATCH /api/users/image`
+
+  * Updates the logged in user's url (image) and returns the logged in user as a dictionary.
+
+    ```
+    {
+      id: integer,
+      username: string,
+      email: string,
+      hashed_password: string,
+      url: string,
+      created_at: string
+    }
+    ```
+
+* `DELETE /api/users/image`
+
+  * Changes the logged in user's url to the default user avatar and returns the logged in user as a dictionary.
+
+    ```
+    {
+      id: integer,
+      username: string,
+      email: string,
+      hashed_password: string,
+      url: string,
+      created_at: string
+    }
+    ```
+
+### Auth
+
+* `GET /api/auth/`
+
+  * If the user is logged in, a dictionary representing the user is returned.
+
+    ```
+    {
+      id: integer,
+      username: string,
+      email: string,
+      hashed_password: string,
+      url: string,
+      created_at: string,
+      numBusinesses: integer,
+      numReviews: integer,
+      favorites: [ {} ]
+    }
+    ```
+
+* `POST /api/auth/login`
+
+  * A logged out user is logged in and a dictionary representing the user is returned.
+
+    ```
+    {
+      id: integer,
+      username: string,
+      email: string,
+      hashed_password: string,
+      url: string,
+      created_at: string,
+      numBusinesses: integer,
+      numReviews: integer,
+      favorites: [ {} ]
+    }
+    ```
+
+* `GET /api/auth/logout`
+
+  * The logged in user is logged out and a dictionary representing a successful logout.
+
+    ```
+    {
+      message: 'User logged out'
+    }
+    ```
+
+* `POST /api/auth/signup`
+
+  * An account is created for the logged out user, the user is logged in and a dictionary representing the new user is returned.
+
+    ```
+    {
+      id: integer,
+      username: string,
+      email: string,
+      hashed_password: string,
+      url: string,
+      created_at: string,
+      numBusinesses: integer,
+      numReviews: integer,
+      favorites: [ {} ]
+    }
+    ```
+
+* `GET /api/auth/unauthorized`
+
+  * Returns a dictionary with an errors key when flask-login authentication fails.
+
+    ```
+    {
+      errors: ['Unauthorized']
+    }
+    ```
+
+
 ### Businesses
 
 * `GET /api/businesses/` (optional query)
 
-  * Returns a list of all the individual business dictionaries on the site.
+  * Returns a list of all the individual businesses as dictionaries on the site.
 
     ```
     [
