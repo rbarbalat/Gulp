@@ -148,17 +148,20 @@ def get_all_businesses_by_current_user():
     if not current_user.is_authenticated:
         return {"error": "not authenticated"}, 401
 
-    all_bus = current_user.businesses
+    businesses = Business.query.filter(
+                                    Business.owner_id == current_user.id,
+                                ).options(
+                                joinedload(Business.owner),
+                                joinedload(Business.images),
+                                joinedload(Business.reviews)
+                            ).all()
 
     lst = []
-    for bus in all_bus:
+    for bus in businesses:
         images = [image.to_dict() for image in bus.images]
-        average = [review.rating for review in bus.reviews]
-        numReviews = len(average)
-        if len(average) == 0:
-            average = None
-        else:
-            average = sum(average)/len(average)
+        ratings = [review.rating for review in bus.reviews]
+        numReviews = len(ratings)
+        average = sum(ratings)/len(ratings) if ratings else None
         lst.append({
             **bus.to_dict(),
             "owner": bus.owner.to_dict(),
@@ -176,17 +179,18 @@ def get_all_recent_businesses(limit):
     of the most recently created businesses.
     """
 
-    all_bus = Business.query.order_by(desc(Business.created_at)).limit(limit).all()
+    businesses = Business.query.options(
+                                joinedload(Business.owner),
+                                joinedload(Business.images),
+                                joinedload(Business.reviews)
+                            ).order_by(desc(Business.created_at)).limit(limit).all()
 
     lst = []
-    for bus in all_bus:
+    for bus in businesses:
         images = [image.to_dict() for image in bus.images]
-        average = [review.rating for review in bus.reviews]
-        numReviews = len(average)
-        if len(average) == 0:
-            average = None
-        else:
-            average = sum(average)/len(average)
+        ratings = [review.rating for review in bus.reviews]
+        numReviews = len(ratings)
+        average = sum(ratings)/len(ratings) if ratings else None
         lst.append({
             **bus.to_dict(),
             "owner": bus.owner.to_dict(),
@@ -194,7 +198,7 @@ def get_all_recent_businesses(limit):
             "numReviews": numReviews,
             "images": images
         })
-    return lst, 200
+    return lst
 
 #DELETE Business by Id
 @bus_routes.route("/<int:id>", methods = ["DELETE"])
@@ -479,17 +483,20 @@ def get_all_fav_businesses_by_current_user():
     if not current_user.is_authenticated:
         return {"error": "not authenticated"}, 401
 
-    all_bus = [favorite.business for favorite in current_user.favorites]
+    businesses = Business.query.join(Favorite).filter(
+                                    Favorite.user_id == current_user.id,
+                                ).options(
+                                joinedload(Business.owner),
+                                joinedload(Business.images),
+                                joinedload(Business.reviews)
+                            ).all()
 
     lst = []
-    for bus in all_bus:
+    for bus in businesses:
         images = [image.to_dict() for image in bus.images]
-        average = [review.rating for review in bus.reviews]
-        numReviews = len(average)
-        if len(average) == 0:
-            average = None
-        else:
-            average = sum(average)/len(average)
+        ratings = [review.rating for review in bus.reviews]
+        numReviews = len(ratings)
+        average = sum(ratings)/len(ratings) if ratings else None
         lst.append({
             **bus.to_dict(),
             "owner": bus.owner.to_dict(),
@@ -498,6 +505,7 @@ def get_all_fav_businesses_by_current_user():
             "images": images
         })
     return lst, 200
+
 
 #CREATE A FAVORITE
 @bus_routes.route("/<int:id>/favorites", methods = ["POST"])
