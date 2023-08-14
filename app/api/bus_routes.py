@@ -25,29 +25,37 @@ def get_all_businesses():
         tags = list(request.args.values())
 
     if name:
-        all_bus = Business.query.filter( \
-            func.lower(Business.name).contains(name)
-        ).all()
+        businesses = Business.query.filter(
+                                func.lower(Business.name).contains(name)
+                            ).options(
+                                joinedload(Business.owner),
+                                joinedload(Business.images),
+                                joinedload(Business.reviews)
+                            ).all()
     elif tags:
-        all_bus = Business.query.filter( \
-            or_(
-                func.lower(Business.tag_one).in_(tags),
-                func.lower(Business.tag_two).in_(tags),
-                func.lower(Business.tag_three).in_(tags)
-            )
-        )
+        businesses = Business.query.filter( \
+                        or_(
+                            func.lower(Business.tag_one).in_(tags),
+                            func.lower(Business.tag_two).in_(tags),
+                            func.lower(Business.tag_three).in_(tags)
+                        )).options(
+                            joinedload(Business.owner),
+                            joinedload(Business.images),
+                            joinedload(Business.reviews)
+                        ).all()
     else:
-        all_bus = Business.query.all()
+        businesses = Business.query.options(
+                                joinedload(Business.owner),
+                                joinedload(Business.images),
+                                joinedload(Business.reviews)
+                            ).all()
 
     lst = []
-    for bus in all_bus:
+    for bus in businesses:
         images = [image.to_dict() for image in bus.images]
-        average = [review.rating for review in bus.reviews]
-        numReviews = len(average)
-        if len(average) == 0:
-            average = None
-        else:
-            average = sum(average)/len(average)
+        ratings = [review.rating for review in bus.reviews]
+        numReviews = len(ratings)
+        average = sum(ratings)/len(ratings) if ratings else None
         lst.append({
             **bus.to_dict(),
             "owner": bus.owner.to_dict(),
@@ -100,43 +108,6 @@ def get_business_by_id(id):
         "average": average
     }, 200
 
-    # bus = Business.query.get(id)
-    # if not bus:
-    #     return {"error": "Business not found"}, 404
-
-    # images = [image.to_dict() for image in bus.images]
-
-
-    # reviews = []
-    # reviewers = []
-    # for review in bus.reviews:
-    #     reviewers.append(review.reviewer_id)
-    #     rev_images = [image.to_dict() for image in review.images]
-    #     reviews.append({
-    #        **review.to_dict(),
-    #        "images": rev_images,
-    #        "reviewer": {
-    #            **review.reviewer.to_dict(),
-    #             "numReviews": len(review.reviewer.user_reviews)
-    #            },
-    #         "replies": [reply.to_dict() for reply in review.replies]
-    #     })
-
-    # average = [review["rating"] for review in reviews ]
-    # if len(average) == 0:
-    #     average = None
-    # else:
-    #     average = sum(average)/len(average)
-
-    # return {
-    #     **bus.to_dict(),
-    #     "owner": bus.owner.to_dict(),
-    #     "reviews": reviews,
-    #     "images": images,
-    #     "numReviews": len(reviews),
-    #     "average": average,
-    #     "reviewers": reviewers
-    # }, 200
 
 #GET ALL BUSINESSES BY CURRENT USER
 @bus_routes.route("/current")
@@ -529,64 +500,3 @@ def create_favorite(id):
     db.session.add(fav)
     db.session.commit()
     return fav.to_dict()
-
-
-
-#from sqlalchemy.orm import joinedload, relationship
-
-#all bus eager
-@bus_routes.route("/eager")
-def get_all_businesses_eager():
-    businesses = Business.query.options(
-                                joinedload(Business.owner),
-                                joinedload(Business.images),
-                                joinedload(Business.reviews)
-                            ).all()
-
-    lst = []
-    for bus in businesses:
-        images = [image.to_dict() for image in bus.images]
-        ratings = [review.rating for review in bus.reviews]
-        numReviews = len(ratings)
-        average = sum(ratings)/len(ratings) if ratings else None
-        lst.append({
-            **bus.to_dict(),
-            "owner": bus.owner.to_dict(),
-            "average": average,
-            "numReviews": numReviews,
-            "images": images
-        })
-    return lst
-
-#single business eager
-@bus_routes.route("/<int:id>/eager")
-def get_business_by_id_eager(id):
-
-    bus = Business.query.filter(Business.id == id).options(
-                                    joinedload(Business.owner),
-                                    joinedload(Business.images),
-                                    joinedload(Business.reviews).options(
-                                    joinedload(Review.replies),
-                                    joinedload(Review.reviewer)
-                                )).first()
-
-    if not bus:
-        return {"error": "Business not found"}, 404
-
-    reviews = [{
-                    **review.to_dict(),
-                    "reviewer": review.reviewer.to_dict(),
-                    "replies": [reply.to_dict() for reply in review.replies]
-                }
-                    for review in bus.reviews ]
-
-    ratings = [ review["rating"] for review in reviews ]
-    average = sum(ratings)/len(ratings) if ratings else None
-    return {
-        **bus.to_dict(),
-        "owner": bus.owner.to_dict(),
-        "images": [image.to_dict() for image in bus.images],
-        "reviews": reviews,
-        "numReviews": len(reviews),
-        "average": average
-    }
