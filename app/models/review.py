@@ -17,7 +17,7 @@ class Review(db.Model):
     business_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('businesses.id')), nullable=False)
 
     reviewer = db.relationship("User", back_populates="user_reviews")
-    business = db.relationship("Business", back_populates="bus_reviews")
+    business = db.relationship("Business", back_populates="reviews")
 
     images = db.relationship("RevImage", back_populates="review", cascade="all, delete-orphan")
 

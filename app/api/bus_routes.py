@@ -6,6 +6,7 @@ from app.forms.bus_form import BusForm
 from app.forms.edit_bus_form import EditBusForm
 from app.forms.review_form import ReviewForm
 from sqlalchemy import or_, func, desc
+from sqlalchemy.orm import joinedload
 
 from datetime import datetime
 
@@ -41,7 +42,7 @@ def get_all_businesses():
     lst = []
     for bus in all_bus:
         images = [image.to_dict() for image in bus.images]
-        average = [review.rating for review in bus.bus_reviews]
+        average = [review.rating for review in bus.reviews]
         numReviews = len(average)
         if len(average) == 0:
             average = None
@@ -73,7 +74,7 @@ def get_business_by_id(id):
 
     reviews = []
     reviewers = []
-    for review in bus.bus_reviews:
+    for review in bus.reviews:
         reviewers.append(review.reviewer_id)
         rev_images = [image.to_dict() for image in review.images]
         reviews.append({
@@ -117,7 +118,7 @@ def get_all_businesses_by_current_user():
     lst = []
     for bus in all_bus:
         images = [image.to_dict() for image in bus.images]
-        average = [review.rating for review in bus.bus_reviews]
+        average = [review.rating for review in bus.reviews]
         numReviews = len(average)
         if len(average) == 0:
             average = None
@@ -145,7 +146,7 @@ def get_all_recent_businesses(limit):
     lst = []
     for bus in all_bus:
         images = [image.to_dict() for image in bus.images]
-        average = [review.rating for review in bus.bus_reviews]
+        average = [review.rating for review in bus.reviews]
         numReviews = len(average)
         if len(average) == 0:
             average = None
@@ -184,7 +185,7 @@ def delete_business_by_id(id):
         remove_if_not_seeded_file_from_s3(url)
 
     # deleting a business will cascade to delete all of its reviews so need to remove those images as well
-    for review in bus.bus_reviews:
+    for review in bus.reviews:
         urls = [image.url for image in review.images]
         for url in urls:
             remove_if_not_seeded_file_from_s3(url)
@@ -448,7 +449,7 @@ def get_all_fav_businesses_by_current_user():
     lst = []
     for bus in all_bus:
         images = [image.to_dict() for image in bus.images]
-        average = [review.rating for review in bus.bus_reviews]
+        average = [review.rating for review in bus.reviews]
         numReviews = len(average)
         if len(average) == 0:
             average = None
@@ -485,3 +486,61 @@ def create_favorite(id):
     db.session.add(fav)
     db.session.commit()
     return fav.to_dict()
+
+
+
+#from sqlalchemy.orm import joinedload, relationship
+
+#all bus eager
+@bus_routes.route("/eager")
+def get_all_businesses_eager():
+    businesses = Business.query.options(
+                                joinedload(Business.reviews),
+                                joinedload(Business.images),
+                                joinedload(Business.owner)
+                            ).all()
+
+    lst = []
+    for bus in businesses:
+        images = [image.to_dict() for image in bus.images]
+        ratings = [review.rating for review in bus.reviews]
+        numReviews = len(ratings)
+        average = sum(ratings)/len(ratings) if ratings else None
+        lst.append({
+            **bus.to_dict(),
+            "owner": bus.owner.to_dict(),
+            "average": average,
+            "numReviews": numReviews,
+            "images": images
+        })
+    return lst
+
+#single business eager
+@bus_routes.route("/<int:id>/eager")
+def get_business_by_id_eager(id):
+    bus = Business.query.filter(Business.id == id).options(
+                                    joinedload(Business.reviews),
+                                    joinedload(Business.images),
+                                    joinedload(Business.owner)
+                                ).first()
+
+    if not bus:
+        return {"error": "Business not found"}, 404
+
+    reviews = [{
+                    **review.to_dict(),
+                    "reviewer": review.reviewer.to_dict(),
+                    "replies": [reply.to_dict() for reply in review.replies]
+                }
+                    for review in bus.reviews ]
+
+    ratings = [ review["rating"] for review in reviews ]
+    average = sum(ratings)/len(ratings) if ratings else None
+    return {
+        **bus.to_dict(),
+        "owner": bus.owner.to_dict(),
+        "images": [image.to_dict() for image in bus.images],
+        "reviews": reviews,
+        "numReviews": len(reviews),
+        "average": average
+    }

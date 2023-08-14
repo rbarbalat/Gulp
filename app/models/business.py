@@ -25,7 +25,7 @@ class Business(db.Model):
 
     owner = db.relationship("User", back_populates="businesses")
 
-    bus_reviews = db.relationship("Review", back_populates="business", cascade="all, delete-orphan")
+    reviews = db.relationship("Review", back_populates="business", cascade="all, delete-orphan")
 
     images = db.relationship("BusImage", back_populates="business", cascade="all, delete-orphan")
 
