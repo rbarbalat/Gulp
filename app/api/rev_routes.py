@@ -5,6 +5,8 @@ from app.models import db, Review, RevImage, Reply
 from app.forms.review_form import ReviewForm
 from app.forms.reply_form import ReplyForm
 
+from sqlalchemy.orm import joinedload
+
 from datetime import datetime
 
 rev_routes = Blueprint("reviews", __name__)
@@ -19,13 +21,20 @@ def get_all_reviews_by_current_user():
     if not current_user.is_authenticated:
         return {"error": "not authenticated"}, 401
 
-    reviews = current_user.user_reviews
-    numReviews = len(reviews)
+    reviews = Review.query.filter(
+                Review.reviewer_id == current_user.id
+            ).options(
+                joinedload(Review.business),
+                joinedload(Review.images)
+            ).all()
+
+    reviewer =  { **current_user.to_dict(), "numReviews": len(reviews) }
+
     return [{
                 **review.to_dict(),
                 "business": review.business.to_dict(),
                 "images": [ image.to_dict() for image in review.images ],
-                "reviewer": { **current_user.to_dict(), "numReviews": numReviews }
+                "reviewer": reviewer
             }
                 for review in reviews]
 
@@ -122,7 +131,12 @@ def get_review_by_id(id):
     if not current_user.is_authenticated:
         return {"error": "not authenticated"}, 401
 
-    review = Review.query.get(id)
+    # review = Review.query.get(id)
+    review = Review.query.filter(Review.id == id).options(
+        joinedload(Review.business),
+        joinedload(Review.images)
+    ).first()
+
     if not review:
         return {"error": "Review not found"}, 404
 
