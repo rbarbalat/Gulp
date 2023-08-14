@@ -72,6 +72,7 @@ def get_business_by_id(id):
 
     images = [image.to_dict() for image in bus.images]
 
+
     reviews = []
     reviewers = []
     for review in bus.reviews:
@@ -495,10 +496,11 @@ def create_favorite(id):
 @bus_routes.route("/eager")
 def get_all_businesses_eager():
     businesses = Business.query.options(
-                                joinedload(Business.reviews),
+                                joinedload(Business.owner),
                                 joinedload(Business.images),
-                                joinedload(Business.owner)
-                            ).all()
+                                joinedload(Business.reviews).options(
+                                joinedload(Review.replies)
+                            )).all()
 
     lst = []
     for bus in businesses:
@@ -518,11 +520,14 @@ def get_all_businesses_eager():
 #single business eager
 @bus_routes.route("/<int:id>/eager")
 def get_business_by_id_eager(id):
+
     bus = Business.query.filter(Business.id == id).options(
-                                    joinedload(Business.reviews),
+                                    joinedload(Business.owner),
                                     joinedload(Business.images),
-                                    joinedload(Business.owner)
-                                ).first()
+                                    joinedload(Business.reviews).options(
+                                    joinedload(Review.replies),
+                                    joinedload(Review.reviewer)
+                                )).first()
 
     if not bus:
         return {"error": "Business not found"}, 404
