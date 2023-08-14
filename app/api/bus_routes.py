@@ -532,9 +532,8 @@ def get_all_businesses_eager():
     businesses = Business.query.options(
                                 joinedload(Business.owner),
                                 joinedload(Business.images),
-                                joinedload(Business.reviews).options(
-                                joinedload(Review.replies)
-                            )).all()
+                                joinedload(Business.reviews)
+                            ).all()
 
     lst = []
     for bus in businesses:
