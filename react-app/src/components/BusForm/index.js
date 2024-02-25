@@ -49,8 +49,12 @@ export default function BusForm({edit})
         if(edit) dispatch(thunkLoadSingleBusiness(business_id));
     }, [render])
 
-    //handle the case where you are on the edit form with pre-loaded data
-    //and click the link at the top to add a new business, prevent stat var from keeping vals from edit
+    // handle the case where you are on the edit form with pre-loaded data
+    // and click the link at the top to add a new business, prevent stat var from keeping vals from edit
+    // link is to a diff url but that url is routed to the SAME COMPONENT
+    // so state variables retain their values just as they would on a regular rerender (THIS IS NOT A MOUNT, 1ST RENDER)
+    // so all of them need to be reSET inside a useEffect conditioned on !edit which runs when [edit] changes
+    // first, second, third are the image values of the file input,look at the handleImage function
     useEffect(() => {
         //need to do this only when on the edit form and click add a business in the navbar
         if(!edit)
@@ -72,6 +76,8 @@ export default function BusForm({edit})
 
             //the file inputs aren't set to have a value equal to a state variable
             //so they need to be reset separately
+
+            //first_file.current is equiv to doc.queryselector()
             document.querySelector("#file_input_1").value = "";
             document.querySelector("#file_input_2").value = "";
             document.querySelector("#file_input_3").value = "";
