@@ -5,7 +5,6 @@ export const UPDATE_REPLY = 'reviews/UPDATE_REPLY';
 export const REMOVE_REPLY = 'reviews/REMOVE_REPLY';
 
 const actionLoadReplies = (replies) => {
-    //reviews is an array of review objects
     return {
         type: LOAD_REPLIES,
         replies
@@ -13,18 +12,17 @@ const actionLoadReplies = (replies) => {
 }
 
 export const thunkLoadRepliesOfUser = () => async (dispatch) => {
-    try {
-        const res = await fetch("/api/replies/current");
-        if(res.ok)
-        {
-            const serverData = await res.json();
-            dispatch(actionLoadReplies(serverData));
-            return serverData;
-        } else {
-            const errorData = await res.json();
-            return errorData;
-        }
-    } catch (error){
+    const res = await fetch("/api/replies/current");
+    if(res.ok)
+    {
+        const serverData = await res.json();
+        dispatch(actionLoadReplies(serverData));
+        return serverData;
+    }
+    else
+    {
+        const errorData = await res.json();
+        return errorData;
     }
 }
 
@@ -36,23 +34,23 @@ const actionReceiveReply = (reply) => {
 }
 
 export const thunkReceiveReply = (review_id, reply) => async (dispatch) => {
-    try {
-        const options = {
-            method: "Post",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(reply)
-        };
-        const res = await fetch(`/api/reviews/${review_id}/replies`, options);
-        if(res.ok)
-        {
-            const serverData = await res.json();
-            dispatch(actionReceiveReply(serverData));
-            return serverData;
-        }else {
-            const errorData = await res.json();
-            return errorData;
-        }
-    } catch (error){
+    const options = {
+        method: "Post",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(reply)
+    };
+
+    const res = await fetch(`/api/reviews/${review_id}/replies`, options);
+    if(res.ok)
+    {
+        const serverData = await res.json();
+        dispatch(actionReceiveReply(serverData));
+        return serverData;
+    }
+    else
+    {
+        const errorData = await res.json();
+        return errorData;
     }
 }
 
@@ -62,24 +60,25 @@ const actionUpdateReply = (reply) => {
         reply
     }
 }
+
 export const thunkUpdateReply = (reply_id, reply) => async (dispatch) => {
-    try {
-        const options = {
-            method: "Put",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(reply)
-        }
-        const res = await fetch(`/api/replies/${reply_id}`, options);
-        if(res.ok)
-        {
-            const serverData = await res.json();
-            dispatch(actionUpdateReply(serverData));
-            return serverData;
-        }else {
-            const errorData = await res.json()
-            return errorData;
-        }
-    } catch (error){
+    const options = {
+        method: "Put",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(reply)
+    };
+
+    const res = await fetch(`/api/replies/${reply_id}`, options);
+    if(res.ok)
+    {
+        const serverData = await res.json();
+        dispatch(actionUpdateReply(serverData));
+        return serverData;
+    }
+    else
+    {
+        const errorData = await res.json()
+        return errorData;
     }
 }
 
@@ -90,22 +89,23 @@ const actionDeleteReply = (reply_id) => {
         reply_id
     }
 }
+
 export const thunkDeleteReply = (id) => async (dispatch) => {
     const options = {
         method: "Delete"
+    };
+
+    const res = await fetch(`/api/replies/${id}`, options);
+    if(res.ok)
+    {
+        const serverData = await res.json();
+        dispatch(actionDeleteReply(id));
+        return serverData;
     }
-    try{
-        const res = await fetch(`/api/replies/${id}`, options);
-        if(res.ok)
-        {
-            const serverData = await res.json();
-            dispatch(actionDeleteReply(id));
-            return serverData;
-        } else {
-            const errorData = await res.json();
-            return errorData;
-        }
-    } catch(error){
+    else
+    {
+        const errorData = await res.json();
+        return errorData;
     }
 }
 

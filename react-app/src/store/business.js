@@ -5,89 +5,83 @@ export const UPDATE_BUS = 'businesses/UPDATE_BUS';
 export const REMOVE_BUS = 'businesses/REMOVE_BUS';
 
 const actionLoadBusinesses = (businesses) => {
-    //businesses is an array of business objects
     return {
         type: LOAD_BUSINESSES,
         businesses
     }
 }
 export const thunkLoadBusinesses = () => async (dispatch) => {
-    try {
-        const res = await fetch("/api/businesses/");
-        if(res.ok)
-        {
-            const serverData = await res.json();
-            dispatch(actionLoadBusinesses(serverData));
-            return serverData;
-        } else {
-            const errorData = await res.json();
-            return errorData;
-        }
-    } catch (error){
+    const res = await fetch("/api/businesses/");
+    if(res.ok)
+    {
+        const serverData = await res.json();
+        dispatch(actionLoadBusinesses(serverData));
+        return serverData;
+    }
+    else
+    {
+        const errorData = await res.json();
+        return errorData;
     }
 }
 
 export const thunkLoadBusinessesQuery = (query) => async (dispatch) => {
-    try {
-        const res = await fetch(`/api/businesses/${query}`);
-        if(res.ok)
-        {
-            const serverData = await res.json();
-            dispatch(actionLoadBusinesses(serverData));
-            return serverData;
-        } else {
-            const errorData = await res.json();
-            return errorData;
-        }
-    } catch (error){
+    const res = await fetch(`/api/businesses/${query}`);
+    if(res.ok)
+    {
+        const serverData = await res.json();
+        dispatch(actionLoadBusinesses(serverData));
+        return serverData;
+    }
+    else
+    {
+        const errorData = await res.json();
+        return errorData;
     }
 }
 
 export const thunkLoadRecentBusinesses = (limit) => async (dispatch) => {
-    try {
-        const res = await fetch(`/api/businesses/recent/${limit}`);
-        if(res.ok)
-        {
-            const serverData = await res.json();
-            dispatch(actionLoadBusinesses(serverData));
-            return serverData;
-        } else {
-            const errorData = await res.json();
-            return errorData;
-        }
-    } catch (error){
+    const res = await fetch(`/api/businesses/recent/${limit}`);
+    if(res.ok)
+    {
+        const serverData = await res.json();
+        dispatch(actionLoadBusinesses(serverData));
+        return serverData;
+    }
+    else
+    {
+        const errorData = await res.json();
+        return errorData;
     }
 }
 
 export const thunkLoadBusinessesOfUser = () => async (dispatch) => {
-    try {
-        const res = await fetch("/api/businesses/current");
-        if(res.ok)
-        {
-            const serverData = await res.json();
-            dispatch(actionLoadBusinesses(serverData));
-            return serverData;
-        } else {
-            const errorData = await res.json();
-            return errorData;
-        }
-    } catch (error){
+    const res = await fetch("/api/businesses/current");
+    if(res.ok)
+    {
+        const serverData = await res.json();
+        dispatch(actionLoadBusinesses(serverData));
+        return serverData;
+    }
+    else
+    {
+        const errorData = await res.json();
+        return errorData;
     }
 }
 
 export const thunkLoadFavBusinessesOfUser = () => async (dispatch) => {
-    try {
-        const res = await fetch("/api/businesses/current/favorites");
-        if(res.ok)
-        {
-            const serverData = await res.json();
-            dispatch(actionLoadBusinesses(serverData));
-            return serverData;
-        } else {
-            const errorData = await res.json();
-            return errorData;
-        }
-    } catch (error){
+    const res = await fetch("/api/businesses/current/favorites");
+    if(res.ok)
+    {
+        const serverData = await res.json();
+        dispatch(actionLoadBusinesses(serverData));
+        return serverData;
+    }
+    else
+    {
+        const errorData = await res.json();
+        return errorData;
     }
 }
 
@@ -98,18 +92,17 @@ const actionLoadSingleBusiness = (singleBus) => {
     }
 }
 export const thunkLoadSingleBusiness = (business_id) => async (dispatch) => {
-    try {
-        const res = await fetch(`/api/businesses/${business_id}`);
-        if(res.ok)
-        {
-            const serverData = await res.json();
-            dispatch(actionLoadSingleBusiness(serverData));
-            return serverData;
-        } else{
-            const errorData = await res.json();
-            return errorData;
-        }
-    } catch (error){
+    const res = await fetch(`/api/businesses/${business_id}`);
+    if(res.ok)
+    {
+        const serverData = await res.json();
+        dispatch(actionLoadSingleBusiness(serverData));
+        return serverData;
+    }
+    else
+    {
+        const errorData = await res.json();
+        return errorData;
     }
 }
 
@@ -120,22 +113,22 @@ const actionReceiveBusiness = (business) => {
     }
 }
 export const thunkReceiveBusiness = (business) => async (dispatch) => {
-    try {
-        const options = {
-            method: "Post",
-            body: business
-        }
-        const res = await fetch(`/api/businesses/`, options);
-        if(res.ok)
-        {
-            const serverData = await res.json()
-            dispatch(actionReceiveBusiness(serverData))
-            return serverData;
-        }else {
-            const errorData = await res.json()
-            return errorData;
-        }
-    } catch (error){
+    const options = {
+        method: "Post",
+        body: business
+    }
+
+    const res = await fetch(`/api/businesses/`, options);
+    if(res.ok)
+    {
+        const serverData = await res.json()
+        dispatch(actionReceiveBusiness(serverData))
+        return serverData;
+    }
+    else
+    {
+        const errorData = await res.json()
+        return errorData;
     }
 }
 const actionUpdateBusiness = (business) => {
@@ -145,22 +138,21 @@ const actionUpdateBusiness = (business) => {
     }
 }
 export const thunkUpdateBusiness = (id, business) => async (dispatch) => {
-    try {
-        const options = {
-            method: "Put",
-            body: business
-        }
-        const res = await fetch(`/api/businesses/${id}`, options);
-        if(res.ok)
-        {
-            const serverData = await res.json()
-            dispatch(actionUpdateBusiness(serverData))
-            return serverData;
-        }else {
-            const errorData = await res.json()
-            return errorData;
-        }
-    } catch (error){
+    const options = {
+        method: "Put",
+        body: business
+    }
+
+    const res = await fetch(`/api/businesses/${id}`, options);
+    if(res.ok)
+    {
+        const serverData = await res.json()
+        dispatch(actionUpdateBusiness(serverData))
+        return serverData;
+    }else
+    {
+        const errorData = await res.json()
+        return errorData;
     }
 }
 const actionDeleteBusiness = (bus_id) => {
@@ -173,18 +165,18 @@ export const thunkDeleteBusiness = (id) => async (dispatch) => {
     const options = {
         method: "Delete"
     }
-    try{
-        const res = await fetch(`/api/businesses/${id}`, options);
-        if(res.ok)
-        {
-            const serverData = await res.json();
-            dispatch(actionDeleteBusiness(id));
-            return serverData;
-        } else {
-            const errorData = await res.json();
-            return errorData;
-        }
-    } catch(error){
+
+    const res = await fetch(`/api/businesses/${id}`, options);
+    if(res.ok)
+    {
+        const serverData = await res.json();
+        dispatch(actionDeleteBusiness(id));
+        return serverData;
+    }
+    else
+    {
+        const errorData = await res.json();
+        return errorData;
     }
 }
 
