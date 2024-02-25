@@ -4,7 +4,7 @@ from app.models import db, Favorite
 
 fav_routes = Blueprint("favorites", __name__)
 
-#DELETE favorite by Id
+
 @fav_routes.route("/<int:id>", methods = ["DELETE"])
 def delete_fav_by_id(id):
     """

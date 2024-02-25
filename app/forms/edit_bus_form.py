@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, BooleanField
+from wtforms import StringField
 from wtforms.validators import URL, DataRequired, ValidationError, Length, Optional
 from flask_wtf.file import FileField, FileAllowed, FileRequired
 from app.api.aws import ALLOWED_EXTENSIONS
@@ -17,8 +17,9 @@ def bus_name_exists(form, field):
         raise ValidationError('Business name is already in use.')
 
 class EditBusForm(FlaskForm):
-    # the bus_name_exists was blocking edits of a business with an unchanged name
-    # b/c it already exists in the db, moved that check inside the edit route handler
+    # bus_name_exists validator was blocking edits of an existing business with an unchanged name on the create bus form
+    # b/c it already exists in the db, moved that check inside the edit route function
+    # and made a separate form
     name = StringField("name", validators=[DataRequired(), Length(min=3, max=20)], )
     description = StringField("description", validators=[DataRequired(), Length(min=20, max=700)] )
     address = StringField("address", validators=[DataRequired(), Length(min=4, max=30)] )
@@ -29,7 +30,7 @@ class EditBusForm(FlaskForm):
     tag_two = StringField("tag_two", validators=[DataRequired(), tag_two, Length(min=3, max=13)] )
     tag_three = StringField("tag_three", validators=[DataRequired(), tag_three, Length(min=3, max=13)] )
 
-    #changed prev_url to optional in the edit form
+    #prev_url to optional here, mandatory in the create bus form
     prev_url = FileField("preview image", validators=[Optional(), FileRequired(), FileAllowed(list(ALLOWED_EXTENSIONS))])
 
     first = FileField("preview image", validators=[Optional(), FileRequired(), FileAllowed(list(ALLOWED_EXTENSIONS))])

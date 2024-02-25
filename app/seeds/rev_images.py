@@ -1,8 +1,5 @@
 from app.models import db, RevImage, environment, SCHEMA
 from sqlalchemy.sql import text
-from faker import Faker
-fake = Faker()
-from random import choice, sample, randint
 
 def seed_rev_images(reviews):
     urls = []
@@ -45,7 +42,6 @@ def seed_rev_images(reviews):
     ]
     urls.extend(bus_urls)
 
-    # 1 p i sapori here, had 2ps in the bus images and mandatory preview image
     bus_urls = [
         "https://bucket-rb22.s3.us-east-2.amazonaws.com/sapori_rev_1.jpeg",
         "https://bucket-rb22.s3.us-east-2.amazonaws.com/sapori_rev_2.jpeg",
@@ -95,7 +91,6 @@ def seed_rev_images(reviews):
             db.session.add(rev_image)
 
     db.session.commit()
-    # print("seeded review images")
 
 
 def undo_rev_images():

@@ -1,8 +1,5 @@
-from app.models import db, Business, BusImage, environment, SCHEMA
+from app.models import db, BusImage, environment, SCHEMA
 from sqlalchemy.sql import text
-from faker import Faker
-fake = Faker()
-from random import choice, sample, randint
 
 def seed_bus_images(businesses):
     urls_0 = [
@@ -43,7 +40,6 @@ def seed_bus_images(businesses):
             db.session.add(bus_image)
 
     db.session.commit()
-    # print("seeded business images")
 
 
 def undo_bus_images():

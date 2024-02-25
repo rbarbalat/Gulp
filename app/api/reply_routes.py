@@ -7,7 +7,7 @@ from datetime import datetime
 
 reply_routes = Blueprint("replies", __name__)
 
-#EDIT A REPLY
+
 @reply_routes.route("/<int:id>", methods = ["PUT"])
 def edit_reply_by_id(id):
     """
@@ -38,7 +38,7 @@ def edit_reply_by_id(id):
 
     return {"error": form.errors}, 400
 
-#DELETE Reply by Id
+
 @reply_routes.route("/<int:id>", methods = ["DELETE"])
 def delete_reply_by_id(id):
     """

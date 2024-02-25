@@ -1,8 +1,6 @@
-from app.models import db, User, Business, Review, RevImage, environment, SCHEMA
+from app.models import db, Review, environment, SCHEMA
 from sqlalchemy.sql import text
-from faker import Faker
-fake = Faker()
-from random import choice, sample, randint
+from random import randint
 from datetime import datetime
 
 def seed_reviews(users, businesses):
@@ -52,8 +50,8 @@ def seed_reviews(users, businesses):
     reviews = [rev1, rev2, rev3, rev4, rev5, rev6]
     ratings = [rat1, rat2, rat3, rat4, rat5, rat6]
     lst = []
-    #businesses[i] is owned by user[i]
-    #for now 6 businesses, so users[6:] is a list of non-owner users
+
+    #users[6:] is a list of non-owner users
     for i in range(len(businesses)):
         for j in range(3):
             review = Review(
@@ -67,7 +65,6 @@ def seed_reviews(users, businesses):
             lst.append(review)
 
     db.session.commit()
-    # print("seeded reviews")
     return lst
 
 

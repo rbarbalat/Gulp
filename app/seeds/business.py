@@ -1,8 +1,5 @@
-from app.models import db, User, Business, BusImage, environment, SCHEMA
+from app.models import db, Business, environment, SCHEMA
 from sqlalchemy.sql import text
-from faker import Faker
-fake = Faker()
-from random import choice, sample, randint
 from datetime import datetime
 
 def seed_businesses(users):
@@ -74,7 +71,6 @@ def seed_businesses(users):
     descriptions[4] = "At Sunda, we pride ourselves on taking classic, culturally-important dishes from all over Southeast Asia and modernizing each one by upgrading ingredients, cooking techniques and presentation to create a tasting experience that is completely new while still retaining the deep-rooted spirit of the original."
     descriptions[5] = "It was 1987. Rick Bayless and his wife, Deann Groen Bayless, had just returned from an extended stay in Mexico, where they had been researching their first book. They wanted a restaurant that tasted and felt like their travels. So they hung colorful Mexican folk art on the walls, turned up the Mariachi music and packed the menu with the foods that reminded them of their travels:  tangy tomatillos, rich black beans, fiery chiles. And that’s how it’s been ever since. Not that we haven’t changed. We change all the time, adding new authentic flavors to our menus, developing new relationships with the Midwestern farmers who provide us with everything from summer squash to maple syrup to goat. But at the end of the day, no matter how inventive our techniques or local our ingredients, our food still transports you to the same place: the colorful, vibrant kitchens of Mexico."
 
-    #created_at = datetime(2023, randint(1,6), randint(1,30), 15)
     lst = []
     for i in range(6):
         bus = Business(
@@ -90,13 +86,11 @@ def seed_businesses(users):
             state = states[i],
             created_at = datetime(2022, 12, i + 1, 15)
             #all reviews are seeded in the first 6m of 2023
-            #15 represents 3pm, just a random choice
         )
         db.session.add(bus)
         lst.append(bus)
 
     db.session.commit()
-    # print("seeded businesses")
     return lst
 
 

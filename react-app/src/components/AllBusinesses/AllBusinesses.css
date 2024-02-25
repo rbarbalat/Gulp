@@ -58,7 +58,6 @@
 }
 
 .all_bus_sort_option.active_sort_all{
-    /* double class to override previous one although order is also enough*/
     color:black;
     font-weight:bold;
 }

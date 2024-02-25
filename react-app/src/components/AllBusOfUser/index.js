@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
-// import { useHistory } from "react-router-dom";
 import { thunkLoadBusinessesOfUser } from "../../store/business";
 import BusCard from "../BusCard";
 
@@ -9,7 +8,6 @@ import "./AllBusOfUser.css";
 
 export default function AllBusOfUser()
 {
-    //initialized to an empty array before the useEffect runs, singe intialState = {}
     const businesses = useSelector(state => Object.values(state.businesses.allBus))
     const [loaded, setLoaded] = useState(false);
     const user = useSelector(state => state.session.user)
@@ -28,7 +26,6 @@ export default function AllBusOfUser()
         fetchData();
     }, [dispatch])
 
-    //might be zero b/c it hasn't loaded or it might be zero b/c he has no businesses
     if(loaded && businesses.length === 0)
     {
         return <div className="start_business" onClick={start_bus}>Start you first business!</div>

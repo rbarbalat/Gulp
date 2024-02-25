@@ -11,7 +11,7 @@ from datetime import datetime
 
 rev_routes = Blueprint("reviews", __name__)
 
-#GET ALL REVIEWS BY CURRENT USER
+
 @rev_routes.route("/current")
 def get_all_reviews_by_current_user():
     """
@@ -38,7 +38,7 @@ def get_all_reviews_by_current_user():
             }
                 for review in reviews]
 
-#DELETE Review by Id
+
 @rev_routes.route("/<int:id>", methods = ["DELETE"])
 def delete_review_by_id(id):
     """
@@ -64,7 +64,7 @@ def delete_review_by_id(id):
     db.session.commit()
     return {"message": "Successfully deleted the review"}
 
-#Edit Review by Id
+
 @rev_routes.route("/<int:id>", methods = ["PUT"])
 def edit_review_by_id(id):
     """
@@ -122,7 +122,6 @@ def edit_review_by_id(id):
 
 
 
-#GET review by id
 @rev_routes.route("/<int:id>")
 def get_review_by_id(id):
     """
@@ -131,7 +130,6 @@ def get_review_by_id(id):
     if not current_user.is_authenticated:
         return {"error": "not authenticated"}, 401
 
-    # review = Review.query.get(id)
     review = Review.query.filter(Review.id == id).options(
         joinedload(Review.business),
         joinedload(Review.images)
@@ -150,7 +148,7 @@ def get_review_by_id(id):
         "reviewer": { **current_user.to_dict(), "numReviews": len(current_user.user_reviews) }
     }
 
-#DELETE Review Image by Id
+
 @rev_routes.route("/images/<int:id>", methods = ["DELETE"])
 def delete_review_image_by_id(id):
     """
@@ -173,7 +171,7 @@ def delete_review_image_by_id(id):
     db.session.commit()
     return {"message": "Successfully deleted the review image"}
 
-#CREATE A REPLY
+
 @rev_routes.route("/<int:id>/replies", methods = ["POST"])
 def create_reply(id):
     """
@@ -190,12 +188,11 @@ def create_reply(id):
         return {"error": "not authorized"}, 403
 
     form = ReplyForm()
-    #form["csrf_token"].data = request.cookies.get("csrf_token")
+
     if "csrf_token" in request.cookies:
         form["csrf_token"].data = request.cookies["csrf_token"]
     else:
         return {"error": "Missing csrf_token"}, 404
-        # check this error code
 
     if form.validate_on_submit():
         reply = Reply()

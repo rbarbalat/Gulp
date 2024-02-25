@@ -12,7 +12,6 @@ from datetime import datetime
 
 bus_routes = Blueprint("businesses", __name__)
 
-#GET ALL BUSINESSES
 @bus_routes.route("/")
 def get_all_businesses():
     """
@@ -65,7 +64,6 @@ def get_all_businesses():
         })
     return lst, 200
 
-#GET Business by Id
 @bus_routes.route("/<int:id>")
 def get_business_by_id(id):
 
@@ -109,7 +107,6 @@ def get_business_by_id(id):
     }, 200
 
 
-#GET ALL BUSINESSES BY CURRENT USER
 @bus_routes.route("/current")
 def get_all_businesses_by_current_user():
     """
@@ -142,7 +139,6 @@ def get_all_businesses_by_current_user():
         })
     return lst, 200
 
-#GET ALL RECENT BUSINESSES
 @bus_routes.route("/recent/<int:limit>")
 def get_all_recent_businesses(limit):
     """
@@ -171,7 +167,6 @@ def get_all_recent_businesses(limit):
         })
     return lst
 
-#DELETE Business by Id
 @bus_routes.route("/<int:id>", methods = ["DELETE"])
 def delete_business_by_id(id):
     """
@@ -205,7 +200,6 @@ def delete_business_by_id(id):
     return {"message": "Successfully deleted the business"}
 
 
-#CREATE A BUSINESS
 @bus_routes.route("/", methods = ["POST"])
 def create_business():
     """
@@ -276,7 +270,7 @@ def create_business():
 
     return {"error": form.errors}, 400
 
-#EDIT A BUSINESS
+
 @bus_routes.route("/<int:id>", methods = ["PUT"])
 def edit_business(id):
     """
@@ -310,7 +304,7 @@ def edit_business(id):
                     "name": ["Business name is already in use"]
                 }
             }
-        # make this error message match the structure of others
+
         bus.name = form.data["name"]
         bus.description = form.data["description"]
         bus.address = form.data["address"]
@@ -361,7 +355,6 @@ def edit_business(id):
     return {"error": form.errors}, 400
 
 
-#CREATE A REVIEW
 @bus_routes.route("/<int:id>/reviews", methods = ["POST"])
 def create_review(id):
     """
@@ -420,7 +413,6 @@ def create_review(id):
 
     return {"error": form.errors}, 400
 
-#DELETE Business Image by Id
 @bus_routes.route("/images/<int:id>", methods = ["DELETE"])
 def delete_business_image_by_id(id):
     """
@@ -478,7 +470,6 @@ def get_all_fav_businesses_by_current_user():
     return lst, 200
 
 
-#CREATE A FAVORITE
 @bus_routes.route("/<int:id>/favorites", methods = ["POST"])
 def create_favorite(id):
     """

@@ -1,10 +1,7 @@
 from app.models import db, Favorite, environment, SCHEMA
 from sqlalchemy.sql import text
-from faker import Faker
-from random import choice, sample, randint
-from datetime import datetime
+from random import sample, randint
 
-fake = Faker()
 def seed_favorites(users, businesses):
     # 6 owners and 16 non-owner users in the seed data, (0,..,21)
     # for now the 6 owners (0,..,5) have no favorites
@@ -31,7 +28,6 @@ def seed_favorites(users, businesses):
             db.session.add(favorite)
 
     db.session.commit()
-    # print("seeded favorites")
 
 def undo_favorites():
     if environment == "production":

@@ -15,8 +15,10 @@ def integer_one_through_five(form, field):
 
 class ReviewForm(FlaskForm):
     review = StringField("review", validators=[DataRequired(), Length(min=20, max=1000)])
-    #IntegerField coerces inputs into integers before validations, can't use it
+
+    #can't use IntegerField b/c coerces inputs into integers before validator can check if it is in [1,2,3,4,5]
     rating = FloatField("rating", validators=[integer_one_through_five, DataRequired()])
+
     first = FileField("preview image", validators=[Optional(), FileRequired(), FileAllowed(list(ALLOWED_EXTENSIONS))])
     second = FileField("preview image", validators=[Optional(), FileRequired(), FileAllowed(list(ALLOWED_EXTENSIONS))])
     third = FileField("preview image", validators=[Optional(), FileRequired(), FileAllowed(list(ALLOWED_EXTENSIONS))])

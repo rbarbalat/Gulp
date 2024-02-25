@@ -46,7 +46,6 @@ def login():
         # Add the user to the session, we are logged in!
         user = User.query.filter(User.email == form.data['email']).first()
         login_user(user)
-        # return user.to_dict()
         return {
             **user.to_dict(),
             "numBusinesses": len(user.businesses),
@@ -81,7 +80,6 @@ def sign_up():
         db.session.add(user)
         db.session.commit()
         login_user(user)
-        # return user.to_dict()
         return {
             **user.to_dict(),
             "numBusinesses": 0,

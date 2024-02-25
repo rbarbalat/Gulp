@@ -1,7 +1,6 @@
 import {useHistory, useLocation} from "react-router-dom";
 import {useDispatch} from "react-redux";
 import {useState} from "react";
-// import {thunkLoadSingleBusiness } from "../../store/business";
 import { linkEditBus, deleteBusiness, createFavorite, deleteFavorite } from "../../helpers";
 import StarRatingInput from "../StarRatingInput";
 import "./BusCard.css";
@@ -10,7 +9,6 @@ export default function BusCard({business, user})
 {
     const isOwner = user?.id === business?.owner_id;
 
-    //find returns undef if there is no match
     const favorite = user?.favorites.find(favorite => favorite.business_id === business.id);
     const userFavorite = favorite !== undefined;
 

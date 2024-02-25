@@ -14,8 +14,6 @@ class Reply(db.Model):
 
     review_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('reviews.id')), nullable=False)
     review = db.relationship("Review", back_populates="replies")
-    # reply.review.business.owner is the replier
-    # reply.review.reviewer is the reviewer
 
     def to_dict(self):
         return {

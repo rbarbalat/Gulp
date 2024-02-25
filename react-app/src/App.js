@@ -62,7 +62,6 @@ function App() {
           <Route path="/businesses/:business_id">
             <SingleBusiness />
           </Route>
-          {/* from landing page will click and be linked to user profile */}
           <ProtectedRoute path="/users/:user_id/">
             <UserProfile />
           </ProtectedRoute>

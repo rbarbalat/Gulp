@@ -32,7 +32,7 @@ def upload_file_to_s3(file, acl="public-read"):
             }
         )
     except Exception as e:
-        # in case the your s3 upload fails
+        # if s3 upload fails
         return {"errors": str(e)}
 
     return {"url": f"{S3_LOCATION}{file.filename}"}
@@ -48,7 +48,6 @@ def remove_file_from_s3(image_url):
         Key=key
         )
     except Exception as e:
-        # print(str(e))
         return { "errors": str(e) }
     return True
 
@@ -65,4 +64,3 @@ def remove_if_not_seeded_file_from_s3(url):
         aws = remove_file_from_s3(url)
         if isinstance(aws, dict):
             errors.append(aws["errors"])
-            # print errors

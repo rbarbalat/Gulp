@@ -29,7 +29,7 @@ export default function AllFavOfUser()
         fetchData();
     }, [dispatch])
 
-    //might be zero b/c it hasn't loaded or it might be zero b/c he has no businesses
+
     if(loaded && businesses.length === 0)
     {
         return <div className="start_business" onClick={find_bus}>Find a business to favorite!</div>

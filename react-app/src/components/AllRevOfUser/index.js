@@ -8,7 +8,6 @@ import "./AllRevOfUser.css";
 
 export default function AllRevOfUser()
 {
-    //initialized to an empty array before the useEffect runs, singe intialState = {}
     const reviews = useSelector(state => Object.values(state.reviews.allRev))
     const [loaded, setLoaded] = useState(false);
 
@@ -29,7 +28,7 @@ export default function AllRevOfUser()
         fetchData();
     }, [dispatch])
 
-    //might be zero b/c it hasn't loaded or it might be zero b/c he has no businesses
+
     if(loaded && reviews.length === 0)
     {
         return <div className="start_rev" onClick={list_bus}>Find a business to review!</div>

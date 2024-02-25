@@ -31,9 +31,6 @@ def tag_three(form, field):
         raise ValidationError("No repeat tags")
 
 class BusForm(FlaskForm):
-    # the bus_name_exists was applied on edits as well...NEED TO CREATE A DIFFERENT
-    # A SEPARATE EDIT FORM ON WHICH NAME IS NOT A FIELD
-
     name = StringField("name", validators=[DataRequired(), bus_name_exists, Length(min=3, max=20)], )
     description = StringField("description", validators=[DataRequired(), Length(min=20, max=700)] )
     address = StringField("address", validators=[DataRequired(), Length(min=4, max=30)] )
@@ -44,7 +41,6 @@ class BusForm(FlaskForm):
     tag_two = StringField("tag_two", validators=[DataRequired(), tag_two, Length(min=3, max=13)] )
     tag_three = StringField("tag_three", validators=[DataRequired(), tag_three, Length(min=3, max=13)] )
 
-    # prev_url = StringField("preview image", validators=[DataRequired(), URL()])
     prev_url = FileField("preview image", validators=[FileRequired(), FileAllowed(list(ALLOWED_EXTENSIONS))])
     first = FileField("preview image", validators=[Optional(), FileRequired(), FileAllowed(list(ALLOWED_EXTENSIONS))])
     second = FileField("preview image", validators=[Optional(), FileRequired(), FileAllowed(list(ALLOWED_EXTENSIONS))])

@@ -42,12 +42,12 @@ def add_image():
     if form.validate_on_submit():
         image = form.data["image"]
         image.filename = get_unique_filename(image.filename)
-        #upload is a dicitonary with a key of url or a key of errors
+
+        #upload has either a "url" key or an "errors" key
         upload = upload_file_to_s3(image)
         if "url" not in upload:
             return {"error": "failed b/c of problem with the image file"}, 400
 
-        # remove the existing url from aws
         remove_if_not_seeded_file_from_s3(current_user.url)
         current_user.url = upload["url"]
 
