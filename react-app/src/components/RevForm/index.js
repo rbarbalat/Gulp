@@ -11,10 +11,15 @@ export default function RevForm({edit})
     //the create review form is always linked from the single business component(singleBus already in the store)
 
     //the edit review form can be linked from a review card on the singleBus component or the AllRevOfUser component
-    //the linkEditReview helper calls thunkLoadSingleReview before history.push to this url
+    //the linkEditReview helper calls thunkLoadSingleReview before history.pushing to this url
+    //so after the first render, a thunk is NOT called in a useEffect
 
+    const user = useSelector(state => state.session.user);
     const business = useSelector(state => state.businesses.singleBus);
     const edit_rev = useSelector(state => state.reviews.singleRev);
+
+    const [initial, setInitial] = useState(true);
+
     const [rating, setRating] = useState(edit ? edit_rev?.rating : "");
     const [review, setReview] = useState(edit ? edit_rev?.review : "");
 
@@ -42,9 +47,21 @@ export default function RevForm({edit})
     const history = useHistory();
 
     useEffect(() => {
-        if(edit) dispatch(thunkLoadSingleReview(review_id));
-        //rerender the page after a user deletes an image before submitting the edited review
+        if(edit && !initial) dispatch(thunkLoadSingleReview(review_id));
+        //do not dispatch on first render b/c the review is already in the store
+        //dispatch only after a forced rerender triggered by deletion of an image before form submission
     }, [render])
+
+    useEffect(() => {
+        //initial is initialized to true and this useEffect only runs once
+        setInitial(false);
+
+        if(edit && Object.keys(edit_rev).length === 0)
+        {
+            history.push(`/users/${user.id}`);
+            //dispatch(thunkLoadSingleBusiness(business_id));
+        }
+    }, [])
 
     function landingPage()
     {
@@ -55,6 +72,7 @@ export default function RevForm({edit})
         const image_id = edit_rev.images[index-1].id;
         const res = await fetch(`/api/reviews/images/${image_id}`, {method: "Delete"});
         if(!res.error) setRender(prev => !prev);
+        //force a rerender here, changes to state variables (i.e rating or review text are preserved)
     }
 
     function handleImage(e, index)

@@ -9,10 +9,11 @@ import "./BusForm.css";
 
 export default function BusForm({edit})
 {
-    //when linked to edit this component from the singleBus page, the correct is singleBus already in the store
-    //when linked from a BusCard (All Bus or All Bus of User components), a thunk is called before history.push
-    //linkEditBus helper function
+    const user = useSelector(state => state.session.user);
     const business = useSelector(state => state.businesses.singleBus);
+
+    const [initial, setInitial] = useState(true);
+
     const [name, setName] = useState(edit ? business.name : "");
     const [description, setDescription] = useState(edit ? business.description : "");
     const [city, setCity] = useState(edit ? business.city : "");
@@ -49,14 +50,18 @@ export default function BusForm({edit})
     const {business_id} = useParams();
     const [render, setRender] = useState(false)
 
+    //do not dispatch on the first render of the edit form
+    //if linked from the singleBus component, the right single business is already in the store
+    //otherwise linked from a BusCard via the helper linkEditBus which dispatches before history.pushing
     useEffect(() => {
-        if(edit) dispatch(thunkLoadSingleBusiness(business_id));
+        if(edit && !initial) dispatch(thunkLoadSingleBusiness(business_id));
+        //dispatch only after a forced rerender triggered by deletion of an image before form submission
     }, [render])
 
     //if you are on the edit form and click "Add Business" on the navBar, linked to the same component
     //values of state variables are preserved so need to reset them so the form fields are blank
     useEffect(() => {
-        if(!edit)
+        if(!edit && !initial)
         {
             setName("");
             setDescription("");
@@ -66,17 +71,27 @@ export default function BusForm({edit})
             setTagOne("");
             setTagTwo("");
             setTagThree("");
-
-            setPrevUrl("");
-            //first, second and third_url aren't state variables
-            //so they are already reset to the empty string by the ternary
-
             setFirst("");
             setSecond("");
             setThird("");
+            setPrevUrl("");
+            //first_url, second_url and third_url aren't state variables
+            //so they are already reset to the empty string by the ternary
         }
     }, [edit])
 
+    useEffect(() => {
+        //initial is initialized to true and this useEffect only runs once
+        setInitial(false);
+
+        //business can only be an empty obj on the first render if the page was refreshed
+        //if its empty, that is irrelevant for create business
+        if(edit && Object.keys(business).length === 0)
+        {
+            history.push(`/users/${user.id}`)
+            //dispatch(thunkLoadSingleBusiness(business_id));
+        }
+    }, [])
 
     async function deleteBusImage(index)
     {
