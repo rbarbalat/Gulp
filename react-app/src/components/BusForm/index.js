@@ -9,7 +9,6 @@ import "./BusForm.css";
 
 export default function BusForm({edit})
 {
-    const user = useSelector(state => state.session.user);
     const business = useSelector(state => state.businesses.singleBus);
 
     const [initial, setInitial] = useState(true);
@@ -84,13 +83,8 @@ export default function BusForm({edit})
         //initial is initialized to true and this useEffect only runs once
         setInitial(false);
 
-        //business can only be an empty obj on the first render if the page was refreshed
-        //if its empty, that is irrelevant for create business
-        if(edit && Object.keys(business).length === 0)
-        {
-            history.push(`/users/${user.id}`)
-            //dispatch(thunkLoadSingleBusiness(business_id));
-        }
+        //this is only true if the page was REFRESHED
+        if(edit && Object.keys(business).length === 0) dispatch(thunkLoadSingleBusiness(business_id));
     }, [])
 
     async function deleteBusImage(index)

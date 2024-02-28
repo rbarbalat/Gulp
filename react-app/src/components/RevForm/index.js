@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { thunkReceiveReview, thunkUpdateReview, thunkLoadSingleReview } from "../../store/review";
+import { thunkLoadSingleBusiness } from "../../store/business";
 import StarRatingInput from "../StarRatingInput";
 import RevFileInput from "../RevFileInput";
 import "./RevForm.css";
@@ -9,13 +10,8 @@ import "./RevForm.css";
 export default function RevForm({edit})
 {
     //the create review form is always linked from the single business component(singleBus already in the store)
-
-    //the edit review form can be linked from a review card on the singleBus component or the AllRevOfUser component
-    //the linkEditReview helper calls thunkLoadSingleReview before history.pushing to this url
-    //so after the first render, a thunk is NOT called in a useEffect
-
-    const user = useSelector(state => state.session.user);
-    const business = useSelector(state => state.businesses.singleBus);
+    //singleBus can be {} but not undefined, safe to key into it
+    const business_name = useSelector(state => state.businesses.singleBus.name);
     const edit_rev = useSelector(state => state.reviews.singleRev);
 
     const [initial, setInitial] = useState(true);
@@ -46,9 +42,11 @@ export default function RevForm({edit})
     const dispatch = useDispatch();
     const history = useHistory();
 
+    //the edit review form can be linked from a review card on the singleBus component or the AllRevOfUser component
+    //the linkEditReview helper calls thunkLoadSingleReview before history.pushing to this url
+    //don't need to dispatch on the first render of the edit form (except for page refresh, handled below)
     useEffect(() => {
         if(edit && !initial) dispatch(thunkLoadSingleReview(review_id));
-        //do not dispatch on first render b/c the review is already in the store
         //dispatch only after a forced rerender triggered by deletion of an image before form submission
     }, [render])
 
@@ -56,11 +54,9 @@ export default function RevForm({edit})
         //initial is initialized to true and this useEffect only runs once
         setInitial(false);
 
-        if(edit && Object.keys(edit_rev).length === 0)
-        {
-            history.push(`/users/${user.id}`);
-            //dispatch(thunkLoadSingleBusiness(business_id));
-        }
+        //these conditionals can only true if the page was REFRESHED
+        if(edit && Object.keys(edit_rev).length === 0) dispatch(thunkLoadSingleReview(review_id));
+        if(!edit && business_name === undefined) dispatch(thunkLoadSingleBusiness(business_id));
     }, [])
 
     function landingPage()
@@ -124,7 +120,7 @@ export default function RevForm({edit})
             { edit ?
                 <div className ="add_your_review">{edit_rev.business?.name}</div>
                 :
-                <div className ="add_your_review">{business.name}</div>
+                <div className ="add_your_review">{business_name}</div>
             }
             {   edit ?
                 <div className ="add_your_review">Update Your Review</div>
