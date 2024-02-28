@@ -8,12 +8,10 @@ import "./RevForm.css";
 
 export default function RevForm({edit})
 {
-    //for create review form will always be coming from a single business page
-    //singleBus will be loaded in the store, but gone from store if you refresh
-    //but you still get the business_id from useParams which is all you need
-    //except for <div>{business.name}</div> at the top of the page which becomes
-    //undefined and you lose the name of the business on the refresh
-    //form still works b/c you have business_id..
+    //the create review form is always linked from the single business component(singleBus already in the store)
+
+    //the edit review form can be linked from a review card on the singleBus component or the AllRevOfUser component
+    //the linkEditReview helper calls thunkLoadSingleReview before history.push to this url
 
     const business = useSelector(state => state.businesses.singleBus);
     const edit_rev = useSelector(state => state.reviews.singleRev);
@@ -28,26 +26,24 @@ export default function RevForm({edit})
     const second_url = edit ? (edit_rev.images?.length >= 2 ? edit_rev.images[1].url : "") : "";
     const third_url =  edit ? (edit_rev.images?.length === 3 ? edit_rev.images[2].url : "") : "";
 
-    const first_file = useRef(null);
-    const second_file = useRef(null);
-    const third_file = useRef(null);
+    //use the useRefs to access to the default html file input's onChange in my custom file input components
+    const first_file_input = useRef(null);
+    const second_file_input = useRef(null);
+    const third_file_input = useRef(null);
 
     const [valErrors, setValErrors] = useState({});
 
-    //business_id exists when !edit, review id exists when edit
-    const { business_id} = useParams();
-    const { review_id } = useParams();
+    const { business_id} = useParams(); // edit === false,  /businesses/:business_id/reviews
+    const { review_id } = useParams();  // edit === true,   /reviews/review_id
 
     const [render, setRender] = useState(false)
 
     const dispatch = useDispatch();
     const history = useHistory();
 
-    //linkEditReview actually dispatches the same thunk and only links here if there is a good response
-    //this useEffect added after the fact for the situation when an image is deleted before form submission
-    //to rerender the page and also preserve changes to the star rating/text of the review from before image deletion
     useEffect(() => {
         if(edit) dispatch(thunkLoadSingleReview(review_id));
+        //rerender the page after a user deletes an image before submitting the edited review
     }, [render])
 
     function landingPage()
@@ -58,10 +54,7 @@ export default function RevForm({edit})
     {
         const image_id = edit_rev.images[index-1].id;
         const res = await fetch(`/api/reviews/images/${image_id}`, {method: "Delete"});
-        if(!res.error)
-        {
-            setRender(prev => !prev);
-        }
+        if(!res.error) setRender(prev => !prev);
     }
 
     function handleImage(e, index)
@@ -129,34 +122,32 @@ export default function RevForm({edit})
 
                 <div>
                     <textarea className="rev_text_area" type="text" name="review" placeholder="Review"
-                    // <input type="text" name="review" placeholder="Review"
-                        value={review} onChange={e => setReview(e.target.value)}
-                    />
+                        value={review} onChange={e => setReview(e.target.value)}/>
                 </div>
                 {valErrors.review && <p className="rev_form_errors">{valErrors.review}</p>}
 
                 <div className = "add_pictures">Add up to 3 pictures!</div>
 
                 <input className="file_input_rev" type="file" accept="image/*" name="first"
-                ref={first_file} style = {{display: "none"}} onChange={e => handleImage(e, 1)}/>
+                ref={first_file_input} style = {{display: "none"}} onChange={e => handleImage(e, 1)}/>
 
-                <RevFileInput url={first_url} image={first} upload = {() => first_file.current.click()}
+                <RevFileInput url={first_url} image={first} upload = {() => first_file_input.current.click()}
                     deleteImage={deleteRevImage} num={1} />
 
                 {valErrors.first && <p className="rev_form_errors">{valErrors.first}</p>}
 
                 <input className="file_input_rev" type="file" accept="image/*" name="second"
-                 ref={second_file} style = {{display: "none"}} onChange={e => handleImage(e, 2)}/>
+                 ref={second_file_input} style = {{display: "none"}} onChange={e => handleImage(e, 2)}/>
 
-                <RevFileInput url={second_url} image={second} upload = {() => second_file.current.click()}
+                <RevFileInput url={second_url} image={second} upload = {() => second_file_input.current.click()}
                     deleteImage={deleteRevImage} num={2} />
 
                 {valErrors.second && <p className="rev_form_errors">{valErrors.second}</p>}
 
                 <input className="file_input" type="file" accept="image/*" name="third"
-                 ref={third_file} style = {{display: "none"}} onChange={e => handleImage(e, 3)}/>
+                 ref={third_file_input} style = {{display: "none"}} onChange={e => handleImage(e, 3)}/>
 
-                <RevFileInput url={third_url} image={third} upload = {() => third_file.current.click()}
+                <RevFileInput url={third_url} image={third} upload = {() => third_file_input.current.click()}
                     deleteImage={deleteRevImage} num={3} />
 
                 {valErrors.third && <p className="rev_form_errors">{valErrors.third}</p>}

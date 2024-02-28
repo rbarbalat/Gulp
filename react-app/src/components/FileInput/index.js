@@ -11,7 +11,9 @@ export default function FileInput( {url, image, upload, deleteImage, num} )
                 <img alt={"optional " + num} className={ image ? "form_images hidden" : "form_images"} src={url}></img>
             </p>
         )
-    }else{
+    }
+    else
+    {
         return (
             <p className = "bus_form_upload_icon_wrapper">
                 <i className={image ? "fa-solid fa-pen-to-square" : "fa-solid fa-upload"} onClick = {upload}></i>

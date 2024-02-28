@@ -36,15 +36,6 @@ export default function ReplyCard({reply, owner, user, business_id})
     }
 
     let updated_date = null;
-    // let updated_date = reply?.updated_at ?
-    //                    new Date(reply?.updated_at)?.toDateString()?.slice(4)
-    //                    :
-    //                    null;
-    // if(updated_date)
-    // {
-    //    if(updated_date[4] === "0")
-    //    updated_date = updated_date.slice(0,4) + updated_date.slice(5);
-    // }
 
     function closeForm()
     {

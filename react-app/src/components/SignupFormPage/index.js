@@ -11,8 +11,6 @@ function SignupFormPage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  // const [errors, setErrors] = useState([]);
-  // switch to object
   const [errors, setErrors] = useState({});
 
   if (sessionUser) return <Redirect to="/" />;
@@ -24,21 +22,26 @@ function SignupFormPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    //make old errors go away
+    //clear errors
     setErrors({})
-    if (password === confirmPassword) {
+    if (password === confirmPassword)
+    {
         const data = await dispatch(signUp(username, email, password));
-        if (data) {
-          // setErrors(data)
+        if (data)
+        {
           const val_errors = {}
           data.forEach(ele => {
             const index = ele.indexOf(":");
             val_errors[ele.slice(0, index - 1)] = ele.slice(index + 2);
+            //the key is the content to the left of the ":"
+            //value is the content to the right of the ":"
+            //index - 1 and index + 2 to exclude the " " to the left and right of ":"
           })
           setErrors(val_errors);
         }
-    } else {
-        //setErrors(['Confirm Password field must be the same as the Password field']);
+    }
+    else
+    {
         setErrors({
           confirmPassword: "The passwords don't match"
         });

@@ -22,11 +22,11 @@ export default function SingleBusiness()
 
     const [sort, setSort] = useState("new");
 
-    //initial state for both is an object, so worst case undefined === undefined
     const isOwner = user?.id === business?.owner_id;
     const hasReviewed = business?.reviewers?.includes(user?.id);
 
-    //initial state for singleBus is an empty object
+    //business is never undefined but business.reviews can be undefined
+    //in which case reviews will be undefined
     const reviews = business.reviews?.slice();
 
     if(sort === "new") reviews?.sort((a,b) => {
@@ -66,8 +66,8 @@ export default function SingleBusiness()
 
     function linkEdit()
     {
-        //don't need the linkEditBus helper b/c if coming
-        //from this component don't need to dispatch load single bus
+        // don't need the linkEditBus helper (which calls a thunk)
+        // b/c the correct singleBus is already in the store
         history.push(`/businesses/${business_id}/edit`);
     }
 
@@ -134,7 +134,6 @@ export default function SingleBusiness()
         }
         {
             reviews.map(review => (
-            // business.reviews.map(review => (
                 <ReviewCard key = {review.id} review={review}
                 user={user} business_id = {business_id} user_profile={false} owner={business.owner} />
             ))

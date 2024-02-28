@@ -9,7 +9,9 @@ export default function RevFileInput( {url, image, upload, deleteImage, num} )
                 <img alt={"optional " + num} className={ image ? "rev_form_images hidden" : "rev_form_images"} src={url}></img>
             </div>
         )
-    }else{
+    }
+    else
+    {
         return (
             <div className = "rev_form_upload_icon_wrapper">
                 <i className={image ? "fa-solid fa-pen-to-square" : "fa-solid fa-upload"} onClick = {upload}></i>

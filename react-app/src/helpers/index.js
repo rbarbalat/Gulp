@@ -42,6 +42,7 @@ export async function linkEditBus(business_id, dispatch, history)
 
     const res = await dispatch(thunkLoadSingleBusiness(business_id));
     if(!res.error) return history.push(`/businesses/${business_id}/edit`);
+
 }
 
 export async function deleteBusiness(business_id, user_id, dispatch, history)
@@ -69,32 +70,26 @@ export async function deleteReply(reply_id, dispatch, business_id)
 export async function createFavorite(business_id, user_id, pathname, dispatch)
 {
     const options = { method: "POST" };
-    try{
-        const res = await fetch(`/api/businesses/${business_id}/favorites`, options);
-        if(res.ok)
-        {
-            //user favorites data are pulled from the session store
-            await dispatch(authenticate());
-            if(pathname === "/businesses") await dispatch(thunkLoadBusinesses());
-            if(pathname === `businesses/${business_id}`) await dispatch(thunkLoadSingleBusiness(business_id));
-            if(pathname === `/users/${user_id}`) await dispatch(thunkLoadFavBusinessesOfUser())
-        }
-    }catch(error){
+    const res = await fetch(`/api/businesses/${business_id}/favorites`, options);
+    if(res.ok)
+    {
+        //user favorites data are pulled from the session store
+        await dispatch(authenticate());
+        if(pathname === "/businesses") await dispatch(thunkLoadBusinesses());
+        if(pathname === `businesses/${business_id}`) await dispatch(thunkLoadSingleBusiness(business_id));
+        if(pathname === `/users/${user_id}`) await dispatch(thunkLoadFavBusinessesOfUser())
     }
 }
 export async function deleteFavorite(favorite_id, user_id, pathname, dispatch, business_id)
 {
     const options = { method: "Delete"};
-    try{
-        const res = await fetch(`/api/favorites/${favorite_id}`, options);
-        if(res.ok)
-        {
-            //user favorites data are pulled from the session store
-            await dispatch(authenticate());
-            if(pathname === "/businesses") await dispatch(thunkLoadBusinesses());
-            if(pathname === `businesses/${business_id}`) await dispatch(thunkLoadSingleBusiness(business_id));
-            if(pathname === `/users/${user_id}`) await dispatch(thunkLoadFavBusinessesOfUser());
-        }
-    }catch(error){
+    const res = await fetch(`/api/favorites/${favorite_id}`, options);
+    if(res.ok)
+    {
+        //user favorites data are pulled from the session store
+        await dispatch(authenticate());
+        if(pathname === "/businesses") await dispatch(thunkLoadBusinesses());
+        if(pathname === `businesses/${business_id}`) await dispatch(thunkLoadSingleBusiness(business_id));
+        if(pathname === `/users/${user_id}`) await dispatch(thunkLoadFavBusinessesOfUser());
     }
 }

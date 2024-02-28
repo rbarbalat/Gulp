@@ -20,7 +20,6 @@ export default function StarRatingInput({ rating, onRatingChange, form })
 
   return (
       <div className="rating-input">
-        {/* <div className={activeRating >= 1 ? "filled" : "empty"}> */}
         <div className={activeRating >= 1 ? "filled" : (form ? "empty" : "hide")}>
           <i className="fa-regular fa-star"
             onMouseEnter={() => onMouseEnter(1)}
@@ -29,7 +28,7 @@ export default function StarRatingInput({ rating, onRatingChange, form })
             >
             </i>
         </div>
-        {/* <div className={activeRating >= 2 ? "filled" : "empty"}> */}
+
         <div className={activeRating >= 2 ? "filled" : (form ? "empty" : "hide")}>
             <i className="fa-regular fa-star"
               onMouseEnter={() => onMouseEnter(2)}
@@ -37,7 +36,7 @@ export default function StarRatingInput({ rating, onRatingChange, form })
               onClick ={() => onRatingChange(2)}>
             </i>
         </div>
-        {/* <div className={activeRating >= 3 ? "filled" : "empty"}> */}
+
         <div className={activeRating >= 3 ? "filled" : (form ? "empty" : "hide")}>
             <i className="fa-regular fa-star"
             onMouseEnter={() => onMouseEnter(3)}
@@ -45,7 +44,7 @@ export default function StarRatingInput({ rating, onRatingChange, form })
             onClick ={() => onRatingChange(3)}>
             </i>
         </div>
-        {/* <div className={activeRating >= 4 ? "filled" : "empty"}> */}
+
         <div className={activeRating >= 4 ? "filled" : (form ? "empty" : "hide")}>
             <i className="fa-regular fa-star"
               onMouseEnter={() => onMouseEnter(4)}
@@ -53,7 +52,7 @@ export default function StarRatingInput({ rating, onRatingChange, form })
               onClick ={() => onRatingChange(4)}>
               </i>
         </div>
-        {/* <div className={activeRating >= 5 ? "filled" : "empty"}> */}
+
         <div className={activeRating >= 5 ? "filled" : (form ? "empty" : "hide")}>
               <i className="fa-regular fa-star"
                 onMouseEnter={() => onMouseEnter(5)}

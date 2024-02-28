@@ -10,7 +10,7 @@ import "./ReviewCard.css";
 
 export default function ReviewCard({review, user, business_id, user_profile, owner})
 {
-    //user can be null if not logged in so need it
+    //user is null for a user who is not logged in
     const isReviewer = user?.id === review?.reviewer?.id;
     const isOwner = user?.id === owner?.id;
 
@@ -32,15 +32,6 @@ export default function ReviewCard({review, user, business_id, user_profile, own
     }
 
     let updated_date = null;
-    // let updated_date = review?.updated_at ?
-    //                    new Date(review?.updated_at)?.toDateString()?.slice(4)
-    //                    :
-    //                    null;
-    // if(updated_date)
-    // {
-    //    if(updated_date[4] === "0")
-    //    updated_date = updated_date.slice(0,4) + updated_date.slice(5);
-    // }
 
     function linkBusiness()
     {
@@ -86,8 +77,8 @@ export default function ReviewCard({review, user, business_id, user_profile, own
         }
     }
 
-    //returning empty review for development for now
-    if(Object.keys(review).length === 0) return <div>empty review</div>
+    if(Object.keys(review).length === 0) return null;
+
     return(
         <div className = "rev_card_wrapper">
         {

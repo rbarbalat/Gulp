@@ -4,11 +4,8 @@ import { SearchContext } from '../../context/Search';
 import { thunkLoadBusinessesQuery } from "../../store/business";
 import BusCard from "../BusCard";
 
-// import "./AllBusinesses.css";
-
 export default function SearchResults()
 {
-    //initialized to an empty array before the useEffect runs, singe intialState = {}
     const businesses = useSelector(state => Object.values(state.businesses.allBus))
     const user = useSelector(state => state.session.user);
 
@@ -25,6 +22,7 @@ export default function SearchResults()
     }else{
         tags?.forEach((tag, i) => {
             //add an ampersand to the front as if i != 0
+            //    `tag....` versus  `&tag...`
             if(i === 0) str = str + `tag${i}=${tag.toLowerCase()}`
             else str = str + `&tag${i}=${tag.toLowerCase()}`;
         });
@@ -32,9 +30,8 @@ export default function SearchResults()
     str = str.toLowerCase();
 
     const [sort, setSort] = useState("high");
-    //businesses an empty array before the thunk is dispatched so can call sort on it
-    //and it auto returns an empty array, won't get typerror from undef.getTime()
-    //b/c no elements to run the operation on
+
+    //businesses can be an empty array but never undefined
     if(sort === "new") businesses.sort((a,b) => {
         return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
     });
@@ -98,8 +95,6 @@ export default function SearchResults()
         {
             businesses.length > 0 &&
             <div className = "all_bus_sort_wrapper">
-                {/* <div className = {`all_bus_sort_option${sort === "new" ? " active_sort_all" : "" }`} onClick={() => setSort("new")}>new</div>
-                <div className = {`all_bus_sort_option${sort === "old" ? " active_sort_all" : "" }`} onClick={() => setSort("old")}>old</div> */}
                 <div className = {`all_bus_sort_option${sort === "high" ? " active_sort_all" : "" }`} onClick={() => setSort("high")}>high</div>
                 <div className = {`all_bus_sort_option${sort === "low" ? " active_sort_all" : "" }`} onClick={() => setSort("low")}>low</div>
                 <div className = {`all_bus_sort_option${sort === "reviews" ? " active_sort_all" : "" }`} onClick={() => setSort("reviews")}>most reviewed</div>

@@ -9,7 +9,6 @@ function LoginFormPage() {
   const sessionUser = useSelector((state) => state.session.user);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  // const [errors, setErrors] = useState([]);
   const [errors, setErrors] = useState({});
 
   if (sessionUser) return <Redirect to="/" />;
@@ -21,16 +20,18 @@ function LoginFormPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    //make old errors go away
+    //clear the existing errors
     setErrors({});
     const data = await dispatch(login(email, password));
     if (data) {
-      // the format in the starter was to return an array in this format
-      // ['email : Email provided not found.', 'password : No such user exists.']
+      // data is an array with format like ['email : Email provided not found.', 'password : No such user exists.']
       const val_errors = {}
       data.forEach(ele => {
         const index = ele.indexOf(":");
         val_errors[ele.slice(0, index - 1)] = ele.slice(index + 2);
+        //the key is the content to the left of the ":"
+        //value is the content to the right of the ":"
+        //index - 1 and index + 2 to exclude the " " to the left and right of ":"
       })
       setErrors(val_errors);
     }

@@ -9,6 +9,9 @@ import "./BusForm.css";
 
 export default function BusForm({edit})
 {
+    //when linked to edit this component from the singleBus page, the correct is singleBus already in the store
+    //when linked from a BusCard (All Bus or All Bus of User components), a thunk is called before history.push
+    //linkEditBus helper function
     const business = useSelector(state => state.businesses.singleBus);
     const [name, setName] = useState(edit ? business.name : "");
     const [description, setDescription] = useState(edit ? business.description : "");
@@ -20,22 +23,23 @@ export default function BusForm({edit})
     const [tag_two, setTagTwo] = useState(edit ? business.tag_two : "");
     const [tag_three, setTagThree] = useState(edit ? business.tag_three : "");
 
-    //these originally set to undefined, got uncontrolled input => controlled warning
+    //these hold new images
     const [prev, setPrev] = useState("")
     const [first, setFirst] = useState("");
     const [second, setSecond] = useState("");
     const [third, setThird] = useState("");
 
     const [prev_url, setPrevUrl] = useState(edit ? business.preview_image : "");
-
+    //urls of images already in the database
     const first_url = edit ? (business.images?.length >= 1 ? business.images[0].url : "") : "";
     const second_url = edit ? (business.images?.length >= 2 ? business.images[1].url : "") : "";
     const third_url =  edit ? (business.images?.length === 3 ? business.images[2].url : "") : "" ;
 
-    const prev_file = useRef(null);
-    const first_file = useRef(null);
-    const second_file = useRef(null);
-    const third_file = useRef(null);
+    //useRefs will provide access to the default html file input's onChange functions for use by my file input components
+    const prev_file_input = useRef(null);
+    const first_file_input = useRef(null);
+    const second_file_input = useRef(null);
+    const third_file_input = useRef(null);
 
     const [valErrors, setValErrors] = useState({});
 
@@ -49,14 +53,9 @@ export default function BusForm({edit})
         if(edit) dispatch(thunkLoadSingleBusiness(business_id));
     }, [render])
 
-    // handle the case where you are on the edit form with pre-loaded data
-    // and click the link at the top to add a new business, prevent stat var from keeping vals from edit
-    // link is to a diff url but that url is routed to the SAME COMPONENT
-    // so state variables retain their values just as they would on a regular rerender (THIS IS NOT A MOUNT, 1ST RENDER)
-    // so all of them need to be reSET inside a useEffect conditioned on !edit which runs when [edit] changes
-    // first, second, third are the image values of the file input,look at the handleImage function
+    //if you are on the edit form and click "Add Business" on the navBar, linked to the same component
+    //values of state variables are preserved so need to reset them so the form fields are blank
     useEffect(() => {
-        //need to do this only when on the edit form and click add a business in the navbar
         if(!edit)
         {
             setName("");
@@ -69,29 +68,22 @@ export default function BusForm({edit})
             setTagThree("");
 
             setPrevUrl("");
+            //first, second and third_url aren't state variables
+            //so they are already reset to the empty string by the ternary
 
             setFirst("");
             setSecond("");
             setThird("");
-
-            //the file inputs aren't set to have a value equal to a state variable
-            //so they need to be reset separately
-
-            //first_file.current is equiv to doc.queryselector()
-            document.querySelector("#file_input_1").value = "";
-            document.querySelector("#file_input_2").value = "";
-            document.querySelector("#file_input_3").value = "";
-            //the mandatory one is diff between edit/add forms (b/c of required attribute) so doesn't have to be cleared
         }
     }, [edit])
+
 
     async function deleteBusImage(index)
     {
         const image_id = business.images[index-1].id;
-        //no thunk b/c no store for bus images,
-        //the setRender will trigger a useEffect to call a thunk to get updated Business
         const res = await fetch(`/api/businesses/images/${image_id}`, {method: "Delete"});
         if(!res.error) setRender(prev => !prev);
+        //useEffect with dep array [render] will call thunkLoadSingleBus to get the updated business and rerender the page
         return null;
     }
     function landingPage()
@@ -182,35 +174,35 @@ export default function BusForm({edit})
                 <p className = "mandatory_prev_image">Mandatory Preview Image</p>
 
                 <input id="file_input_preview_edit" className="file_input" type="file" accept="image/*" name="prev_url"
-                            ref = {prev_file} style = {{display: "none"}} onChange={e => handleImage(e, 0)}/>
+                            ref = {prev_file_input} style = {{display: "none"}} onChange={e => handleImage(e, 0)}/>
 
                 <MandFileInput edit={edit} url={prev_url} image={prev}
-                    upload={() => prev_file.current.click()} />
+                    upload={() => prev_file_input.current.click()} />
 
                 {valErrors.prev_url && <p className="bus_form_errors">{valErrors.prev_url}</p>}
 
                 <p className = "bus_form_optional_images">Optional Images (3)</p>
 
                 <input id="file_input_1" className="file_input" type="file" accept="image/*" name="first"
-                    ref = {first_file} style = {{display: "none"}} onChange={e => handleImage(e, 1)}/>
+                    ref = {first_file_input} style = {{display: "none"}} onChange={e => handleImage(e, 1)}/>
 
-                <FileInput url={first_url} image={first} upload = {() => first_file.current.click()}
+                <FileInput url={first_url} image={first} upload = {() => first_file_input.current.click()}
                     deleteImage={deleteBusImage} num={1} />
 
                 {valErrors.first && <p className="bus_form_errors">{valErrors.first}</p>}
 
                 <input id="file_input_2" className="file_input" type="file" accept="image/*" name="second"
-                    ref = {second_file} style = {{display: "none"}} onChange={e => handleImage(e, 2)}/>
+                    ref = {second_file_input} style = {{display: "none"}} onChange={e => handleImage(e, 2)}/>
 
-                <FileInput url={second_url} image={second} upload = {() => second_file.current.click()}
+                <FileInput url={second_url} image={second} upload = {() => second_file_input.current.click()}
                     deleteImage={deleteBusImage} num={2} />
 
                 {valErrors.second && <p className="bus_form_errors">{valErrors.second}</p>}
 
                 <input id="file_input_3" className="file_input" type="file" accept="image/*" name="third"
-                        ref = {third_file} style = {{display: "none"}} onChange={e => handleImage(e, 3)}/>
+                        ref = {third_file_input} style = {{display: "none"}} onChange={e => handleImage(e, 3)}/>
 
-                <FileInput url={third_url} image={third} upload = {() => third_file.current.click()}
+                <FileInput url={third_url} image={third} upload = {() => third_file_input.current.click()}
                     deleteImage={deleteBusImage} num={3} />
 
                 {valErrors.third && <p className="bus_form_errors">{valErrors.third}</p>}
