@@ -1,16 +1,21 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 import StarRatingInput from "../StarRatingInput";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { linkEditReview, deleteReview } from "../../helpers";
 import { thunkReceiveReply } from "../../store/reply";
 import { thunkLoadSingleBusiness } from "../../store/business";
 import ReplyCard from "../ReplyCard";
 import "./ReviewCard.css";
 
-export default function ReviewCard({review, user, business_id, user_profile, owner})
+export default function ReviewCard({review, user_profile})
 {
     //user is null for a user who is not logged in
+
+    const user = useSelector(state => state.session.user);
+    const owner = useSelector(state => state.businesses.singleBus.owner);
+    const { business_id } = useParams();
+
     const isReviewer = user?.id === review?.reviewer?.id;
     const isOwner = user?.id === owner?.id;
 
@@ -158,7 +163,7 @@ export default function ReviewCard({review, user, business_id, user_profile, own
                 <div className = "all_replies_wrapper">
                 {
                     review.replies.map(reply => (
-                        <ReplyCard key={reply.id} reply={reply} owner={owner} user={user} business_id = {business_id} />
+                        <ReplyCard key={reply.id} reply={reply} />
                     ))
                 }
                 </div>

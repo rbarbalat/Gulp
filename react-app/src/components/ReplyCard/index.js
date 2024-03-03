@@ -1,17 +1,23 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 import { deleteReply } from "../../helpers";
 import { thunkUpdateReply } from "../../store/reply";
 import { thunkLoadSingleBusiness } from "../../store/business";
 import "./ReplyCard.css";
-export default function ReplyCard({reply, owner, user, business_id})
+
+export default function ReplyCard({reply})
 {
+    const user = useSelector(state => state.session.user);
+    const owner = useSelector(state => state.businesses.singleBus.owner);
+    const { business_id } = useParams();
+
+    const isOwner = user?.id === owner?.id;
+
     const [confirm, setConfirm] = useState(false);
     const [showForm, setShowForm] = useState(false);
     const [content, setContent] = useState(reply ? reply.reply : "");
     const [valErrors, setValErrors] = useState({});
-
-    const isOwner = user?.id === owner?.id;
 
     const dispatch = useDispatch();
 
