@@ -1,5 +1,4 @@
 .bus_card_wrapper {
-    /*test*/
     margin-top: 2rem;
 
     display:flex;
@@ -7,8 +6,6 @@
     gap: 1.5rem;
     height: 250px;
     max-width: 600px;
-    /* height: 225px; */
-    /* margin-bottom: 2rem; */
 
     padding-left:1rem;
     padding-right:1rem;
@@ -84,8 +81,7 @@
     align-items:center;
 
     position:relative;
-    /*this relative so i can position the absolutely
-    positioned arrows relative to this div*/
+    /*the arrows are absolutely positioned relative to this div*/
 }
 
 .bus_preview {
@@ -147,7 +143,6 @@
     flex-direction:row;
     justify-content:space-between;
     align-items:center;
-    /* gap: .2rem; */
     flex-wrap:wrap;
 
     margin-top:.5rem;
@@ -159,9 +154,6 @@
 }
 
 .bus_card_order_button{
-    /* position: absolute;
-    bottom:1rem;
-    right:1rem; */
     width: 100px;
     height: 40px;
 
@@ -181,4 +173,27 @@
 .fa-heart.black{
     color:black;
     cursor:pointer;
+}
+
+@media screen and (max-width:800px){
+    .bus_card_wrapper {
+        margin-top: 2rem;
+
+        display:flex;
+        flex-direction: column;
+        gap: 1.0rem;
+        height: 500px;
+    }
+    .preview_image_wrapper {
+        height: 50%;
+        width: 100%;
+    }
+    .bus_info_wrapper {
+        height: 50%;
+        width: 100%;
+    }
+    .bus_edit, .bus_cancel_delete,
+    .bus_delete, .bus_confirm_delete{
+        font-size: 16px;
+    }
 }
