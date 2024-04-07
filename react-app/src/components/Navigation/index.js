@@ -60,7 +60,7 @@ function Navigation({ isLoaded }){
 				<input
 					className = "search_bar"
 					onChange={e => setQuery(e.target.value)}
-					value={query} type="text" placeholder={searchName ? "search by name" : "search by tag(s)"}
+					value={query} type="text" placeholder={searchName ? "name" : "tag(s)"}
 				/>
 				<div className="glassWrapper" onClick={search}>
 					<i className="fa-solid fa-magnifying-glass"></i>
@@ -77,6 +77,13 @@ function Navigation({ isLoaded }){
 			{
 				isLoaded && sessionUser &&
 				<div className ="addBus" onClick={createBus}>Add Business</div>
+			}
+			{
+				isLoaded && sessionUser &&
+				<div className ="addBus_mediaQ" onClick={createBus}>
+					<span>Add</span>
+					<span>Business</span>
+				</div>
 			}
 			{
 				isLoaded && sessionUser &&

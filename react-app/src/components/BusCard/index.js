@@ -64,6 +64,7 @@ export default function BusCard({business, user})
             }
                 <img alt="bus_preview_image" className ="bus_preview" src={urls[index]}></img>
             </div>
+
             <div className = "bus_info_wrapper" onClick={linkBusiness}>
                 <div className="bus_card_name_and_buttons_wrapper">
                     <div className = "business_name">{business.name}</div>

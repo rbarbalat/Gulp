@@ -7,7 +7,6 @@
   height: 300px;
   border-radius:5px;
   box-shadow:0 0 7px black;
-  /* border: 2px dashed red; */
 
   list-style-type: none;
 
@@ -15,13 +14,11 @@
   flex-direction:column;
   justify-content:space-evenly;
 
-  /* clicking logout in the dropdown wasn't working when
-  the dropdown was over the background image in the single bus page
-  giving it a z-index fixed the issue*/
+  /* clicking logout on the single bus page wasn't working
+  b/c of a conflict w/ the background image, adjust with z index*/
   z-index: 1;
 }
 .profile-dropdown > li {
-  /* margin-bottom: .5rem; */
   font-size: 20px;
   cursor:pointer;
 }
@@ -29,13 +26,6 @@
   color:teal;
   font-weight:bold;
 }
-
-/* .drop_down_logout_button {
-  background-color:white;
-  border:none;
-  color:black;
-  font-size:14px;
-} */
 
 .hidden {
   display: none;
@@ -83,8 +73,6 @@
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  /* border: 1px solid black; */
-  /* width: 15%; */
   width:55px;
   background-color: red;
   cursor:pointer;
@@ -109,7 +97,10 @@
   font-size:20px;
   font-weight:bold;
 }
-.addBus:hover{
+.addBus_mediaQ{
+  display:none
+}
+.addBus:hover, .addBus_mediaQ:hover{
   text-decoration:underline;
 }
 
@@ -166,4 +157,44 @@
   border:2px solid teal;
   font-weight:bold;
   border-radius:5px;
+}
+
+@media screen and (max-width:575px){
+  .gulp {
+    font-size:20px;
+  }
+  .nav_logged_out_buttons{
+    gap: .3rem;
+  }
+  .nav_logged_out_buttons > button {
+    height: 30px;
+    width: 60px;
+    font-size: 12px;
+    border-radius:5px;
+  }
+  .header_input_and_glass > input {
+    height: 30px;
+    width: 85%;
+    font-size:15px;
+  }
+  .glassWrapper{
+    height: 30px;
+    width:45px;
+  }
+  .addBus{
+    display:None;
+  }
+  .addBus_mediaQ{
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    font-size: 11px;
+    font-weight:bold;
+    color: teal;
+    cursor: pointer;
+  }
+  .fa-message, .fa-bell, .fa-user-circle {
+    font-size:15px;
+  }
 }
