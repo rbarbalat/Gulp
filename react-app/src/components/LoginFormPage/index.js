@@ -47,10 +47,11 @@ function LoginFormPage() {
             New to Gulp? <span><NavLink to="/signup" style={{color: "teal", textDecoration: "none"}}>Sign up</NavLink></span>
           </div>
           <div className = "terms">
-            By continuing, you agree to Gulp's Terms of Servie and acknowledge
+            By continuing, you agree to Gulp's Terms of Service and acknowledge
             Gulp's privacy Policy
           </div>
         </div>
+
         <div className = "form_wrapper">
           <form onSubmit={handleSubmit}>
             <p><input className="login_input" type="text" value={email} onChange={(e) => setEmail(e.target.value)} required placeholder="Email"/></p>

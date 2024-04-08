@@ -16,7 +16,7 @@ export default function LandingPage()
     const dispatch = useDispatch();
     const history = useHistory();
 
-    const { setTargetName, setTargetTags }  = useContext(SearchContext);
+    const { setTargetName, setTargetTags } = useContext(SearchContext);
 
     const [loaded, setLoaded] = useState(false);
 
@@ -75,7 +75,6 @@ export default function LandingPage()
     return (
         <>
         <div className = "top_landing_page" style={styles}>
-
         </div>
 
         <div className="landing_middle_bottom_wrapper">

@@ -1,5 +1,5 @@
 .top_landing_page {
-    height: 500px;
+    height: 350px;
     margin-bottom:3rem;
 }
 
@@ -15,7 +15,7 @@
 .recent_activity{
     display:flex;
     flex-direction:row;
-    justify-content: center;
+    justify-content:center;
     align-items:center;
     font-size:25px;
     font-weight: bold;
@@ -33,7 +33,6 @@
     flex-direction:row;
     justify-content:space-between;
     align-items:center;
-    /* gap:1rem; */
 }
 
 .new_one{
@@ -106,4 +105,37 @@
 }
 .bottom_item{
     font-size:12px;
+}
+
+@media screen and (max-width:850px){
+    .top_landing_page {
+        height: 175px;
+    }
+    .landing_middle_bottom_wrapper{
+        margin-left: 10%;
+        margin-right: 10%;
+    }
+    .recent_activity{
+        font-size:20px;
+    }
+    .new_businesses{
+        display:flex;
+        flex-direction:column;
+        justify-content:space-between;
+        align-items:center;
+    }
+    .categories{
+        gap:.75rem;
+    }
+    .category{
+        height:65px;
+        width:25%;
+        font-size:11px;
+    }
+    .bottom_top_item{
+        font-size:10px;
+    }
+    .bottom_item{
+        font-size:7px;
+    }
 }
