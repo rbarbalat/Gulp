@@ -15,7 +15,6 @@
 }
 .form_stars{
     font-size:25px;
-    /* margin-bottom:1rem; */
     align-self:center;
 }
 .add_pictures{
@@ -91,4 +90,14 @@
 
 .some_space{
     min-height:75px;
+}
+
+@media screen and (max-width:750px){
+    .rev_form_wrapper{
+        margin-left:17.5%;
+        margin-right:17.5%;
+    }
+    .rev_text_area {
+        height:250px;
+    }
 }

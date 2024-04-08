@@ -8,7 +8,6 @@
 
     display:flex;
     flex-direction:row;
-    /* justify-content:space-between; */
     gap: 5%;
 }
 
@@ -34,9 +33,8 @@
     display: flex;
     flex-direction:column;
     justify-content:space-between;
-    align-items: center;
+    align-items: flex-start;
     gap: .4rem;
-
 }
 
 .login_input {
@@ -72,4 +70,24 @@
 
 .login_errors {
     color: red;
+}
+
+@media screen and (max-width:750px){
+    .login_right_image_wrapper{
+        display:none;
+    }
+    .login_page_wrapper {
+        margin-left: 25%;
+        margin-right: 25%;
+    }
+    .login_left_content_wrapper {
+        height: 100%;
+        width: 100%;
+        max-width:250px;
+
+        display:flex;
+        flex-direction: column;
+        justify-content:center;
+        gap: 5%;
+    }
 }

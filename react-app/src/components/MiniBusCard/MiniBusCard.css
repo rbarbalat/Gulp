@@ -34,3 +34,10 @@
     color:teal;
     word-wrap:break-word;
 }
+
+@media screen and (max-width:850px){
+    .mini_preview_image_wrapper{
+        height: 150px;
+        width: 275px;
+    }
+}

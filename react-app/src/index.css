@@ -8,19 +8,3 @@ body {
     background-color: #eeedf2;
     margin:0;
 }
-
-.media_message{
-    display:none;
-}
-
-/* @media screen and (max-width:850px){
-    .application_wrapper{
-        display:none;
-    }
-    .media_message{
-        display:flex;
-        font-weight:bold;
-        flex-direction:row;
-        justify-content:center;
-    }
-} */
