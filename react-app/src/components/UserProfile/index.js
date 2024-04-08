@@ -175,13 +175,13 @@ export default function UserProfile()
 
                 <div className = "bus_rev_selection_wrapper">
                     <div onClick={() => setShow(0)} className = {`user_profile_caption ${show === 0 ? "active" : "inactive"}`}>
-                        My Businesses
+                        Businesses
                     </div>
                     <div onClick={() => setShow(1)} className = {`user_profile_caption ${show === 1 ? "active" : "inactive"}`}>
-                        My Reviews
+                        Reviews
                     </div>
                     <div onClick={() => setShow(2)} className = {`user_profile_caption ${show === 2 ? "active" : "inactive"}`}>
-                        My Favorites
+                        Favorites
                     </div>
                 </div>
                 {show === 0 && <AllBusOfUser /> }

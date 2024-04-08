@@ -13,7 +13,6 @@
     align-items:center;
 
     height:55px;
-    /* border:1px dashed red; */
 }
 
 .single_reply_image_and_owner_wrapper{
@@ -27,7 +26,7 @@
 
 .single_reply_image_wrapper{
     height:100%;
-    width:55px;/*might need to change in media queries*/
+    width:55px;
 }
 
 .single_reply_owner_pic{
@@ -71,4 +70,17 @@
     font-weight:bold;
     border:2px solid teal;
     border-radius:7px;
+}
+
+@media screen and (max-width:800px){
+    .reply_card_buttons_wrapper{
+        gap:.2rem;
+    }
+    .reply_edit, .reply_delete,
+    .reply_confirm_delete, .reply_cancel_delete{
+        font-size:15px;
+    }
+    .single_reply_owner{
+        font-size:15px;
+    }
 }
