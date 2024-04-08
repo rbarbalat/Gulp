@@ -4,8 +4,6 @@
     display:flex;
     flex-direction:column;
     gap: .5rem;
-
-    /*can't give a height b/c need to display full text of review*/
 }
 
 .bus_name_in_review{
@@ -33,7 +31,7 @@
 .rev_card_buttons_wrapper{
     display:flex;
     flex-direction:row;
-    gap: .5rem;
+    gap: .25rem;
 }
 
 .rev_edit, .rev_cancel_delete{
@@ -54,26 +52,21 @@
 .rev_edit:hover, .rev_delete:hover,
 .rev_cancel_delete:hover, .rev_confirm_delete:hover,
 .owner_reply:hover, .owner_reply_again:hover{
-    /* text-decoration:underline; */
     font-weight:bold;
 }
 
 .reviewer_section {
-    /* height: 65px; */
-
     display: flex;
     flex-direction: row;
     /* this is why edit/delete buttons positioned close */
     justify-content: space-between;
     align-items: center;
-    /* gap: 1rem; */
 }
 .reviewer_section_left{
     display:flex;
     flex-direction:row;
     align-items:center;
     gap: 1rem;
-    /* height:100%; */
     width:40%;
 }
 
@@ -108,9 +101,6 @@
 }
 
 .reviewer_image_wrapper {
-    /* height: 100%;
-    width:50%;
-    max-width:150px; */
     height:75px;
     width: 100px;
 }
@@ -130,7 +120,6 @@
     height: 150px;
 
     margin-top:1rem;
-    /* border: 1px dashed blue; */
 }
 .submitted_image_wrapper {
     height: 100%;
@@ -188,4 +177,34 @@
 
 .create_reply_error{
     color:red;
+}
+
+@media screen and (max-width:800px){
+    .rev_card_wrapper {
+        width: 100%;
+    }
+    .submitted_images_wrapper {
+        display: flex;
+        flex-direction: row;
+        justify-content:flex-start;
+        gap: .6rem;
+
+        height: 100px;
+
+        margin-top:1rem;
+    }
+    .submitted_image_wrapper {
+        height: 100%;
+        width: 150px;
+    }
+    .rev_edit, .rev_cancel_delete,
+    .rev_delete, .rev_confirm_delete{
+        font-size: 13px;
+    }
+    .reviewer_section_left{
+        width:60%;
+    }
+    .owner_reply, .owner_reply_again{
+        font-size: 15px;
+    }
 }

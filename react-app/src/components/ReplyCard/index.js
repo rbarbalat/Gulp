@@ -75,7 +75,7 @@ export default function ReplyCard({reply})
                     <div className = "single_reply_image_wrapper">
                         <img className = "single_reply_owner_pic" alt="owner" src={owner.url}></img>
                     </div>
-                    <div className = "single_reply_owner">{owner.username}&nbsp;<span>(Owner)</span></div>
+                    <div className = "single_reply_owner">{owner.username}</div>
                 </div>
                 { isOwner && confirm && confirmAndCancel}
                 { isOwner && !confirm && editAndDelete}

@@ -13,7 +13,7 @@ body {
     display:none;
 }
 
-@media screen and (max-width:850px){
+/* @media screen and (max-width:850px){
     .application_wrapper{
         display:none;
     }
@@ -23,4 +23,4 @@ body {
         flex-direction:row;
         justify-content:center;
     }
-}
+} */

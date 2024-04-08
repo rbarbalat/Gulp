@@ -19,13 +19,12 @@
     align-items:center;
     gap: 1rem;
 
-    /* background-color:white; */
+
 }
 
 .user_profile_image_wrapper{
     height: 35%;
     width: 45%;
-    /* border: 1px solid gray; */
 }
 
 .user_profile_image{
@@ -70,7 +69,6 @@
     display:contents;
 }
 .user_image_input{
-    /* border: 1px dashed red; */
     width: 180px;
 
 }
@@ -114,7 +112,6 @@
 
 .user_profile_middle_wrapper {
     width:59%;
-    /* border: 1px dashed blue; */
 }
 
 .bus_rev_selection_wrapper{
@@ -134,4 +131,27 @@
 .inactive:hover{
     text-decoration:underline;
     cursor:pointer;
+}
+
+@media screen and (max-width:800px){
+    .user_profile_wrapper {
+        display: flex;
+        flex-direction:column;
+        align-items:center;
+        gap: 1rem;
+    }
+    .user_profile_left_wrapper {
+        width: 100%;
+        max-width: 350px;
+    }
+    .user_profile_middle_wrapper {
+        width:100%;
+    }
+    .user_profile_caption{
+        font-size:16px;
+    }
+    .bus_rev_selection_wrapper{
+        justify-content:center;
+        gap:.4rem;
+    }
 }

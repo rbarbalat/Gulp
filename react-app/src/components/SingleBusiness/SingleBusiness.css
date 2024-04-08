@@ -126,11 +126,33 @@
     cursor:pointer;
 }
 
-/* .fa-heart.red_single:hover{
-    color:black;
-    font-weight:bold;
+@media screen and (max-width:800px){
+    .single_bus_middle_wrapper, .single_bus_wrapper{
+        margin-left: 10%;
+        margin-right: 10%;
+    }
+    .single_bus_submitted_images {
+        margin-top:1rem;
+        margin-bottom:.5rem;
+
+        display: flex;
+        flex-direction: column;
+        justify-content:center;
+        align-items:center;
+        gap:.5rem;
+
+        width:100%;
+        height:fit-content;
+    }
+    .single_bus_submitted_image_wrapper{
+        height: 140px;
+        width: 100%;
+        max-width:275px;
+    }
+    .review_button, .bus_edit_button, .bus_delete_button,
+    .bus_confirm_delete_button, .bus_cancel_delete_button{
+        height: 35px;
+        width: 130px;
+        font-size:10px;
+    }
 }
-.fa-heart.black_single:hover{
-    color:red;
-    font-weight:bold;
-} */
