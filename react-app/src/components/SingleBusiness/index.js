@@ -105,7 +105,9 @@ export default function SingleBusiness()
                     {
                         business.images.map(image => (
                             <div key = {image.id} className = "single_bus_submitted_image_wrapper">
-                                <img className = "single_bus_submitted_image" src={image.url} alt="bus_preview_image"></img>
+                                <a href={image.url} target="_blank" rel="noopener noreferrer">
+                                    <img className = "single_bus_submitted_image" src={image.url} alt="bus_preview_image" />
+                                </a>
                             </div>
                         ))
                     }

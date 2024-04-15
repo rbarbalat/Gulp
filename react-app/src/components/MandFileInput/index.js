@@ -13,7 +13,7 @@ export default function MandFileInput( {edit, url, image, upload} )
         return(
             <p className="image_and_delete_button">
                 <i className = {image ? "fa-solid fa-pen-to-square" : "fa-solid fa-upload"} onClick = {upload}></i>
-                <img alt="preview" className={ image ? "form_images hidden" : "form_images"} src={url}></img>
+                <img alt="preview" className={ image ? "form_images hidden" : "form_images"} src={url} />
             </p>
         )
     }else{

@@ -99,7 +99,7 @@ export default function ReviewCard({review, user_profile})
             <div className = "reviewer_section">
                 <div className = "reviewer_section_left">
                     <div className = "reviewer_image_wrapper">
-                        <img className = "reviewer_image" alt="default avatar" src={review.reviewer.url}></img>
+                        <img className = "reviewer_image" alt="default avatar" src={review.reviewer.url} />
                     </div>
                     <div className = "reviewer_info_wrapper">
                         <div className = "reviwer_username">
@@ -150,7 +150,9 @@ export default function ReviewCard({review, user_profile})
                     {
                         review.images.map(image => (
                             <div key = {image.id} className = "submitted_image_wrapper">
-                                <img className = "submitted_image" src={image.url} alt="rev_preview_image"></img>
+                                <a href={image.url} target="_blank" rel="noopener noreferrer">
+                                    <img className = "submitted_image" src={image.url} alt="rev_preview_image" />
+                                </a>
                             </div>
                         ))
                     }

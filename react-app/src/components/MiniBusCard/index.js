@@ -32,7 +32,7 @@ export default function MiniBusCard({business})
                     <div className="mini_first_review">Leave the first review!</div>
                 }
             <div className = "mini_preview_image_wrapper">
-                <img alt="mini preview" className ="mini_bus_preview" src={business.preview_image}></img>
+                <img alt="mini preview" className ="mini_bus_preview" src={business.preview_image} />
             </div>
         </div>
     )
