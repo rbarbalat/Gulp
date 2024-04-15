@@ -80,7 +80,7 @@ function SignupFormPage() {
       </div>
 
       <div className = "signup_right_image_wrapper">
-        <img className ="signup_logo_image" alt="logo" src="https://bucket-rb22.s3.us-east-2.amazonaws.com/yelp_pic.png"></img>
+        <img className ="signup_logo_image" alt="logo" src="https://bucket-rb22.s3.us-east-2.amazonaws.com/yelp_pic.png" />
       </div>
     </div>
   )

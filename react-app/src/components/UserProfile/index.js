@@ -91,7 +91,7 @@ export default function UserProfile()
         <div className="user_profile_wrapper">
             <div className = "user_profile_left_wrapper">
                 <div className = "user_profile_image_wrapper">
-                    <img className="user_profile_image" alt="default avatar" src={user.url}></img>
+                    <img className="user_profile_image" alt="default avatar" src={user.url} />
                 </div>
                 <div className = "user_profile_username">{user.username}</div>
             {

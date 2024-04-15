@@ -73,7 +73,7 @@ export default function ReplyCard({reply})
             <div className = "single_reply_top_section">
                 <div className = "single_reply_image_and_owner_wrapper">
                     <div className = "single_reply_image_wrapper">
-                        <img className = "single_reply_owner_pic" alt="owner" src={owner.url}></img>
+                        <img className = "single_reply_owner_pic" alt="owner" src={owner.url} />
                     </div>
                     <div className = "single_reply_owner">{owner.username}</div>
                 </div>

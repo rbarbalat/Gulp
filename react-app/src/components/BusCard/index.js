@@ -62,7 +62,7 @@ export default function BusCard({business, user})
                     <i className="fa-sharp fa-solid fa-arrow-right bus_card" onClick={nextImage}></i>
                 </>
             }
-                <img alt="bus_preview_image" className ="bus_preview" src={urls[index]}></img>
+                <img alt="bus_preview_image" className ="bus_preview" src={urls[index]} />
             </div>
 
             <div className = "bus_info_wrapper" onClick={linkBusiness}>

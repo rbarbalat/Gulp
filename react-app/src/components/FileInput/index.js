@@ -8,7 +8,7 @@ export default function FileInput( {url, image, upload, deleteImage, num} )
             <p className="image_and_delete_button">
                 <i className={image ? "fa-solid fa-pen-to-square" : "fa-solid fa-upload"} onClick = {upload}></i>
                 <i className={image ? "fa-solid fa-trash hidden" : "fa-solid fa-trash"} onClick={() => deleteImage(num)}></i>
-                <img alt={"optional " + num} className={ image ? "form_images hidden" : "form_images"} src={url}></img>
+                <img alt={"optional " + num} className={ image ? "form_images hidden" : "form_images"} src={url} />
             </p>
         )
     }
